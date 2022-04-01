@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js获取指定时区的时间</title>
+</head>
+
+<body>
+
+    <script>
+        /**
+         * 需求：如果你现在美国，通过new Date()获取的是当地时间。而你想知道知道此时北京的时间是多少？反过来思考，如果你现在在国内，如何获取指定时区的时间呢？ 设置系统时间为美国时间，通过new Date()获取当地时间：
+         * **/
+        //  获取指定指定时区时间（北京时区为8，纽约时区为-5。东时区为正数，西市区为负数）
+        function getTimeByZone(timezone = 8, date) {
+            // 本地时间距离（GMT时间）毫秒数
+            let nowDate = !date ? new Date().getTime() : new Date(date).getTime()
+            // 本地时间和格林威治时间差，单位分钟
+            let offset_GMT = new Date().getTimezoneOffset()
+            //  反推到格林尼治时间
+            let GMT = nowDate + offset_GMT * 60 * 1000
+            //  获取指定时区时间
+            let targetDate = new Date(GMT + timezone * 60 * 60 * 1000)
+            return targetDate
+        }
+    </script>
+
+</body>
+
+</html>
