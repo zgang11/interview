@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ES6箭头函数、箭头函数与普通函数的区别</title>
+</head>
+
+<body>
+  <div class="parent">
+    <div class="item-1"></div>
+    <div class="item-2"></div>
+    <div class="item-3"></div>
+  </div>
+  <!-- 
+    三个参数分别对应的是 flex-grow, flex-shrink 和 flex-basis，默认值为0 1 auto。
+1.flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。
+2.flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。
+3.flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。 -->
+
+
+
+  <style type="text/css">
+    .parent {
+      display: flex;
+      width: 600px;
+    }
+
+    .parent>div {
+      height: 100px;
+    }
+
+    .item-1 {
+      width: 140px;
+      flex: 2 1 0%;
+      background: blue;
+    }
+
+    .item-2 {
+      width: 100px;
+      flex: 2 1 auto;
+      background: darkblue;
+    }
+
+    .item-3 {
+      flex: 1 1 200px;
+      background: lightblue;
+    }
+
+  </style>
+  <!-- <script>
+    window.name = 'ByteDance';
+
+    function A() {
+
+      this.name = 123;
+
+    }
+
+    A.prototype.getA = function () {
+
+      console.log(this.name);
+
+      return this.name + 1;
+
+    }
+
+    let a = new A();
+
+    let funcA = a.getA;
+
+    funcA();
+    a.getA()
+
+  </script> -->
+  <!-- 
+  <script>
+    window.name = 'ByteDance';
+
+    class A {
+
+      constructor() {
+
+        this.name = 123;
+
+      }
+
+      getA() {
+
+        console.log(this);
+
+        return this.name + 1;
+
+      }
+
+    }
+
+    let a = new A();
+
+    let funcA = a.getA;
+    console.log(a)
+    a.getA()
+    console.log(funcA)
+    funcA();
+
+  </script> -->
+
+  <!-- <script>
+    class Cat {
+      constructor(name) {
+        this.name = name
+        this.jump = this.jump.bind(this)
+        this.drink = () => {
+          console.log('drink', this)
+        }
+      }
+      run() {
+        console.log('run', this)
+      }
+      jump() {
+        console.log('jump', this)
+      }
+      static go() {
+        console.log('go', this)
+      }
+    }
+    Cat.prototype.walk = () => {
+      console.log('walk', this)
+    }
+    Cat.prototype.see = function(){
+        console.log("see", this)
+    }
+
+    let cat = new Cat('豆芽')
+    let run = cat.run
+    let jump = cat.jump
+    let go = Cat.go
+    let walk = cat.walk
+    let drink = cat.drink
+    let see = cat.see
+
+    run() // run undefined (严格模式下，this为undefined，可以举一个严格模式下function的例子)
+    jump() // jump Cat {name: "豆芽", jump: ƒ}
+    Cat.go() // go class Cat {}
+    go() // go undefined
+    cat.walk() // walk Window
+    walk() // walk Window
+    cat.drink() // drink Cat {name: "豆芽", jump: ƒ, drink: ƒ}
+    drink() // drink Cat {name: "豆芽", jump: ƒ, drink: ƒ}
+    cat.see()
+    see()
+
+  </script> -->
+
+  <script>
+    function a() {
+      console.log('a');
+      Promise.resolve().then(() => {
+        console.log('e');
+      });
+    }
+
+    function b() {
+      console.log('b');
+    }
+
+    function c() {
+      console.log('c');
+    }
+
+    function d() {
+      setTimeout(a, 0);
+      var temp = Promise.resolve().then(b);
+      setTimeout(c, 0);
+      console.log('d');
+    }
+    d();
+
+    d
+    b
+    a
+    e
+    c
+
+  </script>
+</body>
+
+</html>

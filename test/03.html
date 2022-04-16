@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <script>
+        Array.prototype.reduce_ = function (fn, acc) {
+            let that = this
+            let length = that.length
+            let noInital = acc === undefined ? true : false
+            if (noInital) {
+                 acc = that[0]
+            }
+            for (let i = noInital ? 1 : 0; i < length; i++) {
+                let result = fn.call(that, acc, that[i], i, that)
+                acc = result
+            }
+            return acc
+        }
+        function add(a, b) {return a + b }
+        let arr = [1,2,4,6,7]
+        let result = arr.reduce_(add, undefined)
+        console.log(result)
+    </script> -->
+    <!-- <script>
+        setTimeout(() => {
+            console.log('setTimeout')
+        }, 0)
+        new Promise((resolve, reject) => {
+            reject(1)
+            console.log('6')
+        }).catch(() => {
+            console.log(2)
+        }).then(() => console.log(3), () => console.log('1')).then(() => console.log("v")).then(() => console.log('88'))
+        console.log(5)
+    </script> -->
+    <script>
+        const DayLen = 7
+        const TimeLen = 13
+        const curDStamp = new Date()
+        const StartTime = 8
+        const padding0 = (num) => {
+            return num < 10 ? '0' + num : num
+        }
+        const dataObjMaker = () => {
+            const data = {}
+            for (let d = 0; d < DayLen; d++) {
+                data[d] = {}
+                for (let h = 0; h < TimeLen * 4 + 1; h++) {
+                    const minute = h % 4 === 0 ? '00' : h % 4 === 1 ? '15' : h % 4 === 2 ? '30' : '45'
+                    const dayValue = new Date(curDStamp + d * 24 * 60 * 60000)
+                    data[d][h] = {
+                        dayId: d,
+                        dayValue,
+                        timeId: h,
+                        timeValue: `${parseInt((h / 4).toString()) + StartTime}:${minute}`,
+                        detailTime: `${dayValue.getFullYear()}-${padding0(dayValue.getMonth() + 1)}-${padding0(
+                            dayValue.getDate(),
+                        )} ${padding0(parseInt((h / 4).toString()) + StartTime)}:${minute}:00`,
+                        checked: false,
+                        disabled: false,
+                        candidateInfo: null,
+                    }
+                }
+            }
+            // console.log(data)
+            return data
+        }
+        console.log(dataObjMaker())
+
+
+        getDayStart = (date, duration = 0) => {
+            return new Date(date.getFullYear(), date.getMonth(), date.getDate() + duration)
+        }
+        console.log(getDayStart(new Date(), 7))
+    </script>
+</body>
+
+</html>

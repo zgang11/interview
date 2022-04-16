@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js实现原生节流防抖</title>
+</head>
+
+<body>
+  <input id="input">
+  <script>
+    // 区别：防抖在指定时间间隔里再次调用函数，会清除定时器，重新计时，直到在最新的计时时间间隔里没有调用函数，才会执行定时器里的函数。而节流会在指定时间间隔后会执行一次函数，不会清除定时器而重新计时
+    // 防抖缺点：当用户在指定时间间隔里一直操作，那么setTimeout里的函数永远不会执行
+    // 节流缺点：如果用户一直操作，那么setimeout里的函数会在指定时间间隔后都会执行一次，如此反复
+    // 防抖
+    let input = document.getElementById('input')
+
+    function debounce(fn, wait = 1000) {
+      // 通过闭包缓存一个定时器 id
+      let timer = null
+      // 将 debounce 处理结果当作函数返回
+      // 触发事件回调时执行这个返回函数
+      return function (...args) {    
+        // this保存给context
+        const context = this
+        // 如果已经设定过定时器就清空上一次的定时器
+        if (timer) clearTimeout(timer)
+        // 开始设定一个新的定时器，定时器结束后执行传入的函数 fn
+        timer = setTimeout(() => {
+          fn.apply(context, args.slice(1))
+        }, wait)
+      }
+    }
+
+    const handle = (a='参数1', b="参数2") => {
+      console.log('执行了', a, b)
+    }
+    document.addEventListener("input", debounce(handle, 1000))
+
+    
+
+
+  </script>
+</body>
+
+</html>

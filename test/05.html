@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <script>
+        setTimeout(function () {
+            console.log(1)
+        }, 0);
+        new Promise(function executor(resolve) {
+            console.log(2);
+            for (var i = 0; i < 10000; i++) {
+                i == 9999 && resolve()
+            }
+            console.log(3);
+        }).then(function () {
+            console.log(4);
+        });
+    </script> -->
+    <!-- <script>
+        async function async1() {
+            console.log('async start');
+            await async2();
+            console.log('async1 end');
+            await async2()
+            console.log('async1 more');
+        }
+        async function async2() {
+            console.log('async2');
+        }
+        console.log('script start');
+        setTimeout(function () {
+            console.log('setTimeout');
+        }, 0);
+        async1();
+        new Promise(function (resolve) {
+            console.log('promise1');
+            resolve();
+        }).then(function () {
+            console.log('promise2');
+        });
+        console.log('script end');
+
+    </script> -->
+    <script>
+        console.log(1);
+        setTimeout(() => {
+            console.log(2);
+        }, 1000);
+        async function fn() {
+            console.log(3);
+            setTimeout(_ => {
+                console.log(4);
+            }, 20);
+            return Promise.reject()
+        }
+        async function run() {
+            console.log(5);
+            await fn();
+            console.log(6);
+        }
+        run();
+        for (let i = 0; i < 9000000 ; i++) {
+	// ...大约执行150ms
+        }
+        setTimeout(_ => {
+            console.log(7);
+            new Promise(resolve => {
+                console.log(8);
+                resolve();
+            }).then(_ => {
+                console.log(9);
+            });
+        }, 0);
+        console.log(10);
+
+    </script>
+</body>
+
+</html>

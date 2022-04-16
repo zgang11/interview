@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const PENDDING = "pendding"
+    const REJECTED = "rejected"
+    const FULFUILLEd = "fulfilled"
+    class MyPromise {
+      constructor(handler) {
+        this.value_ = undefined
+        this.status = PENDDING
+        this.fulfilledList = []
+        this.rejectedList = []
+        try {
+          handler(this.resolve_.bind(this), this.rejected_.bind(this))
+        } catch (e) {
+          console.log(e)
+        }
+      }
+      
+      resolve_ = function (value) {
+        const  run = () => {
+          if (this.status !== PENDDING) return
+          this.status = FULFUILLEd
+          // this.value_ = value
+          if (value instanceof MyPromise) {
+            value.then(val => {
+              this.value_ = val
+              this.fulfilledList.forEach(cb => cb.call(null, value))
+            }, err => {
+              this.value_ = err
+              this.rejectedList.forEach(cb => cb.call(null, value))
+            })
+          } else {
+            this.value_ = value
+            this.fulfilledList.forEach(cb => cb.call(null, value))
+          }
+          
+
+        }
+        setTimeout(run, 0)
+      }
+      rejected_ = function (err) {
+        if (this.status !== PENDDING) return
+        const run = () => {
+          this.status = REJECTED
+          this.value_ = err
+          this.rejectedList.forEach(cb => cb.call(null, err))
+        }
+        setTimeout(run, 0)
+      }
+      then = function (onFulfilled, onRejected) {
+        const {
+          value_,
+          status
+        } = this
+        return new MyPromise((onFulfilledNext, onRejectedNext) => {
+          const fulfilledFun = (value) => {
+            try {
+              if (typeof onFulfilled !== 'function') {
+                onFulfilledNext(value)
+              } else {
+                let res = onFulfilled(value)
+                debugger
+                if (res instanceof MyPromise) {
+                  res.then(onFulfilledNext, onRejectedNext)
+                } else {
+                  onFulfilledNext(res)
+                }
+              }
+            } catch (e) {
+              onRejectedNext(e)
+            }
+          }
+          const rejectedFun = (err) => {
+            try {
+              if (typeof onRejectedNext !== 'function') {
+                onRejectedNext(err)
+              } else {
+                let res = onRejected(err)
+                if (res instanceof myPromise) {
+                  res.then(onFulfilledNext, onRejectedNext)
+                } else {
+                  onRejectedNext(err)
+                }
+              }
+            } catch (e) {
+              onRejectedNext(err)
+            }
+          }
+
+          switch (status) {
+            case PENDDING:
+              this.fulfilledList.push(onFulfilled)
+              this.rejectedList.push(onRejected)
+            case FULFUILLEd:
+              fulfilledFun(value_)
+              break
+            case REJECTED:
+              rejectedFun(value_)
+              break
+
+          }
+        })
+      }
+      static resolve(value) {
+        if (value instanceof MyPromise) return value
+        return new Promise(resolve => resolve(value))
+      }
+    }
+
+    let myPromise = new MyPromise((resolve, reject) => {
+      console.log('jajaj')
+      resolve('resolved')
+    })
+    myPromise.then(res => {
+      console.log(res)
+    })
+  </script>
+</body>
+
+</html>
