@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const $context = (context) => {
+            while (1) {
+                switch (context.prev = context.next) {
+                    case 0:
+                        context.next = 2
+                        return context.prev
+                    case 2:
+                        context.next = 4
+                        return context.prev
+                    default:
+                        context.next = 6
+                        return  context.sotp()
+                }
+            }
+        }
+
+
+        const context = {
+            prev: 0,
+            next: 0,
+            done: false,
+            sotp: function(){
+                this.done = true
+            }
+        }
+
+        function Gennerator() {
+            return {
+                next: function () {
+                     value = context.done ? undefined : $context(context)
+                     done = context.done
+                    return {
+                        value,
+                        done
+                    }
+                }
+            }
+        }
+
+        let gen = Gennerator()
+
+
+        // function *Gennerator(){
+        //     yield 1
+        //     yield 2
+        //     yield 3
+        // }
+        // let gen = Gennerator()
+    </script>
+</body>
+
+</html>

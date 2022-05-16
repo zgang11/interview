@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>字节：模拟实现 Array.prototype.splice</title>
+  <meta name="description" content="https://github.com/sisterAn/JavaScript-Algorithms/issues/81">
+</head>
+
+<body>
+  <script>
+    let value = 2
+    let foo = {
+      value: 1
+    }
+
+    function bar(name, age) {
+      return {
+        value: this.value,
+        name: name,
+        age: age
+      }
+    }
+    let barFoo1 = bar.bind(foo, 'rose')
+    console.log(barFoo1(24))
+    let barFoo2 = bar.bind(foo, 'jack', 34)
+    console.log(barFoo2())
+
+
+    // 实现bind
+    Function.prototype._bind = function (context) {
+      if (typeof this !== 'function') {
+        throw new Error("Function.prototype.bind - what is trying to be bound is not callable")
+      }
+
+
+      let self = this
+      let args = [].slice.call(arguments, 1)
+
+      return function () {
+        let newArgs = [].slice.apply(arguments)
+        return self.apply(context, args.concat(newArgs))
+      }
+    }
+
+    const newFoo = bar._bind(foo, 'new', '89')
+    console.log(newFoo())
+
+
+    // 场景2：
+    bar.prototype.friend = 'kevin';
+
+    let bindFoo3 = bar.bind(foo, 'Jack');
+    let obj = new bindFoo3(20);
+    console.log(obj)
+    // undefined
+    // Jack
+    // 20
+
+    obj.habit;
+    // shopping
+
+    obj.friend;
+    // kevin
+
+
+
+
+  </script>
+</body>
+
+</html>

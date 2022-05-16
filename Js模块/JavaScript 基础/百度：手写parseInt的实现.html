@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>百度：手写parseInt的实现</title>
+</head>
+
+<body>
+  <script>
+    const _parseInt = (str, radix) => {
+      let type_of_str = typeof str
+      let res = 0
+      if (type_of_str !== 'string' && type_of_str !== 'number') return NaN
+      str = String(str).trim().split('.')[0]
+      let a = String(str).trim()
+      let length = str.length
+      if(!length) return NaN
+      if(!radix){
+          radix = 10
+      }
+      if(!typeof radix !== 'number' || radix < 2 || radix > 32){
+          return NaN
+      }
+      for(let i = 0; i< str.length; i++){
+          let arr = str.split('').reverse().join('')
+          res += Math.floor(arr[i] * Math.pow(radix, i))
+      }
+      return res
+    }
+
+    _parseInt('134567')
+
+  </script>
+</body>
+
+</html>

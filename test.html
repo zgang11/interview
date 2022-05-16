@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+    }
+    .s-c {
+        height: 200px;
+        margin: 0 200px 0 300px;
+    }
+    .s-m{
+        background-color: aqua;
+        height: 100%;
+        width: 100%;
+        float: left;
+    }
+    .s-l{
+        width: 300px;
+        height: 200px;
+        float: left;
+        background-color: rebeccapurple;
+        margin-left: -100%;
+        left: -300px;
+        position: relative;
+    }
+    .s-r{
+        width: 200px;
+        height: 200px;
+        float: left;
+        background-color:blueviolet;
+        margin-left: -200px;
+        left: 200px;
+        position: relative;
+    }
+</style>
+
+<body>
+    <!-- //圣杯布局 -->
+    <div class="s-c">
+        <div class="s-m"></div>
+        <div class="s-l"></div>
+        <div class="s-r"></div>
+    </div>
+    <!-- <script>
+        let cityList = [{
+                id: 1,
+                parentId: 0,
+                name: '江苏省'
+            },
+            {
+                id: 2,
+                parentId: 0,
+                name: '广东省'
+            },
+            {
+                id: 3,
+                parentId: 0,
+                name: '湖南省'
+            },
+            {
+                id: 4,
+                parentId: 1,
+                name: '苏州市'
+            },
+            {
+                id: 5,
+                parentId: 1,
+                name: '无锡市'
+            },
+            {
+                id: 6,
+                parentId: 1,
+                name: '南通市'
+            },
+            {
+                id: 7,
+                parentId: 2,
+                name: '广州市'
+            },
+            {
+                id: 8,
+                parentId: 2,
+                name: '深圳市'
+            },
+            {
+                id: 9,
+                parentId: 3,
+                name: '长沙市'
+            },
+            {
+                id: 10,
+                parentId: 4,
+                name: '工业园区'
+            },
+            {
+                id: 11,
+                parentId: 4,
+                name: '吴中区'
+            },
+            {
+                id: 12,
+                parentId: 4,
+                name: '姑苏区'
+            }
+        ];
+
+        // let createTreee = function(arr){
+        //     let res = []
+        //     for(let num of arr){
+        //         if(num.parentId === 0){
+        //             res.push(num)
+        //         }
+        //         num.chilern = arr.filter(item => item.parentId === num.id)
+        //     }
+        //     return res
+        // }
+        // let result = createTreee(cityList)
+        // console.log(result)
+
+        let createTree = function(arr, pid){
+            let list = []
+            for(let num of arr){
+                if(num.parentId === pid){
+                    list.push(num)
+                    num.childern = createTree(arr, num.id)
+                }
+            }
+            return list
+        }
+        let result = createTree(cityList, 0)
+        console.log(result)
+    </script> -->
+    <!-- <script>
+        const setTimeout_ = function(fn, timeout){
+           let start = +new Date()
+           const loop = function(){
+               let timer = window.requestAnimationFrame(loop)
+               let now = +new Date()
+               if(now - start > timeout){
+                   fn.call(null)
+                   start = now
+                //    window.cancelAnimationFrame(timer)
+               }
+           }
+           return window.requestAnimationFrame(loop)
+        }
+        const fn = () => {
+            console.log('执行了')
+        }
+        setTimeout_(fn, 2000)
+    </script> -->
+    <!-- <script>
+         function new_(fn, ...args){
+            let obj = Object.create(fn.prototype)
+            let result = fn.call(obj, ...args)
+            return  typeof result === 'object' ? result : obj
+         }
+         let createObject = function(name, age){
+             this.name = name
+             this.age = age
+         }
+         let res = new_(createObject, 'zhanggang', 23)
+         console.log(res)
+    </script> -->
+</body>
+
+</html>

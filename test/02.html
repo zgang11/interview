@@ -1,229 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<style>
-.div1{
-    width: 200px;
-    height: 200px;
-    background-color: red;
-    animation: scale 2s cubic-bezier(0.42,0,1,1) 2s;
-    animation-fill-mode : forwards ; 
-}
-@keyframes scale {
-    0% {transform: scale(0);}
-    50% { transform: scale(1); }
-    100% {transform: scale(0);}
-}
-.div2{
-    width: 0;
-    height: 0;
-    border-left: 100px solid transparent;
-    border-right: 100px solid transparent;
-    border-bottom: 100px solid red;
-    border-radius: 50%;
-}
-</style>
 <body>
-    <div class="div1"></div>
-    <div class="div2"></div>
-    <div></div>
     <script>
-    //     let obj = {
-    //         a: '111',
-    //         b: '2222'
-    //     }
-    //    class Observer {
-    //        constructor(){ }
-    //        observer(obj){
-    //            for(let [i, v] of Object.entries(obj)){
-    //               this.defineReactive(obj, i, v)
-    //            }
-    //        }
-    //        defineReactive(obj, key, value){
-    //              let that = this
-    //              if(typeof value === 'object') this.observer(value)
-    //              Object.defineProperty(obj, key, {
-    //                 get: function(){
-    //                     console.log(value, "see")
-    //                     return  value
-    //                 },
-    //                 set: function(newVla){
-    //                     if(typeof newVla === 'object') that.observer(newVla)
-    //                     console.log(newVla, "edit")
-    //                     value = newVla
-    //                 }
-    //              })
-    //        }
-    //    }
-    //    let ob = new Observer()
-    //    ob.observer(obj)
-    //    obj.a = {c: 'jjaja'}
+        function interv(timeout){
+          const fn = () => {
+             try{
+                console.log('执行了')
+                setTimeout(fn, timeout)
+             }catch(e){
+                 console.log(e)
+             }
+          }
+          let timer = setTimeout(fn, timeout)
+          return timer
+        }
+        let t = interv(2000)
 
+        console.log(t)
     </script>
-    <script>
-        // 防抖
-        // const debouce = function(fn, timeout){
-        //     let timer
-        //     return function(){
-        //         let args = Array.prototype.slice.call(arguments)
-        //         if(timer){
-        //             clearTimeout(timer)
-        //         }
-        //         timer = setTimeout(() => {
-        //             fn.call(this, args)
-        //         }, timeout)
-        //     }
-        // }
-        // function fun(){
-        //     console.log('触发了')
-        // }
-        // document.addEventListener('click', debouce(fun, 1000))
-
-
-        // 节流
-        // const throte = function(fn, timeout){
-        //     let start = +new Date()
-        //     return function(){
-        //         let now = +new Date()
-        //         if(now - start > timeout){
-        //             fn.call(this)
-        //             start = now
-        //         }
-        //     }
-        // }
-        // function fun1(){
-        //     console.log('执行了')
-        // }
-        // document.addEventListener('click', throte(fun1, 5000))
-    </script>
-    <script>
-        // class htmlPlugin {
-        //     constructor(compiler){
-              
-        //     }
-        //     apply(compiler){
-        //        compiler.plugin('emit', (complication, callback) => {
-        //            complication.as
-        //            callback()
-        //        })
-        //     }
-        // }
-    </script>
-   <script>
-//        var a = { name: "Sam" };
-// var b = { name: "Tom" };
-// var o = {};
-// o[a] = 1;
-// o[b] = 2;
-// console.log(o[a]);
-
-// async function async1() {
-//   console.log("async1 start");
-//   await async2();
-//   console.log("async1 end");
-// }
-// async function async2() {
-//   console.log("async2");
-// }
-// console.log("script start");
-// setTimeout(() => {
-//   console.log("setTimeout");
-// }, 0);
-// async1();
-// new Promise((resolve) => {
-//   console.log("promise1");
-//   resolve();
-// }).then(() => {
-//   console.log("promise2");
-// });
-// console.log("script end");
-
-// async function async1(){
-//     console.log('async1 start')
-//     await async2()
-//     console.log('async1 start')
-// }
-
-// async function async2(){
-//     console.log("async2")
-// }
-// console.log("start")
-// async1()
-// console.log('end')
-
-// script start 
-// async1 start
-// async2
-// async1 end
-// promise1
-// script end
-// promise2
-// setTimeout
-
-
-// async function async1() {
-//       console.log('async1 start');
-//       await async2();
-//       console.log('async1 end');
-//     }
-    
-//     async function async2() {
-//       console.log('async2 start');
-//       return new Promise((resolve, reject) => {
-//         resolve();
-//         console.log('async2 promise');
-//       })
-//     }
-
-//     async1();
-    
-//     new Promise(function(resolve) {
-//       console.log('promise1');
-//       resolve();
-//     }).then(function() {
-//       console.log('promise2');
-//     }).then(function() {
-//       console.log('promise3');
-//     });
-
-//     function sleep(interval) {
-//   return new Promise(resolve => {
-//     setTimeout(resolve, interval);
-//   })
-// }
-
-// // 用法
-// async function one2FiveInAsync() {
-//   for(let i = 1; i <= 5; i++) {
-//     console.log(i);
-//     await sleep(1000);
-//   }
-// }
-
-// one2FiveInAsync();
-
-const promise1 = Promise.resolve("First");
-const promise2 = Promise.resolve("Second");
-const promise3 = Promise.reject("Third");
-const promise4 = Promise.resolve("Fourth");
-const runPromises = async () => {
-  const res1 = await Promise.all([promise1, promise2]);
-  const res2 = await Promise.all([promise3, promise4]);
-  return [res1, res2];
-};
-runPromises()
-  .then((res) => console.log(res))
-  .catch((err) => console.log(err));
-
-
-
-   </script>
 </body>
-
 </html>

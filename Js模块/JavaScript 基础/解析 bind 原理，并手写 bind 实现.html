@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>解析 bind 原理，并手写 bind 实现</title>
+</head>
+
+<body>
+  <script>
+    // Function.prototype.bind_ = function (context, ...args) {
+    //   if(typeof context !== 'object') {throw new Error("不是函数") }
+    //   let self = this
+      
+    //   return function(){
+    //       return self.call(context, ...args,...arguments)
+    //   }
+    
+    // }
+
+    Function.prototype.bind_ = function(context, ...args){
+       context = context ? Object(context) : window
+       let that = this
+       return function(){
+          return  that.call(context, ...args, ...arguments)
+       }
+    }
+
+
+    let value = 2;
+    let foo = {
+      value: 1
+    };
+
+    function bar(name, age) {
+      return {
+        value: this.value,
+        name: name,
+        age: age
+      }
+    };
+
+    let foo1 = bar.bind_(foo, 'jack', 20)
+    console.log(foo1())
+
+  </script>
+</body>
+
+</html>

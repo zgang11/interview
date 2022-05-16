@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模拟实现一个new</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * new 使用Js原生实现
+     */
+    // https://github.com/sisterAn/JavaScript-Algorithms/issues/71
+    function Parent(name, age) {
+      this.name = name;
+      this.age = age;
+      this.sayName = function () {
+        console.log(this.name);
+      }
+    }
+    // const _new = function (Parent, ...rest) {
+    //     console.log(...rest)
+    //   //1.以构造器Parent的prototype为原型创建新对象
+    //   const child = Object.create(Parent.prototype);
+    //   //2. 将this和调用参数传给构造器执行
+    //   const result = Parent.apply(child, rest);
+    //   return typeof result === 'object' ? result : child;
+    // }
+
+    const _new = function(fn, ...rest){
+        const obj = Object.create(fn.prototype)
+        const result = fn.call(obj, ...rest)
+        return typeof result === 'object' ? result : obj
+    }
+    const p1 = _new(Parent, 'www', '23');
+    console.log(p1);
+    p1.sayName();
+
+  </script>
+  <script>
+    function Parent(name, age) {
+      this.name = name;
+      this.age = age;
+      this.sayName = function () {
+        console.log(this.name);
+      }
+    }
+
+    function _new_(fn, ...args){
+      const obj = Object.create(fn.prototype)
+      const result = fn.call(obj, ...args)
+      return  typeof result === 'object' ? result : obj
+    }
+    let res = _new_(Parent, 'zhangsan', '34')
+    console.log(res)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>webpack实战-手写一个plugin
+  </title>
+  <link rel="stylesheet" href="https://zhuanlan.zhihu.com/p/102734086">
+</head>
+
+<body>
+  <script>
+    // 一个基本的plugin插件结构
+    class webpackPlugin {
+      constructor(options) {
+        console.log(options)
+      }
+      apply(compiler) {
+        compiler.plugin('done', compilation => {
+          console.log("plugin")
+        })
+      }
+    }
+
+
+    class firstPlugin {
+      constructor(options) {
+        this.options = options
+      }
+      apply(compiler) {
+        compiler.plugin('emit', (compilation, callback) => {
+          let str = ''
+          for (let filename in compilation.assets) {
+            str += `文件:${filename}  大小${compilation.assets[filename]['size']()}\n`
+          }
+          // 通过compilation.assets可以获取打包后静态资源信息，同样也可以写入资源
+          compilation.assets['fileSize.md'] = {
+            source: function () {
+              return str
+            },
+            size: function () {
+              return str.length
+            }
+          }
+          callback()
+        })
+      }
+    }
+    module.exports = firstPlugin
+
+  </script>
+</body>
+
+</html>

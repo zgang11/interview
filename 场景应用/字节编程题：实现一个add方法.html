@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>字节编程题：实现一个add方法</title>
+  <link rel="stylesheet" href="https://www.jianshu.com/p/626deb354024">
+</head>
+
+<body>
+  <script>
+    // function add() {
+    //   let args = [].slice.call(arguments)
+    //   let self = this
+    //   this.num = args
+
+    //   function add_() {
+    //     let args_ = [].slice.call(arguments)
+    //     self.num.push(...args_)
+    //     return add_
+    //   }
+    //   add_.value = () => {
+    //       return self.num.reduce((acc, cur) => acc += cur, 0)
+    //     }
+    //   return add_
+    // }
+
+
+    // function add() {
+    //     const arr = [].slice.apply(arguments)
+    //     function add_(){
+    //         arr.push(...arguments)
+    //         return add_
+    //     }
+    //     add_.value = function(){
+    //       return  arr.reduce((acc, cur) => {
+    //         return acc + cur
+    //       })
+    //     }
+
+    //     return add_
+    // }
+    // function add(){
+    //   let args = [].slice(arguments)
+    //   const add_ = function(...arg){
+    //     args.push(...arg)
+    //     return add_
+    //   }
+    //   add_.value = function(){
+    //     return args.reduce((acc, cur) => acc + cur)
+    //   }
+    //   return add_
+    // }
+
+
+    // const result = add(1)(2, 3)(4).value()
+    // console.log(result)
+    function add(...outer) {
+      function innerAdd(...inner) {
+        return add(...outer, ...inner);
+      }
+
+      innerAdd.toString = function () {
+        let result = 0;
+        for (let i = 0; i < outer.length; i++) {
+          result += outer[i];
+        }
+        return result;
+      }
+      return innerAdd;
+    }
+
+    console.log(add(1)(2)(3).toString());
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js跨域</title>
+    <link rel="stylesheet" href="https://segmentfault.com/a/1190000011145364">
+    <link rel="stylesheet" href="https://www.imooc.com/article/291931">
+</head>
+
+<body>
+    <script>
+        // JSONP
+        let script = document.createElement('script')
+        script.src = 'www.some.jd.com?callback=callbackFun'
+        document.head.appendChild(script)
+        const callbackFun = (res) => {
+            console.log(res)
+        }
+
+        // document.domain + iframe跨域问题
+        document.domain = 'jd.com'
+        let user = 'admin'
+        document.domain = 'jd.com'
+        window.parent.user
+
+        // webSocket
+        let socket = io('http://www.domain2.com:8080')
+        socket.on('connect', function(){
+            socket.on('message', function(msg){
+                console.log(msg)
+            })
+            socket.on('disconnect', function(){
+                console.log('closed')
+            })
+        })
+        socket.send({})
+    </script>
+</body>
+
+</html>

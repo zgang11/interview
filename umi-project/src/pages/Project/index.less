@@ -1,0 +1,138 @@
+.item {
+    border: 1px solid #1da921;
+    width: 180px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 #b3b3b3;
+    margin: 5px auto;
+    background: #fff;
+}
+.item.active {
+    border-style: dashed;
+}
+.item-header {
+    font-size: 12px;
+    color: #9e9e9e;
+    padding: 3px 5px;
+}
+.item-main {
+    padding: 5px;
+    font-size: 14px;
+    color: #424242;
+    height: 36px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+.item-header-point {
+    background: #ccc;
+    float: right;
+    padding: 0 4px;
+    min-width: 10px;
+    text-align: center;
+    color: #fff;
+    border-radius: 50%;
+}
+.col {
+    border: 1px solid #d2d2d2;
+    flex-grow: 1;
+    width: 180px;
+    height: 100%;
+    margin: 0 2px;
+    background: #eee;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.col-header {
+    height: 40px;
+    line-height: 40px;
+    background: #1DA921;
+    color: #fff;
+    text-align: center;
+}
+.col-main {
+    overflow: auto;
+    flex-grow: 1;
+}
+.col-main.active {
+    background: #00ad23;
+    opacity: 0.1;
+}
+.task-wrapper {
+    display: flex;
+    height: 400px;
+    width: 700px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.listContainer {
+    position: relative;
+    width: 350px;
+    margin: 10px 0 0 40px;
+    background-color: #eee; /*跟item移动时候的背景颜色一样，就可以产生一种移开后还留有阴影的错觉*/
+}
+
+.listContainer li {
+    list-style: none;
+    border-bottom: 1px solid #9c9c9c;
+    padding: 10px;
+    background-color: #fff;
+}
+
+.listContainer li span{
+    font-size: 10px;
+}
+
+.listContainer .coverMask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(190, 33, 33, 0.1);
+}
+
+
+
+.wrap{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    .list{
+      width: 480px;
+      padding:10px;
+    }
+  
+    .item{
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      height: 30px;
+      width: 100%;
+      margin-right: 20px;
+      margin-bottom: 10px;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      background:#eee;
+      cursor: pointer;
+      &:nth-child(3n){
+        margin-right: 0;
+      }
+    }
+  }
+  

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给你一个数组[2,1,2,4,3]，你返回数组 [4,2,4,−1,−1] </title>
+</head>
+<body>
+    <script>
+        //  查找后边最大的一个数
+        // const findLastArrMaxNum = (num) => {
+        //     const len = num.length, res = new Array(num.length).fill(-1)
+        //     for(let i = 0 ; i < len - 1; i++){
+        //         let j = i +  1, max = Number.MIN_SAFE_INTEGER
+        //         while(j < len){
+        //             max = Math.max(max, num[j])
+        //             j++
+        //         }
+        //         if(max > num[i]){
+        //             res[i] = max
+        //         }
+        //     }
+        //     return res
+        // }
+        // console.log(findLastArrMaxNum([2,1,2,4,3]))
+
+        //  查找后边第一大于当前数
+        const findFirstMaxNum = (num) => {
+            const len = num.length, res = new Array(num.length).fill(-1)
+            for(let i = 0 ; i < len - 1; i++){
+                let j = i +  1
+                while(j < len){
+                    if(num[j] > num[i]){
+                        res[i] = num[j]
+                        break
+                    }
+                    j++
+                }
+            }
+            return res
+        }
+        console.log(findFirstMaxNum([2,1,2,4,3]))
+    </script>
+</body>
+</html>

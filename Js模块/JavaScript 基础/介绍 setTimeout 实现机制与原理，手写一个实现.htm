@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>介绍 setTimeout / setInterval 实现机制与原理，手写一个实现</title>
+</head>
+
+<body>
+    <!-- <script>
+        const setTimeout_ = (fn, timeout) => {
+            let start = +new Date()
+            function loop(){
+                let timer = window.requestAnimationFrame(loop)
+                let now = +new  Date()
+                if(now - start > timeout){
+                    start = now
+                    fn.call(this)
+                    // cancelAnimationFrame(timer)
+                }
+            }
+            window.requestAnimationFrame(loop)
+        }
+        function fn(){
+            console.log('jjjjaja')
+        }
+        setTimeout_(fn, 2000)
+
+    </script> -->
+
+    <script>
+        function setTimeout_(fn, timeout) {
+            let start = +new Date()
+            const loop = function () {
+                let timer = window.requestAnimationFrame(loop)
+                let now = +new Date()
+                if (now - start > timeout) {
+                    // start = now
+                    fn.call(this, ...arguments)
+                    window.cancelAnimationFrame(timer)
+                }
+            }
+            return   window.requestAnimationFrame(loop)
+             
+        }
+        function fn() {
+            console.log('111')
+        }
+        console.log(setTimeout_(fn, 2000))
+    </script>
+</body>
+
+</html>

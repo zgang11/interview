@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>阿里异步串行编程题：按照以下要求，实现 createFlow 函数 </title>
+</head>
+
+<body>
+  <script>
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    const subFlow = createFlow([() => delay(1000).then(() => console.log("c"))]);
+
+    createFlow([
+      () => console.log("a"),
+      () => console.log("b"),
+      subFlow,
+      [() => delay(1000).then(() => console.log("d")), () => console.log("e")],
+    ]).run(() => {
+      console.log("done");
+    });
+    
+  </script>
+</body>
+
+</html>

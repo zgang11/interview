@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>百度：模版渲染</title>
+</head>
+
+<body>
+  <script>
+    const render = (template, context) => {
+      const getVal = (obj, props) => {
+        if (props.length === 0) {
+          return obj
+        }
+        return getVal(obj[props.shift()], props)
+      }
+
+      return template.replace(/\{\{\s*(\w+(\.\w+)*)\s*\}\}/g, (p1, p2, p3) => {
+        console.log(p1, p2, p3)
+        return getVal(context, p2.split('.'))
+      })
+    }
+
+    const template = '{{name}}很厉害，才{{age}}岁，他少年{{obj.a}}，独力支持，做了{{obj.b.c}}。'
+    const context = {
+      name: '二月',
+      age: '15',
+      obj: {
+        a: '出外谋生',
+        b: {
+          c: '许多大事'
+        }
+      }
+    }
+
+    console.log(render(template, context))
+    // 二月很厉害，才15岁，他少年出外谋生，独力支持，做了许多大事。
+
+  </script>
+</body>
+
+</html>

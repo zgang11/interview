@@ -51,6 +51,7 @@
         const dataObjMaker = () => {
             const data = {}
             for (let d = 0; d < DayLen; d++) {
+                
                 data[d] = {}
                 for (let h = 0; h < TimeLen * 4 + 1; h++) {
                     const minute = h % 4 === 0 ? '00' : h % 4 === 1 ? '15' : h % 4 === 2 ? '30' : '45'
@@ -79,7 +80,22 @@
             return new Date(date.getFullYear(), date.getMonth(), date.getDate() + duration)
         }
         console.log(getDayStart(new Date(), 7))
+
+
+        const timeTableTitleMaker = () => {
+            const arr = []
+            for(let i = 0; i < DayLen; i++){
+                arr.push({
+                    day: new Date(curDStamp + i * 24 * 60 * 60000).getDate(),
+                    week: `周${new Date(curDStamp + i * 24 * 60 * 6000).getDay()}`
+                })
+            }
+            return arr
+        }
     </script>
+    <div>
+        ti
+    </div>
 </body>
 
 </html>

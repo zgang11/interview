@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js中的且(&&)和或(||)</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * 且（与）预算：
+             1.当遇到第一个值为false时，会停止后面判断，并返回当前的当前值  
+         * **/
+        const firstFalse = 0 && 'a' && 2
+        console.log("firstFalse:", firstFalse) // 0
+        const secondFalse = 2 && null && 3
+        console.log("secondFalse:", secondFalse) // null
+        const thirdFalse = 2 && '1' && '' && 2
+        console.log("thirdFalse:", thirdFalse) // ''
+
+        /**
+         * 2.当全部为true的时候则会默认返回最后一个值
+         * **/
+        const  allTrue = 3 && '23' && true && true
+        console.log("allTrue:", allTrue) // 'true'
+
+
+        /**
+         * 或预算：
+         1.当遇到第一个为true的值则返回当前值，否则一直向后判断，如果最后这个值也为false，则默认返回最后一个值
+         * **/
+        const secondTrue = null || true || 'jajajaj'
+        console.log("secondTrue:", secondTrue) // 'true'
+        const AllFalse = null || '' || undefined
+        console.log("AllFalse:", AllFalse) // 'undefined'
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>腾讯：不产生新数组，删除数组里的重复元素()</title>
+</head>
+
+<body>
+  <script>
+    // const removeDuplicates = (nums) => {
+    //   // 原地排序
+    //   nums.sort()
+    //   // 去重
+    //   let len = 1
+    //   for (let i = 1; i < nums.length; i++){
+    //     if (nums[i] != nums[i - 1]) nums[len++] = nums[i];
+    //   }
+    //   // 删除重复项
+    //   nums.splice(len)
+    //   return nums
+    // }
+
+    const removeDuplicates = function (num) {
+      num.sort((a, b) => a - b)
+      let len = 0
+      for (let i = 1; i < num.length; i++) {
+        if (num[i] !== num[len - 1]) num[len++] = num[i]
+      }
+      num.splice(len)
+      return num
+    }
+
+    const arr = [0, 0, 3, 2, 5, 62, 3, 2, 3, 1, 12, 21, 2, 4, 4, 23, 22]
+    arr.splice(2)
+    console.log(arr)
+    console.log(removeDuplicates(arr))
+
+  </script>
+</body>
+
+</html>

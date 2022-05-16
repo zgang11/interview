@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第 103 题：模拟实现一个 localStorage</title>
+</head>
+
+<body>
+  <script>
+    const localStorageMock = (function () {
+      let store = {}
+      return {
+        getItem: function (key) {
+          return store[key] || null
+        },
+        setItem: function (key, value) {
+          store[key] = value.toString()
+        },
+        removeItem: function (key) {
+          delete store[key]
+        },
+        clear: function () {
+          store = {}
+        },
+      }
+    })()
+
+    Object.defineProperty(window, 'localStorage2', {
+      value: localStorageMock
+    })
+
+    localStorage2.setItem('test', 'test')
+    console.log(localStorage2.getItem("test")) //test
+    localStorage2.removeItem('test')
+    console.log(localStorage2.getItem("test")) //null
+    localStorage2.setItem('test', 'test')
+    localStorage2.clear()
+    console.log(localStorage2.getItem("test")) //null
+
+  </script>
+</body>
+
+</html>

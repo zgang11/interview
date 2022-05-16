@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dom结构解析</title>
+</head>
+
+<body>
+    <script>
+        /**
+ * 2.DOM 的体积过大会影响页面性能，假如你想在用户关闭页面时统计（计算并反馈给服务器）
+ 当前页面中元素节点的数量总和、元素节点的最大嵌套深度以及最大子元素个数，请用 JS 配合
+ 原生 DOM API 实现该需求（不用考虑陈旧浏览器以及在现代浏览器中的兼容性，可以使用任意
+ 浏览器的最新特性；不用考虑 shadow DOM）。比如在如下页面中运行后：
+ */
+        const str = `<html>
+            <head></head>
+            <body>
+                <div>
+                    <span>f</span>
+                    <span>o</span>
+                    <span>o</span>
+                </div>
+            </body>
+        </html>`
+        // 会输出：
+
+        // {
+        //     totalElementsCount: 7,
+        //         maxDOMTreeDepth: 4,
+        //             maxChildrenCount: 3
+        // }
+
+        const startTagReg = /\<(\w+)\>/
+        const endTagReg = /\<\/(\w+)\>/
+        const closeSelfReg = /\<(\w+)\/\>/
+        const tagReg = /\<\/?(\w+)\/?\>/g
+
+        let matchedTags = str.match(tagReg)
+        // console.log(matchedTags)
+
+        let htmlTree = null
+        let currentNode = null
+        let nodeStacks = []
+
+        function createNode(tag){
+            const tagName = tag.replace(tagReg, '$1')
+            return {
+                name: tagName,
+                childern: null
+            }
+        }
+
+        function insertNode(node){
+            if(htmlTree === null){
+                htmlTree = node
+            }else {
+                if(currentNode.childern === null){
+                    currentNode.childern = [node]
+                }else {
+                    currentNode.childern.push(node)
+                }
+            }
+        }
+
+        for(let tag of matchedTags){
+            if(startTagReg.test(tag)){
+                const node = createNode(tag)
+                insertNode(node)
+                nodeStacks.push(node)
+                currentNode = nodeStacks[nodeStacks.length - 1]
+            }else if(closeSelfReg.test(tag)) {
+               const node = createNode(tag)
+               insertNode(node)
+            }else if(endTagReg.test(tag)){
+                let index = nodeStacks.reverse().findIndex(item => item.name === tag.replace(tagReg, "$1"))
+                index = nodeStacks.length - index
+                nodeStacks.reverse()
+                nodeStacks.splice(index - 1)
+                currentNode = nodeStacks[nodeStacks.length - 1]
+            }
+        }
+
+        console.log(htmlTree)
+        function maxHeight(htmlTree){
+            let max = Number.MIN_SAFE_INTEGER, width = Number.MIN_SAFE_INTEGER, totalElement = 0
+            const dfs = (htmlTree, depth) => {
+               if(!htmlTree) return
+               totalElement++
+               max = Math.max(max, depth + 1)
+               if(!htmlTree.childern) return
+               width = Math.max(width, htmlTree.childern.length)
+               for(let child of htmlTree.childern){
+                   dfs(child, depth + 1)
+               }
+            }
+            dfs(htmlTree,0)
+            return {
+                depth: max, 
+                width,
+                totalElement
+            }
+        }
+        console.log(maxHeight(htmlTree))
+
+    </script>
+</body>
+
+</html>

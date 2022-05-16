@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随机洗牌算法</title>
+    <link rel="stylesheet" href="https://www.jb51.net/article/81373.htm">
+</head>
+<body>
+    <script>
+         const arr = [3, 23, 34, 5, 234, 2, 34, 2, 1, 6, 233, 7, 8, 2, 23, 4]
+        function rufflue_(arr) {
+           let len = arr.length
+           for(let i = len - 1; i >= 0; i--){
+                let index = Math.floor(Math.random() * i)
+                let temp = arr[i]
+                arr[i] = arr[index]
+                arr[index] = temp
+           }
+        //    console.log(arr)
+           return arr
+        }
+        // rufflue_(arr)
+        
+
+        function rufflue_1(arr){
+            let result = [], arr_ = arr.slice()
+            while(arr_.length > 0){
+                let index = Math.floor(Math.random() * arr_.length)
+                result.push(arr_[index])
+                arr_.splice(index, 1)
+            }
+            return result
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=0.5, initial-scale=0.5">
+  <title>介绍 setTimeout 实现机制与原理，手写一个实现</title>
+</head>
+<style>
+#border-box{
+    box-sizing: border-box;
+}
+#content-box{
+    content-box: content-box;
+}
+.box {
+    width: 10px;
+    height: 10px;
+    margin: 2px;
+    padding: 2px;
+    border: 1px solid red;
+    background-color: blue;
+}
+</style>
+
+<body>
+    <div id="border-box" class="box"></div>
+<div id="content-box" class="box"></div>
+
+  <script>
+    // function setTimeout_(fn, timeout, ...args){
+    //     const start = +new Date()
+    //     let timer, now
+    //     const loop = () => {
+    //         timer = window.requestAnimationFrame(loop)
+    //         now = +new Date()
+    //         if(now - start > timeout){
+    //             fn.apply(this, args)
+    //             window.cancelAnimationFrame(timer)
+    //         }
+    //     }
+    //     window.requestAnimationFrame(loop)
+    // }
+    // function showName(){ 
+    //     console.log("Hello")
+    // }
+    // setTimeout_(showName, 10000)
+
+
+    // 实现一个timer
+    // let setTimeout = (fn, timeout, ...args) => {
+    //   let start = +new Date()
+    //   let timer, now
+
+    //   function loop() {
+    //     timer = window.requestAnimationFrame(loop)
+    //     now = +new Date()
+    //     if (now - start > timeout) {
+    //       fn.apply(this, args)
+    //       window.cancelAnimationFrame(timer)
+    //     }
+    //   }
+
+    //   window.requestAnimationFrame(loop)
+    // }
+
+    // function showName(a) {
+    //   console.log("Hello", a)
+    // }
+    // let timerID = setTimeout(showName, 1000, 'ajjaja');
+
+
+
+    // if ([]) console.log(1);
+    // if({}) console.log(5)
+    // if ([].length) console.log(2);
+    // if ([] == 0) console.log(3);
+    // if ({} === {}) console.log(4);
+    // if({} == 0) console.log(7)
+    // if({} === {}) console.log(6)
+
+    let arr = [43,553,34,23,2,3,23,3232,3,5,6,7,3,84]
+
+
+    // 冒泡排序
+    function bubbleSort (arr){
+        for(let i = 0; i< arr.length; i++){
+            for(let j = 0; j < arr.length - i - 1; j++){
+                if(arr[j] > arr[j + 1]){
+                    let temp = arr[j]
+                    arr[j] = arr[j+1]
+                    arr[j+1] = temp
+                }
+            }
+        }
+        return arr
+    }
+
+    // 插入排序
+    function insertSort(arr){
+        for(let i = 1; i < arr.length; i++){
+            let j = i
+            while(j > 0 && arr[j] < arr[j - 1]){
+                let temp = arr[j]
+                arr[j] = arr[j - 1]
+                arr[j-1] = temp
+                j--
+            }
+        }
+        return arr
+    }
+
+    // 选择排序
+    function SelectSort(arr){
+        for(let i = 0 ; i < arr.length; i++){
+            let minIndex = i
+            for(let j = i + 1; j < arr.length; j++){
+               if(arr[j] < arr[minIndex]){
+                   minIndex = j
+               }
+            }
+            let temp = arr[i]
+            arr[i] = arr[minIndex]
+            arr[minIndex] = temp
+        }
+        return arr
+    }
+
+
+    // function Fisher-Yates 洗牌算法
+    function RadomSort(arr){
+        for(let i = 0; i < arr.length; i++){
+            
+        }
+    }
+
+    console.log(SelectSort(arr),'jajaj')
+
+
+
+
+  </script>
+</body>
+
+</html>

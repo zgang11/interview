@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let obj = {
+            a: '111',
+            b: '2222'
+        }
+       class Observer {
+           constructor(){ }
+           observer(obj){
+               for(let [i, v] of Object.entries(obj)){
+                  this.defineReactive(obj, i, v)
+               }
+           }
+           defineReactive(obj, key, value){
+                 let that = this
+                 if(typeof value === 'object') this.observer(value)
+                 Object.defineProperty(obj, key, {
+                    get: function(){
+                        console.log(value, "see")
+                        return  value
+                    },
+                    set: function(newVla){
+                        if(typeof newVla === 'object') that.observer(newVla)
+                        console.log(newVla, "edit")
+                        value = newVla
+                    }
+                 })
+           }
+       }
+       let ob = new Observer()
+       ob.observer(obj)
+       obj.a = {c: 'jjaja'}
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 实现文本的单行和多行溢出省略效</title>
+</head>
+<style>
+    .single{
+        width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .multiple{
+        width: 500px;
+        /* height: 100px; */
+        /* 将对象作为弹性伸缩盒子模型使用 */
+        display: -webkit-box; 
+        overflow: hidden;
+        /* 用来限制一个块元素显示的行数 */
+        -webkit-line-clamp: 5;
+        /* 设置或检索伸缩盒子对象子元素的排列方式 */
+        -webkit-box-orient:vertical;
+    }
+</style>
+<body>
+  <div class="single">
+    file:///Users/zhanggang56/Documents/Demo/WEB-Front/%E6%97%A5%E5%B8%B8%E5%BC%80%E5%8F%91%E6%91%98%E5%BD%95/Js%E6%A8%A1%E5%9D%97/%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%20findIndex%20%E5%87%BD%E6%95%B0.htmlfile:///Users/zhanggang56/Documents/Demo/WEB-Front/%E6%97%A5%E5%B8%B8%E5%BC%80%E5%8F%91%E6%91%98%E5%BD%95/Js%E6%A8%A1%E5%9D%97/%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%20findIndex%20%E5%87%BD%E6%95%B0.html
+  </div>
+  <div class="multiple">
+    2006年1月15日，主演的古装神话剧《天外飞仙》首播，胡歌饰演“地瓜”董永，并演唱两首插曲《天亮以后》和《月光》，之后登陆台湾中视 [42-44]  ；6月6日，在第2届电视剧风云盛典上获得“内地最受欢迎男演员奖”和“内地最具潜质新人奖”两个奖项 [45]  ；7月13日，主演的都市爱情剧《别爱我》首播，胡歌饰演漫画家徐风，并演唱片头曲《一刻永远》和插曲《爱你不会变》 [46-47]  ；8月18日，主演的都市温情电影《第601个电话》上映，胡歌饰演阳光男孩晓文，并凭借此角获得2006年腾讯网星光大典“最具潜力电影演员奖” [48-49]  ；9月26日，主演的古装历史剧《少年杨家将》首播，胡歌饰演杨六郎杨延昭，并演唱插曲《告诉他我爱她》 [50-51]  ；10月25日，发行首张EP专辑《珍惜》 [52-53]  。
+    胡歌
+    胡歌(10张)
+    2007年6月23日，胡歌在受伤治疗期间创作的书籍《幸福的拾荒者》发布。
+    2008年1月27日，主演的电视剧《仙剑奇侠传》于首播三年后首次上星播出 [54-56]  ；4月，为作家饶雪漫的长篇小说《离歌》献唱了主题曲《毒药》，并参演了由韩寒执导的歌曲MV [57]  ；5月12日，发行个人音乐专辑《出发》，并在上海举行首唱会 [58-59]  ；7月19日，主演的金庸武侠剧《射雕英雄传》首播，胡歌饰演郭靖，并演唱片尾曲《乌云然》，并陆续在香港、台湾等地播出 [60-61]  ；10月16日，参与主演的武侠爱情电影《剑蝶》上映，胡歌饰演马承恩，首次尝试反派角色 [62-63]  。  </div>
+  <script>
+
+  </script>
+</body>
+
+</html>

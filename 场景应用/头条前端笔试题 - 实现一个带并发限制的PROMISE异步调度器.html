@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>头条前端笔试题 - 实现一个带并发限制的PROMISE异步调度器</title>
+  <link rel="stylesheet" href="https://www.freesion.com/article/28351068595/">
+</head>
+
+<body>
+  <script>
+    // function Scheduler() {
+    //   this.list = []
+    //   this.add = function (promiseCreator) {
+    //     this.list.push(promiseCreator)
+    //   }
+
+    //   this.maxCount = 2;
+
+
+    //   var tempRunIndex = 0;
+
+    //   this.taskStart = function () {
+    //     for (var i = 0; i < this.maxCount; i++) {
+    //       request.bind(this)()
+    //     }
+    //   }
+
+    //   function request() {
+
+    //     if (!this.list || !this.list.length || tempRunIndex >= this.maxCount) {
+    //       return
+    //     }
+
+    //     tempRunIndex++
+    //     this.list.shift()().then(() => {
+    //       tempRunIndex--
+    //       request.bind(this)()
+    //     })
+    //   }
+    // }
+
+
+
+    class Scheduler {
+      constructor() {
+        this.list = []
+        this.maxCount = 2
+        this.tempRunIndex = 0
+      }
+      add = function (fn) {
+        this.list.push(fn)
+      }
+      taskStart = function () {
+        for (let i = 0; i < this.maxCount; i++) {
+          this.request()
+        }
+      }
+      request = function () {
+        if (this.list.length === 0 || this.tempRunIndex >= this.list.length) return
+        this.tempRunIndex++
+        this.list.shift()().then(() => {
+          this.tempRunIndex--
+          this.request()
+        })
+      }
+
+    }
+
+    var scheduler = new Scheduler()
+
+    function timeout(time) {
+      return new Promise(resolve => {
+        setTimeout(resolve, time)
+      })
+    }
+
+    function addTask(time, order) {
+      scheduler.add(() => timeout(time).then(() => console.log(order)))
+    }
+
+
+    addTask(1000, 1)
+    addTask(500, 1)
+    addTask(300, 3)
+    addTask(400, 4)
+
+    scheduler.taskStart()
+
+  </script>
+</body>
+
+</html>

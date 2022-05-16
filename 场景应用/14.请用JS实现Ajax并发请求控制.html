@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>请用JS实现Ajax并发请求控制</title>
+  <link rel="stylesheet" href="https://segmentfault.com/a/1190000038924244">
+</head>
+<style>
+  .a {
+    width: 20px;
+    height: 20px;
+    background-color: rebeccapurple;
+    margin: 5px;
+    overflow: hidden;
+  }
+
+  .c {
+    margin: 4px;
+    width: 5px;
+    height: 5px;
+    background-color: blue;
+  }
+
+  .b {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    margin: 5px;
+    overflow: hidden;
+  }
+
+</style>
+
+<body>
+  <div class="a">
+    <div class="c"></div>
+  </div>
+  <div class="b"></div>
+  <script>
+    // function multiRequest(urls = [], maxNum) {
+    //     let len = urls.length //请求的总数量
+    //     let res = new Array() //请求后的结果
+    //     let sendCount = 0 // 已发送的请求数量
+    //     let finishCount = 0 // 已经返回的请求数量
+    //     return new Promise((resolve, reject) => {
+    //         while(sendCount < len && sendCount < maxNum){
+    //             next()
+    //         }
+    //         function next(){
+    //             let current = sendCount ++
+    //             if(finishCount >= len){
+    //                 resolve(res)
+    //                 return
+    //             }
+    //             const url = urls[current]
+    //             fetch(url).then(result => {
+    //                 finishCount ++
+    //                 ans[current] = result
+    //                 if(current < len){
+    //                     next()
+    //                 }
+    //             }, err => {
+    //                 finishCount++
+    //                 ans[current] = result
+    //                 if(current < len){
+    //                     next()
+    //                 }
+    //             })
+    //         }
+    //     })
+    // }
+    const p = () => new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('调用了p')
+        resolve('data')
+      }, 2000)
+    })
+
+    const p1 = () => new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('调用了p1')
+        resolve('data')
+      }, 1000)
+    })
+
+    function createP(i) {
+       return () => new Promise((resolve, reject) => {
+           setTimeout(() => {
+               resolve(i)
+           }, 1000)
+       })
+    }
+
+    const urls = []
+    for (let i = 0; i < 16; i++) {
+      urls.push(createP(i))
+    }
+    console.log(urls)
+
+    function multiRequest(urls) {
+      let resultArr = new Array(urls.length)
+      let len = urls.length
+      let sendCount = 0 // 已经发送的数量
+      let maxCount = 2 // 请求最最大数字
+      return new Promise((resolve, reject) => {
+        while (sendCount < len && sendCount < maxCount) {
+          next()
+        }
+
+        function next() {
+          let current = sendCount++
+          
+          if (sendCount > len) {
+            resolve(resultArr)
+            return
+          }
+          const promise = urls[current]
+          promise().then(res => {
+            resultArr[current] = res
+            console.log(resultArr)
+            if (current < len) {
+              next()
+            }
+          }).catch(err => {
+            resultArr[current] = err
+            if (current < len) {
+              next()
+            }
+          })
+        }
+      })
+
+
+    }
+
+    multiRequest(urls).then(res => {
+      console.log(res)
+    })
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实现一个 findIndex 函数</title>
+</head>
+
+<body>
+  <script>
+    Array.prototype.findIndex_ = function (target) {
+      for (let i = 0; i < this.length; i++) {
+        if (this[i] === target) {
+          return i
+        }
+      }
+      return -1
+    }
+    const a = [1, '1', 4, 'a']
+    console.log(a.findIndex_('1'))
+
+    // findIndex
+    Array.prototype.findIdx = function (target) {
+      var that = this
+      let left = 0,
+        right = this.length - 1
+      while (left <= right) {
+        let middle = Math.floor(left + (right - left) / 2)
+        if (this[middle] === target && this[middle - 1] < target || middle === 0) {
+          return middle
+        } else if (this[middle] < target) {
+          left = middle + 1
+        } else {
+          right = middle -1
+        }
+      }
+      return -1
+    }
+    const arr = [3, 4, 4, 4, 4, 6, 6, 8, 9, 34, 77]
+
+  </script>
+</body>
+
+</html>

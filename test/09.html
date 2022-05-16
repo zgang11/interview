@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .outerBox3 {
+        width: 400px;
+        height: 400px;
+        background-color: gray;
+        position: relative;
+    }
+
+    .innerBox3 {
+        width: 20%;
+        height: 30%;
+        background-color: pink;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+    }
+</style>
+
+<body>
+    <div class="outerBox3">
+        <div class="innerBox3"></div>
+    </div>
+    <!-- <script>
+        Array.prototype.reduce_ = function (fn, initial) {
+            let that = this
+            let hasInitial = !initial ? false : true
+            let acc
+            if (hasInitial) {
+                acc = initial
+            }else {
+                acc = that[0]
+            }
+            for (let i = hasInitial ? 0 : 1; i < that.length; i++) {
+                let result = fn.call(null, acc, that[i], i, that)
+                acc = result
+            }
+            return acc
+        }
+        let list = [1, 2, 3, 4, 5]
+        let result = list.reduce_((acc, cur, index, arr) => {
+            console.log(acc, cur, index, arr)
+            return acc + cur
+        }, 0)
+        console.log(result)
+    </script> -->
+    <!-- <script>
+        const str = `<html>
+            <head></head>
+            <body>
+                <div>
+                    <span>f</span>
+                    <span>o</span>
+                    <span>o</span>
+                </div>
+            </body>
+        </html>`
+
+
+
+        function createTreeByDom(dom) {
+            let htmlTree = null
+            let currentNode = null
+            let nodeStacks = []
+
+            let startTagReg = /\<(\w+)\>/
+            let endTagReg = /\<\/(\w+)\>/
+            let closeSelfReg = /\<(\w+)\/\>/
+            let tagReg = /\<\/?(\w+)\/?\>/g
+
+            let matchedTags = dom.match(tagReg)
+            console.log(matchedTags)
+
+            function createNode(tag){
+                let tagName = tag.replace(tagReg, ($1, $2) => {
+                    return $2
+                })
+                return {
+                    name: tagName, 
+                    child: null
+                } 
+            }
+
+            function insertNode(node){
+                if(htmlTree === null){
+                    htmlTree = node
+                }else {
+                    if(currentNode.child === null){
+                        currentNode.child = [node]
+                    }else {
+                        currentNode.child.push(node)
+                    }
+                }
+            }
+
+            for(let tag of matchedTags){
+                if(startTagReg.test(tag)){
+                   let node = createNode(tag)
+                   insertNode(node)
+                   nodeStacks.push(node)
+                   currentNode = nodeStacks[nodeStacks.length - 1]
+                }else if(closeSelfReg.test(tag)){
+                    let node = createNode(tag)
+                    insertNode(node)
+                }else if(endTagReg.test(tag)){
+                    let index = nodeStacks.reverse().findIndex(item => tag.replace(tagReg, "$1"))
+                    index = nodeStacks.length - index
+                    nodeStacks.reverse()
+                    nodeStacks.splice(index - 1)
+                    currentNode = nodeStacks[nodeStacks.length - 1]
+                }
+            }
+            return htmlTree
+        }
+
+        let tree = createTreeByDom(str)
+        console.log(tree)
+    </script> -->
+    <script>
+        let str = -'123456789004562345687654234'
+        let strArr = str.toString().split('').reverse().join('')
+        let str_ = strArr.replace(/(\d{3})/g, '$1' + ',' )
+        console.log(str_.split('').reverse().join(''))
+    </script>
+</body>
+
+</html>

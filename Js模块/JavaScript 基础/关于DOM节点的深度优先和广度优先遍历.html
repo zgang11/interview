@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于DOM节点的深度优先和广度优先遍历</title>
+    <link rel="stylesheet" href="https://blog.csdn.net/weixin_39798049/article/details/88667322">
+</head>
+
+<body>
+    <div>
+        <span>
+            <p>jajajaja</p>
+        </span>
+        <span>jajajajajajajaj</span>
+    </div>
+    <script>
+        let dom = document.body
+        // 递归
+        // let res = []
+        // const bfs = (root) => {
+        //     if(!root) return
+        //     res.push(root.tagName.toLowerCase())
+        //     if(root.children){
+        //         for(let i = 0; i < root.children.length; i++){
+        //             bfs(root.children[i])
+        //         }
+        //     }
+        // }
+        // bfs(dom)
+        // console.log(res)
+
+        // 深度优先遍历
+        const deep = (root) => {
+            let stack = [],
+                ans = []
+            if (!root) return ans
+            stack.push(root)
+            while (stack.length) {
+                let node = stack.pop()
+                let len = node.children.length
+                ans.push(node.tagName)
+                for (let i = len - 1; i >= 0; i--) {
+                    stack.push(node.children[i])
+                }
+            }
+            return ans
+        }
+        let res_deep = deep(dom)
+        console.log(res_deep)
+
+        // 广度优先遍历
+        const bfs = (root) => {
+            let stack = [],
+                ans = []
+            if (!root) return ans
+            stack.push(root)
+            while (stack.length) {
+                let node = stack.shift()
+                let len = node.children.length
+                ans.push(node.tagName)
+                for (let i = 0; i < len; i++) {
+                    stack.push(node.children[i])
+                }
+            }
+            return ans
+        }
+        let res_b = bfs(dom)
+        console.log(res_b)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function getType(obj) {
+            if (obj === null) {
+                return String(obj)
+            }
+            const getObjType = (obj) => {
+                // return Object.prototype.toString.call(obj).replace('[object ', '').replace(']', '')
+                return obj.constructor.name
+            }
+
+            return  typeof obj === 'object' ? getObjType(obj) : typeof obj
+        }
+        function Person(){
+
+        }
+        let per = new Person()
+        class Oc {}
+        let o = new Oc
+        console.log(getType(null)) // -> null
+        console.log(getType(undefined)) // -> undefined
+        console.log(getType({})) // -> object
+        console.log(getType([])) // -> array
+        console.log(getType(123)) // -> number
+        console.log(getType(true)) // -> boolean
+        console.log(getType('123')) // -> string
+        console.log(getType(/123/)) // -> regexp
+        console.log(getType(new Date())) // -> date
+        console.log(getType(new Set([]))) // ->set
+        console.log(getType(per.constructor))
+        console.log(getType(o))
+        console.log(getType(o.constructor))
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手写 reduce</title>
+</head>
+
+<body>
+  <script>
+    const arr = [1, 2, 3, 4, 5]
+    let result = arr.reduce((acc, cur) => acc + cur)
+    console.log(result)
+
+
+    Array.prototype.reduce_ = function(fn, accumulator) {
+
+      if (typeof fn !== "function") {
+        throw "参数必须为函数"
+      }
+      //get array going to be iterated
+      let arr = this;
+      if (!Array.isArray(arr)) {
+        throw "只能对数组使用reduce方法"
+      }
+
+      let index = 0;
+
+      if (!accumulator) {
+        index = 1;
+        accumulator = arr[0];
+      }
+
+      for (; index < arr.length; index++) {
+        let invokedReturn = fn(accumulator, arr[index], index, arr);
+        accumulator = invokedReturn;
+      }
+      return accumulator;
+    }
+
+    let result_ = arr.reduce_((acc, cur) => acc + cur)
+    console.log(result_)
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>call实现</title>
+</head>
+
+<body>
+  <script>
+    // Function.prototype.call_ = function (context, ...args) {
+    //   context = context ? Object(context) : window
+    //   context.fn = this
+
+    //   let result
+    //   if (args) {
+    //     result = context.fn(...args)
+    //   } else {
+    //     result = context.fn()
+    //   }
+
+    //   delete context.fn
+    //   return result
+    // }
+
+    
+
+
+    Function.prototype.call_ = function(context, ...args){
+       context = context ? Object(context) : window
+       context.fn = this
+       let result
+       if(args){
+         result = context.fn(...args)
+       }else {
+         result = context.fn()
+       }
+       delete context.fn
+       return result
+    }
+
+    var person = {
+      fullName: function (city, country) {
+        return this.firstName + " " + this.lastName + "," + city + "," + country;
+      }
+    }
+    var person1 = {
+      firstName: "John",
+      lastName: "Doe"
+    }
+
+    const res =  person.fullName.call_(person1, "Oslo", "Norway")
+    console.log(res)
+
+
+  </script>
+</body>
+
+</html>
