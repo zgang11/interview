@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遍历器</title>
+</head>
+<body>
+    <script>
+        let t = {
+            a: 'a',
+            b: 'b'
+        }
+        t[Symbol.iterator] = function(){
+            let that = this,  index = 0, keys = Object.keys(this)
+            return {
+                next: function(){
+                    if(index < keys.length){
+                        return {
+                            value: that[keys[index++]],
+                            done: false
+                        }
+                    }else{
+                        return {
+                            value: undefined,
+                            done: true
+                        }
+                    }
+                }
+            }
+        }
+        for (let value of t) {
+            console.log(value)
+            }
+    </script>
+</body>
+</html>
