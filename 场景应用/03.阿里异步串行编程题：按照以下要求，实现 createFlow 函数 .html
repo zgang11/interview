@@ -16,13 +16,33 @@
 
     createFlow([
       () => console.log("a"),
+      delay(1000),
       () => console.log("b"),
-      subFlow,
-      [() => delay(1000).then(() => console.log("d")), () => console.log("e")],
+      // subFlow,
+      // [() => delay(1000).then(() => console.log("d")), () => console.log("e")],
     ]).run(() => {
       console.log("done");
     });
-    
+
+
+    function createFlow(arr) {
+      run_ = () => {
+        arr.reduce((acc, cur) => {
+          return acc.then(() => {
+            if (cur instanceof Promise) {
+
+            }
+            cur()
+          })
+        }, Promise.resolve())
+      }
+      run = async (fn) => {
+
+        await this.run_()
+        fn()
+      }
+      return this
+    }
   </script>
 </body>
 

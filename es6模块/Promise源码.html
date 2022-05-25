@@ -539,13 +539,13 @@
           let count = 0
           for (let [i, p] of list.entries()) {
             this.resolve(p).then(res => {
-              values[i] = res
-              i++
+              values[count] = res
+              count++
             }).catch(err => {
-              values[i] = err
-              i++
+              values[count] = err
+              count++
             }).finally(() => {
-              if (i === list.length) resolve(values)
+              if (count === list.length) resolve(values)
             })
           }
         })

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator 函数的异步应用
+    </title>
+</head>
+
+<body>
+    <script>
+        // let promise = new Promise((resolve, reject) => {
+        //     resolve('first')
+        // }).then(res => {
+        //     console.log(res)
+        //     return Promise.resolve('second')
+        // }).then(res => {
+        //     console.log("res:", res)
+        //     // return 'third'
+        //     return {}.push()
+        // }).catch(err => {
+        //     console.log("err:", err)
+            
+        // }).then(res => {
+        //     console.log("res01:", res)
+        // }, err => {
+        //     console.log("err01:", err)
+        // })
+
+
+        // function* gen(x){
+        //     let result = yield x + 3
+        //     console.log(result)
+        //     let result2 = yield result + 3
+        //     console.log(result2)
+        //     return 44444
+        // }
+        // let g = gen(2)
+        // console.log(g.next(111))
+        // console.log(g.next(222))
+        // console.log(g.next(333))
+        // console.log(g.next())
+
+        // function* F(){
+        //     for(let i = 0; true; i++){
+        //         let reset = yield i
+        //         if(reset === true) {
+        //             i = -1
+        //         } 
+        //     }
+        // }
+
+        // let f = F()
+
+
+        // function* Gen(x){
+        //    try{  
+        //      var y = yield x + 2
+        //      var z = yield y + 2
+        //    }catch(e){
+        //        console.log(e)
+        //    }
+        //    return y
+        // }
+        // let gen = Gen(7)
+        // console.log(gen.next(1))
+        // console.log(gen.next())
+
+        const createPromise = () => {
+            return new Promise((resolve, reject) => {
+                resolve({a: 'a'})
+            })
+        }
+
+        function* Gen(){
+             let result = yield createPromise()
+             return result
+        }
+        let gen = Gen()
+        let gen_ = gen.next()
+        gen_.value.then(res => {
+            console.log(res)
+        })
+        
+    </script>
+</body>
+
+</html>

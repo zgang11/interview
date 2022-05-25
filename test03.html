@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <script>
+        function requestAsync(){
+            Promise.resolve().then(() => {
+                requestAsync()
+            })
+        }
+        // async function request(){
+        //     let reulsult1 = await requestAsync()
+        //     // let reulsult2 = await equestAsync()
+        // }
+        requestAsync()
+
+        function getLog(num, i, j){
+            // let 
+        }
+    </script> -->
+
+    <!-- <script>
+        function $Gen(context) {
+            while (true) {
+                switch (context.prev = context.next) {
+                    case 0:
+                        context.next = 2
+                        return 0
+                    case 2:
+                        context.next = 4
+                        return 2
+                    case 4:
+                        context.next = 6
+                        return 4
+                    default:
+                        context.stop()
+                        return 'end'
+
+                }
+            }
+        }
+
+        const $context = {
+            prev: 0,
+            next: 0,
+            done: false,
+            stop: function () {
+                this.done = !this.done
+            }
+        }
+        function Gennerator() {
+            return {
+                next: function () {
+                    let value = $context.done ? undefined : $Gen($context)
+                    let done = $context.done
+                    return {
+                        value,
+                        done
+                    }
+                }
+            }
+        }
+
+        let gen = Gennerator()
+    </script> -->
+<!--     
+    <script>
+        let p1 = new Promise((resolve, reject) => {
+            resolve('22')
+        })
+        let p2 = new Error('error')
+        let p3 = () => {
+            return Error
+        }
+        Promise.all([p1, p2, p3]).then(res => {
+            console.log(res)
+        }).catch(err => {
+            console.log('catch:', err)
+        })
+
+        Promise.all_ = function(list) {
+             return new Promise((resolve, reject) => {
+                 let result = [], count = 0
+                 for(let [i,p] of list.entries()){
+                     Promise.resolve(p).then(res => {
+                           result[count++] = res
+                           if(count === result.length){
+                               resolve(result)
+                           }
+                     }, err => {
+                         reject(err)
+                     })
+                 }
+             })
+        }
+
+        Promise.all_([p1, p2, p3]).then(res => {
+            console.log(res)
+        }).catch(err => {
+            console.log('catch:', err)
+        })
+
+        Promise.resolve_ = (value) => {
+            if(value instanceof Promise){
+                return value
+            }else{
+                return new Promise(resolve => resolve(value))
+            }
+        }
+
+        let p4 = Promise.resolve_('promise')
+        console.log(p4.then(res => console.log(res)))
+
+
+        let thenabel = {
+            then: function(resolve, reject){
+                reject('errr')
+            }
+        }
+        let p5 = Promise.resolve_(thenabel)
+        p5.then(res => console.log(res), err => console.log(err))
+    </script> -->
+
+    <script>
+        
+    </script>
+</body>
+
+</html>
