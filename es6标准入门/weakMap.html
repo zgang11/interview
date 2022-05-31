@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weakMap</title>
+</head>
+
+<body>
+    <div id="example"></div>
+    <script>
+        // 添加成员
+        const wm = new WeakMap()
+        let obj = { foo: 1 }
+        wm.set(obj, 23)
+        console.log(wm.get(obj))
+        console.log(wm)
+        obj = null
+        console.log(wm)
+        console.log(wm.get(obj))
+
+        // 数组作为构造函数
+        let arr1 = [1, 2, 4], arr2 = [3, 2, 2, 5, 5]
+        const wm2 = new WeakMap([[arr1, 'arr1'], [arr2, "arr2"]])
+        console.log(wm2)
+        let symbol =  Symbol('jajaj')
+        // wm2.set(null, 'null') // error
+        // wm2.set(symbol, 'symbol') // error
+
+        let element = document.getElementById("example")
+        let wm3 = new WeakMap()
+        wm3.set(element, {a: 232})
+        console.log(wm3.get(element))
+        element = null
+        console.log(wm3.get(element))
+    </script>
+</body>
+
+</html>
