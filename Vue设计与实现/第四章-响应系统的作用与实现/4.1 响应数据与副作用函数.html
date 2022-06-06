@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>响应数据与副作用函数</title>
+</head>
+
+<body>
+    <script>
+        // 4.1 响应数据与副作用函数
+        const obj = { text: 'hello world' }
+        function effect() {
+            console.log("document.body.innerHTML", document.body.innerHTML, "document.body.innerText:", document.body.innerText)
+            document.body.innerHTML = obj.text
+        }
+        effect()
+    </script>
+
+    
+
+    <!-- <script>
+         // 4.3 设计一个完善的响应系统
+        let activeEffect
+
+        function effect(fn) {
+            activeEffect = fn
+            fn()
+        }
+
+        const bucket = new Set()
+        let data = { text: 'hello world' }
+        let obj = new Proxy(data, {
+            get(target, key) {
+                if (activeEffect) {
+                    bucket.add(activeEffect)
+                }
+                return target[key]
+            },
+            set(target, key, newValue) {
+                target[key] =  newValue
+                bucket.forEach(cb => cb())
+                return true
+            }
+        })
+
+        effect(() => {
+            console.log('run')
+            document.body.innerText = obj.text
+        })
+        setTimeout(() => {
+           obj.notExist = 'hellow gucss'
+        }, 2000)
+    </script> -->
+   
+
+    
+</body>
+
+</html>

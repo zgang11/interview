@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://zhuanlan.zhihu.com/p/405752877">
+</head>
+
+<body>
+    <script>
+        /////////////////// 1、编程题，改造 Person 使其在非new调用时抛出错误【编程】
+        function Person(name) {
+            console.log(this)
+            this.name = name
+        }
+        // Person("Hello")  // undefined
+        // new Person("Hello")
+
+
+        // function Person(name){
+        //     if(!(this instanceof Person)){
+        //         throw Error('must new')
+        //     }
+        //     this.name = name
+        // }
+        Person("Hello") 
+        new Person('Hello')
+
+
+        /////////////////// 2、实现 instanceof 方法【编程】
+    </script>
+</body>
+
+</html>
