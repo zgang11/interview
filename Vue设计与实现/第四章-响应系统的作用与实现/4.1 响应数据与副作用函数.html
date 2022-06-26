@@ -21,39 +21,7 @@
 
     
 
-    <!-- <script>
-         // 4.3 设计一个完善的响应系统
-        let activeEffect
-
-        function effect(fn) {
-            activeEffect = fn
-            fn()
-        }
-
-        const bucket = new Set()
-        let data = { text: 'hello world' }
-        let obj = new Proxy(data, {
-            get(target, key) {
-                if (activeEffect) {
-                    bucket.add(activeEffect)
-                }
-                return target[key]
-            },
-            set(target, key, newValue) {
-                target[key] =  newValue
-                bucket.forEach(cb => cb())
-                return true
-            }
-        })
-
-        effect(() => {
-            console.log('run')
-            document.body.innerText = obj.text
-        })
-        setTimeout(() => {
-           obj.notExist = 'hellow gucss'
-        }, 2000)
-    </script> -->
+   
    
 
     
