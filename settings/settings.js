@@ -3125,7 +3125,8 @@ cr-tabs {
     </div>
 <!--_html_template_end_--></div></cr-dialog>`,
     behaviors: [I18nBehavior, WebUIListenerBehavior],
-    properties: {
+    properties: 
+    {
         selected: {
             type: Number,
             value: 0
