@@ -9,112 +9,442 @@
 </head>
 
 <body>
+    <div id="root"></div>
     <script>
-        const {
-            URL
-        } = window
-
-        function getFaviconForPageURL(
-            url, isSyncedUrlForHistoryUi, remoteIconUrlForUma = '', size = 16) {
-            // Note: URL param keys used below must match those in the description of
-            // chrome://favicon2 format in components/favicon_base/favicon_url_parser.h.
-            const faviconUrl = getBaseFaviconUrl();
-            faviconUrl.searchParams.set('size', size);
-            faviconUrl.searchParams.set('page_url', url);
-            // TODO(dbeam): use the presence of 'allow_google_server_fallback' to
-            // indicate true, otherwise false.
-            const fallback = isSyncedUrlForHistoryUi ? '1' : '0';
-            faviconUrl.searchParams.set('allow_google_server_fallback', fallback);
-            if (isSyncedUrlForHistoryUi) {
-                faviconUrl.searchParams.set('icon_url', remoteIconUrlForUma);
+        var win_list = [];
+        var linux_list = {};
+        var mac_list = [];
+        var descriptionTemplate = {
+            windows: '适用于Windows平台<br>（XP/Win7/Win10）',
+            arm64: "适用于ARM架构CPU<br>（飞腾/鲲鹏/麒麟等）",
+            mips64el: "适用于MIPS架构CPU<br>（龙芯3A3000/3A4000等）",
+            x64: '适用于X86架构CPU<br>（兆芯/海光/Intel/AMD等）',
+            mac: '适用于Mac平台',
+            loongarch: '适用于基于LoogArch架构CPU（龙芯3A5000等）',
+            la64: '适用于基于LoogArch架构CPU（龙芯3A5000等）',
+        };
+        let data = [{
+                "id": 1,
+                "name": "Windows x86版",
+                "description": "适用于传统Win xp、Win7、Win8、Win10等操作系统",
+                "enable": true,
+                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFEmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMC0wMy0xMlQxOTozMTozMSswODowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjAtMDMtMTJUMTk6MzI6MDkrMDg6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjAtMDMtMTJUMTk6MzI6MDkrMDg6MDAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MmJkZjMxZDQtNWQ1Yy04MjRjLWEyODQtMGRjMzg0MzRjNDYyIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjJiZGYzMWQ0LTVkNWMtODI0Yy1hMjg0LTBkYzM4NDM0YzQ2MiIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ4bXAuZGlkOjJiZGYzMWQ0LTVkNWMtODI0Yy1hMjg0LTBkYzM4NDM0YzQ2MiI+IDx4bXBNTTpIaXN0b3J5PiA8cmRmOlNlcT4gPHJkZjpsaSBzdEV2dDphY3Rpb249ImNyZWF0ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6MmJkZjMxZDQtNWQ1Yy04MjRjLWEyODQtMGRjMzg0MzRjNDYyIiBzdEV2dDp3aGVuPSIyMDIwLTAzLTEyVDE5OjMxOjMxKzA4OjAwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pm6mt90AAACzSURBVGje7dpLCsMgFEbhLCE7anbU7qTdUbqjZgenIyGDFKRR45UTcCKC/+djcCUTMAVpM3AD7sATWIFPmKD8+MIEvRJQJGgLwD5o6isWtCQgZ0XTWK4EnNn6poAaZ7QpoObOChAgQIAAAQIECBAwOCB0GwLgHRAgQIAAAQIECBAg4O+JZmABHsALeAPbCBXZGVjXJWUOLGRNvIelvi0SoMZR7PpVogis1589smGRnlAOYV/UYbWCB1yoiwAAAABJRU5ErkJggg==",
+                "groups": [],
+                "isWhole": false,
+                "type": "DOWNLOAD",
+                "software": {
+                    "id": 18,
+                    "type": "DEFAULT",
+                    "platform": null,
+                    "version": "1.1.41648.8052",
+                    "downloadUrl": "http://10.95.58.77:39090/browser/c7e0b85a-56f1-425c-a515-f569ad376133.exe",
+                    "updateTime": "2022-06-27 17:48:12",
+                    "updateType": "TYPE_DEFAULT",
+                    "packetMd5": "",
+                    "size": "",
+                    "extra_system": "OTHERS",
+                    "is_not_sign": 0
+                },
+                "historyVersion": "NEWEST",
+                "effectiveId": 4,
+                "effectiveIdKylin": 0,
+                "effectiveIdUos": 0,
+                "ipGroups": [],
+                "system": "windows",
+                "architecture": "x86",
+                "suffix": "exe",
+                "is_increment": true,
+                "strategy_status": true,
+                "extra_softwares": []
+            },
+            {
+                "id": 4,
+                "name": "x64+deb版",
+                "description": "适用于基于兆芯、海光等X86架构CPU的银河麒麟、统信UOS、中科方德等操作系统",
+                "enable": true,
+                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFEmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMS0wNC0yMFQxMDo1ODoxMCswODowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjEtMDQtMjBUMTI6MTQ6MDYrMDg6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjEtMDQtMjBUMTI6MTQ6MDYrMDg6MDAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M2Q2ZmMxMjItMjZhNS1mNDQ5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",
+                "groups": [],
+                "isWhole": true,
+                "type": "DOWNLOAD",
+                "software": {
+                    "id": 20,
+                    "type": "DEFAULT",
+                    "platform": null,
+                    "version": "1.0.41533.7",
+                    "downloadUrl": "http://10.95.58.77:39090/browser/45260ebd-9188-4840-abcd-cf3fdcaa752f.deb",
+                    "updateTime": "2022-06-27 17:50:01",
+                    "updateType": "TYPE_DEFAULT",
+                    "packetMd5": "",
+                    "size": "",
+                    "extra_system": "OTHERS",
+                    "is_not_sign": 0
+                },
+                "historyVersion": "HISTORIC",
+                "effectiveId": 34,
+                "effectiveIdKylin": 7,
+                "effectiveIdUos": 3,
+                "ipGroups": [],
+                "system": "linux",
+                "architecture": "x64",
+                "suffix": "deb",
+                "is_increment": false,
+                "strategy_status": true,
+                "extra_softwares": []
+            },
+            {
+                "id": 11,
+                "name": "arm64+deb版",
+                "description": "适用于基于飞腾、鲲鹏等ARM架构CPU的银河麒麟、统信UOS、中科方德等操作系统",
+                "enable": true,
+                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFEmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMS0wNC0yMFQxMDo1ODoxMCswODowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjEtMDQtMjBUMTI6MTQ6MDYrMDg6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjEtMDQtMjBUMTI6MTQ6MDYrMDg6MDAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M2Q2ZmMxMjItMjZhNS1mNDQ5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",
+                "groups": [],
+                "isWhole": true,
+                "type": "DOWNLOAD",
+                "software": {
+                    "id": 27,
+                    "type": "DEFAULT",
+                    "platform": null,
+                    "version": "1.0.33329.6",
+                    "downloadUrl": "http://10.95.58.77:39090/browser/ea61077a-d9f4-4ad3-b38f-a3b88bfb4736.deb",
+                    "updateTime": "2022-07-05 14:43:04",
+                    "updateType": "TYPE_DEFAULT",
+                    "packetMd5": "",
+                    "size": "",
+                    "extra_system": "UOS",
+                    "is_not_sign": 0
+                },
+                "historyVersion": "VERSION_DEFAULT",
+                "effectiveId": 0,
+                "effectiveIdKylin": 0,
+                "effectiveIdUos": 0,
+                "ipGroups": [],
+                "system": "linux",
+                "architecture": "arm64",
+                "suffix": "deb",
+                "is_increment": false,
+                "strategy_status": true,
+                "extra_softwares": [{
+                        "id": 26,
+                        "type": "DEFAULT",
+                        "platform": null,
+                        "version": "1.0.33329.6",
+                        "downloadUrl": "http://10.95.58.77:39090/browser/e296c073-1ea3-4032-9914-00d6635f3a05.deb",
+                        "updateTime": "2022-07-05 14:43:03",
+                        "updateType": "TYPE_DEFAULT",
+                        "packetMd5": "",
+                        "size": "",
+                        "extra_system": "KYLIN",
+                        "is_not_sign": 0
+                    },
+                    {
+                        "id": 27,
+                        "type": "DEFAULT",
+                        "platform": null,
+                        "version": "1.0.33329.6",
+                        "downloadUrl": "http://10.95.58.77:39090/browser/ea61077a-d9f4-4ad3-b38f-a3b88bfb4736.deb",
+                        "updateTime": "2022-07-05 14:43:04",
+                        "updateType": "TYPE_DEFAULT",
+                        "packetMd5": "",
+                        "size": "",
+                        "extra_system": "UOS",
+                        "is_not_sign": 0
+                    }
+                ]
+            },
+            {
+                "id": 15,
+                "name": "mips64el+deb版",
+                "description": "适用于基于龙芯CPU的银河麒麟、统信UOS、中科方德等操作系统",
+                "enable": true,
+                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFEmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMS0wNC0yMFQxMDo1ODoxMCswODowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjEtMDQtMjBUMTI6MTQ6MDYrMDg6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjEtMDQtMjBUMTI6MTQ6MDYrMDg6MDAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M2Q2ZmMxMjItMjZhNS1mNDQ5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",
+                "groups": [],
+                "isWhole": true,
+                "type": "DOWNLOAD",
+                "software": {
+                    "id": 29,
+                    "type": "DEFAULT",
+                    "platform": null,
+                    "version": "1.0.33329.6",
+                    "downloadUrl": "http://10.95.58.77:39090/browser/0f1cccd1-e643-499c-ae2a-3251449cf62c.deb",
+                    "updateTime": "2022-07-05 14:43:35",
+                    "updateType": "TYPE_DEFAULT",
+                    "packetMd5": "",
+                    "size": "",
+                    "extra_system": "UOS",
+                    "is_not_sign": 0
+                },
+                "historyVersion": "VERSION_DEFAULT",
+                "effectiveId": 0,
+                "effectiveIdKylin": 0,
+                "effectiveIdUos": 0,
+                "ipGroups": [],
+                "system": "linux",
+                "architecture": "mips64el",
+                "suffix": "deb",
+                "is_increment": false,
+                "strategy_status": false,
+                "extra_softwares": [{
+                        "id": 28,
+                        "type": "DEFAULT",
+                        "platform": null,
+                        "version": "1.0.33329.6",
+                        "downloadUrl": "http://10.95.58.77:39090/browser/f114e80e-3e90-4cfc-a091-6d547a5b0ba3.deb",
+                        "updateTime": "2022-07-05 14:43:33",
+                        "updateType": "TYPE_DEFAULT",
+                        "packetMd5": "",
+                        "size": "",
+                        "extra_system": "KYLIN",
+                        "is_not_sign": 0
+                    },
+                    {
+                        "id": 29,
+                        "type": "DEFAULT",
+                        "platform": null,
+                        "version": "1.0.33329.6",
+                        "downloadUrl": "http://10.95.58.77:39090/browser/0f1cccd1-e643-499c-ae2a-3251449cf62c.deb",
+                        "updateTime": "2022-07-05 14:43:35",
+                        "updateType": "TYPE_DEFAULT",
+                        "packetMd5": "",
+                        "size": "",
+                        "extra_system": "UOS",
+                        "is_not_sign": 0
+                    }
+                ]
+            },
+            {
+                "id": 22,
+                "name": "x64+rpm版",
+                "description": "适用于基于兆芯、海光等X86CPU的中标麒麟、红旗Linux、万里红等操作系统",
+                "enable": true,
+                "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFEmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMS0wNC0yMFQxMDo1ODoxMCswODowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjEtMDQtMjBUMTI6MTQ6MDYrMDg6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjEtMDQtMjBUMTI6MTQ6MDYrMDg6MDAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M2Q2ZmMxMjItMjZhNS1mNDQ5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",
+                "groups": [],
+                "isWhole": true,
+                "type": "DOWNLOAD",
+                "software": {
+                    "id": 30,
+                    "type": "DEFAULT",
+                    "platform": null,
+                    "version": "1.0.41535.7",
+                    "downloadUrl": "http://10.95.58.77:39090/browser/6cb24e13-58f0-4b8c-8f59-7030bdea55b6.rpm",
+                    "updateTime": "2022-07-05 14:44:07",
+                    "updateType": "TYPE_DEFAULT",
+                    "packetMd5": "",
+                    "size": "",
+                    "extra_system": "OTHERS",
+                    "is_not_sign": 0
+                },
+                "historyVersion": "VERSION_DEFAULT",
+                "effectiveId": 0,
+                "effectiveIdKylin": 0,
+                "effectiveIdUos": 0,
+                "ipGroups": [],
+                "system": "linux",
+                "architecture": "x64",
+                "suffix": "rpm",
+                "is_increment": false,
+                "strategy_status": true,
+                "extra_softwares": []
+            },
+            {
+                "id": 23,
+                "name": "la64+deb版",
+                "description": "适用于基于loongarch64架构的银河麒麟等操作系统",
+                "enable": true,
+                "icon": "",
+                "groups": [],
+                "isWhole": true,
+                "type": "DOWNLOAD",
+                "software": {
+                    "id": 32,
+                    "type": "DEFAULT",
+                    "platform": null,
+                    "version": "1.0.41557.8007",
+                    "downloadUrl": "http://10.95.58.77:39090/browser/630a369e-a0d5-4197-ad71-0524f931a575.deb",
+                    "updateTime": "2022-07-05 14:44:38",
+                    "updateType": "TYPE_DEFAULT",
+                    "packetMd5": "",
+                    "size": "",
+                    "extra_system": "UOS",
+                    "is_not_sign": 0
+                },
+                "historyVersion": "VERSION_DEFAULT",
+                "effectiveId": 0,
+                "effectiveIdKylin": 0,
+                "effectiveIdUos": 0,
+                "ipGroups": [],
+                "system": "linux",
+                "architecture": "la64",
+                "suffix": "deb",
+                "is_increment": true,
+                "strategy_status": false,
+                "extra_softwares": [{
+                        "id": 31,
+                        "type": "DEFAULT",
+                        "platform": null,
+                        "version": "1.0.41557.8007",
+                        "downloadUrl": "http://10.95.58.77:39090/browser/ed290d3d-2198-4f77-bfd1-edd78bbeeb8d.deb",
+                        "updateTime": "2022-07-05 14:44:36",
+                        "updateType": "TYPE_DEFAULT",
+                        "packetMd5": "",
+                        "size": "",
+                        "extra_system": "KYLIN",
+                        "is_not_sign": 0
+                    },
+                    {
+                        "id": 32,
+                        "type": "DEFAULT",
+                        "platform": null,
+                        "version": "1.0.41557.8007",
+                        "downloadUrl": "http://10.95.58.77:39090/browser/630a369e-a0d5-4197-ad71-0524f931a575.deb",
+                        "updateTime": "2022-07-05 14:44:38",
+                        "updateType": "TYPE_DEFAULT",
+                        "packetMd5": "",
+                        "size": "",
+                        "extra_system": "UOS",
+                        "is_not_sign": 0
+                    }
+                ]
             }
+        ]
 
-            return getImageSet(faviconUrl.toString());
+        function getDownnameFromUrl(url) {
+            var ext = url.substring(url.lastIndexOf('.') + 1);
+            return ext + "安装包";
         }
 
-        function getBaseFaviconUrl() {
-            const faviconUrl = new URL('chrome://favicon2/');
-            faviconUrl.searchParams.set('size', '16');
-            faviconUrl.searchParams.set('scale_factor', 'SCALEFACTORx');
-            return faviconUrl;
-        }
+        function parseSoftwareList(data) {
 
-        /**
-         * Generates a CSS -webkit-image-set for a chrome:// url.
-         * An entry in the image set is added for each of getSupportedScaleFactors().
-         * The scale-factor-specific url is generated by replacing the first instance
-         * of 'scalefactor' in |path| with the numeric scale factor.
-         *
-         * @param {string} path The URL to generate an image set for.
-         *     'scalefactor' should be a substring of |path|.
-         * @return {string} The CSS -webkit-image-set.
-         */
-        function getImageSet(path) {
-            const supportedScaleFactors = getSupportedScaleFactors();
-            debugger
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                if (!item.enable) {
+                    continue;
+                }
+                if (item.system == 'windows') {
+                    win_list.push({
+                        downName: '立即下载',
+                        icon: 'windows',
+                        downloadUrl: item.software.downloadUrl,
+                        description: descriptionTemplate['windows'] ? descriptionTemplate['windows'] : item
+                            .description
+                    });
+                } else if (item.system == 'linux') {
+                    if (!linux_list[item.architecture]) {
+                        linux_list[item.architecture] = [{
+                            downName: getDownnameFromUrl(item.software.downloadUrl),
+                            icon: 'linux_' + item.architecture,
+                            downloadUrl: item.software.downloadUrl,
+                            description: descriptionTemplate[item.architecture] ? descriptionTemplate[item
+                                .architecture] : item.description
+                        }];
+                    } else {
+                        if (item.software.downloadUrl.lastIndexOf('.rpm') != -1) {
+                            linux_list[item.architecture].push({
+                                downName: getDownnameFromUrl(item.software.downloadUrl),
+                                icon: 'linux_' + item.architecture,
+                                downloadUrl: item.software.downloadUrl,
+                                description: descriptionTemplate[item.architecture] ? descriptionTemplate[item
+                                    .architecture] : item.description
+                            });
+                        } else {
+                            linux_list[item.architecture].unshift({
+                                downName: getDownnameFromUrl(item.software.downloadUrl),
+                                icon: 'linux_' + item.architecture,
+                                downloadUrl: item.software.downloadUrl,
+                                description: descriptionTemplate[item.architecture] ? descriptionTemplate[item
+                                    .architecture] : item.description
+                            });
+                        }
+                    }
+                } else if (item.system == 'mac') {
+                    mac_list.push({
+                        downName: "立即下载",
+                        icon: 'mac',
+                        downloadUrl: item.software.downloadUrl,
+                        description: descriptionTemplate['mac'] ? descriptionTemplate['mac'] : item.description
+                    });
+                }
 
-            const replaceStartIndex = path.indexOf('SCALEFACTOR');
-            if (replaceStartIndex < 0) {
-                return getUrlForCss(path);
+            }
+            if (win_list.length > 0) {
+                // createHTML("windows", win_list);
+                // document.getElementById('head_windows').style.display = "table-cell";
+                // document.getElementById('list_windows').style.display = "table-cell";
+            } else {
+                // document.getElementById('head_windows').style.display = "none";
+                // document.getElementById('list_windows').style.display = "none";
             }
 
-            let s = '';
-            for (let i = 0; i < supportedScaleFactors.length; ++i) {
-                const scaleFactor = supportedScaleFactors[i];
-                const pathWithScaleFactor = path.substr(0, replaceStartIndex) +
-                    scaleFactor + path.substr(replaceStartIndex + 'scalefactor'.length);
-
-                s += getUrlForCss(pathWithScaleFactor) + ' ' + scaleFactor + 'x';
-
-                if (i !== supportedScaleFactors.length - 1) {
-                    s += ', ';
+            var DEFAULT_VERSION = parseInt("8.0");
+            var ua = navigator.userAgent.toLowerCase();
+            var isIE = ua.indexOf("msie") > -1;
+            var safariVersion = null;
+            if (isIE) {
+                safariVersion = getExplorerInfo().version;
+                if (parseInt(safariVersion) <= DEFAULT_VERSION) {
+                    // document.getElementById('ie-tips').style.display = 'block';
+                    return;
                 }
             }
-            return '-webkit-image-set(' + s + ')';
-        }
+            var hasPackage = false;
+            for (var item in linux_list) {
+                hasPackage = true;
 
-        /**
-         * @return {!Array<number>} The scale factors supported by this platform for
-         *     webui resources.
-         */
-        function getSupportedScaleFactors() {
-            const isIOS = false, isAndroid = false
-            const supportedScaleFactors = [];
-            if (!isIOS) {
-                // This matches the code in ResourceBundle::InitSharedInstance() that
-                // supports SCALE_FACTOR_100P on all non-iOS platforms.
-                supportedScaleFactors.push(1);
             }
-            if (!isIOS && !isAndroid) {
-                // All desktop platforms support zooming which also updates the renderer's
-                // device scale factors (a.k.a devicePixelRatio), and these platforms have
-                // high DPI assets for 2x.  Let the renderer pick the closest image for
-                // the current device scale factor.
-                supportedScaleFactors.push(2);
+            if (hasPackage) {
+                console.log(linux_list)
+                createHTML("linux", linux_list);
+                // document.getElementById('head_linux').style.display = "table-cell";
+                // document.getElementById('list_linux').style.display = "table-cell";
             } else {
-                // For other platforms that use fixed device scale factor, use
-                // the window's device pixel ratio.
-                // TODO(oshima): Investigate corresponding to
-                // ResourceBundle::InitSharedInstance() more closely.
-                supportedScaleFactors.push(window.devicePixelRatio);
+                // document.getElementById('head_linux').style.display = "none";
+                // document.getElementById('list_linux').style.display = "none";
             }
-            return supportedScaleFactors;
+
+
+            if (mac_list.length > 0) {
+                // createHTML("mac", mac_list);
+                // document.getElementById('head_mac').style.display = "table-cell";
+                // document.getElementById('list_mac').style.display = "table-cell";
+            } else {
+                // document.getElementById('head_mac').style.display = "none";
+                // document.getElementById('list_mac').style.display = "none";
+            }
+
         }
 
-        /**
-         * Generates a CSS url string.
-         * @param {string} s The URL to generate the CSS url for.
-         * @return {string} The CSS url string.
-         */
-        function getUrlForCss(s) {
-            // http://www.w3.org/TR/css3-values/#uris
-            // Parentheses, commas, whitespace characters, single quotes (') and double
-            // quotes (") appearing in a URI must be escaped with a backslash
-            const s2 = s.replace(/(\(|\)|\,|\s|\'|\"|\\)/g, '\\$1');
-            return `url("${s2}")`;
+        function createHTML(system, list) {
+
+            var html = "<table><tbody><tr>";
+            var template =
+                "<td><div class='card'  onmouseleave=\"hideLink(this,'{system}')\" ><div class='out'><div class='icon' style='background-image:url(\"{iconUrl}\")'></div></div><div class='over' onmouseover=\"showLink(this,'{system}')\"><div class='card_top'><div class='icon_over' style='background-image:url(\"{iconOverUrl}\");background: none\\9;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\"{iconOverUrl}\",sizingMethod=\"scale\");'></div><div class='desc'>{description}</div></div><div class='buttons'>{buttons}</div></div></div></td>";
+
+            for (var item in list) {
+                if (system == 'windows' || system == 'mac') {
+                    html += template.replace("{iconUrl}", "/download/images/icons/" + list[item].icon + '_blue.png')
+                        .replace(/"{iconOverUrl}"/g, "/download/images/icons/" + list[item].icon + '_white.png')
+                        .replace(/\{description\}/g, list[item].description)
+                        .replace("{buttons}", "<div class='btn'  onclick=\"downloadPackage('" + list[item].downloadUrl +
+                            "')\">" + list[item].downName + "</div>")
+                        .replace(/\{system\}/g, system);
+
+                } else if (system == 'linux') {
+                    var buttons = "";
+                    for (var i = 0; i < list[item].length; i++) {
+                        buttons += "<div class='btn'  onclick=\"downloadPackage('" + list[item][i].downloadUrl +
+                            "')\">" + list[item][i].downName + "</div>";
+                    }
+                    html += template.replace("{iconUrl}", "/download/images/icons/" + list[item][0].icon + '_blue.png')
+                        .replace(/"{iconOverUrl}"/g, "/download/images/icons/" + list[item][0].icon + '_white.png')
+                        .replace(/\{description\}/g, list[item][0].description)
+                        .replace("{buttons}", buttons)
+                        .replace(/\{system\}/g, system);
+
+                }
+            }
+            document.getElementById('root').innerHTML = html + "</tr></tbody></table>";
         }
 
-        window.getFaviconForPageURL = getFaviconForPageURL
+        parseSoftwareList(data)
     </script>
 </body>
 
