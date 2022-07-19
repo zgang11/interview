@@ -17,3 +17,12 @@ git push --delete origin 旧分支名
 git push origin 新分支名:将新分支名推到远程
 git branch --set-upstream-to origin/新分支名：新本地分支和远程关系
 ```
+
+### 4.git删除本地分支&远程分支
+```
+git branch -d xxx --删除本地分支
+git branch -D xxx --强制删除本地分支
+
+git push --delete origin xxx  --删除远程分支
+git push origin :xxx  --删除远程分支
+```
