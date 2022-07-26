@@ -26,3 +26,16 @@ git branch -D xxx --强制删除本地分支
 git push --delete origin xxx  --删除远程分支
 git push origin :xxx  --删除远程分支
 ```
+
+### 5.git切换分支不同步本地修改
++ git add和git commit提交修改，保证git status检查区和暂存为空
++ git stash
+```
+git stash | git stash save 'xxx': 加注解缓存 ---隐藏当前工作现场(git status查看工作区，隐藏后可以切换)
+git stash list --查看缓存列表
+git stash apply --恢复缓存 stash内容不删除 举例：git stash apply stash@{0}
+git stash pop --恢复最新的缓存并删除缓存
+
+git stash drop [名] --删除单个缓存 举例：git stash drop stash@{0}
+git stash clear --缓存全清
+```
