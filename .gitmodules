@@ -1,10 +1,10 @@
 [submodule "test/assets"]
-	path = test/assets
+	path = https://github.com/maonx/vimwiki-assets.git
 	url = https://github.com/maonx/vimwiki-assets.git
 [submodule "test/lodash"]
 	path = test/lodash
-	url = https://***/upming/browserconsole-api.git
+	url = test/lodash
 [submodule "test/lodash"]
 	path = test/lodash
 	url = https://***/upming/browserconsole-api.git
-	name = mian
+	name = merge-test
