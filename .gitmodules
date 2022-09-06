@@ -1,0 +1,10 @@
+[submodule "test/assets"]
+	path = test/assets
+	url = https://github.com/maonx/vimwiki-assets.git
+[submodule "test/lodash"]
+	path = test/lodash
+	url = https://git-biz.qianxin-inc.cn/upming/browserconsole-api.git
+[submodule "test/lodash"]
+	path = test/lodash
+	url = https://git-biz.qianxin-inc.cn/upming/browserconsole-api.git
+	name = test
