@@ -1,7 +1,10 @@
 ### 1.git查看远程分支
 ```
-git branch -a: 查看本地和远程仓库的所有分支
-git branch -r：查看所有远程分支
+git branch -a 查看本地和远程仓库的所有分支
+git branch -r 查看所有远程分支
+git branch -v 查看一个分支的最后一次提交
+git branch --merged  查看哪些分支已经合并到当前分支
+git branch --no-merged 查看所有未合并工作的分支
 ```
 
 ### 2.git拉取远程分支
