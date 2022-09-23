@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <script>
+    <!-- <script>
         let activeEffect
         let effectStatck = []
 
@@ -41,7 +41,10 @@
             obj.foo = obj.foo++
         }
 
-        const data = { foo: 1, bar: 2 } // change
+        const data = {
+            foo: 1,
+            bar: 2
+        } // change
 
 
         let bucket = new WeakMap()
@@ -93,10 +96,403 @@
             document.body.innerText = obj.foo
         })
 
-        obj.foo++
-        obj.foo++
+        setTimeout(() => {
+            obj.foo++
+            setTimeout(() => {
+                obj.foo++
+            }, 2000)
+        }, 2000)
+    </script> -->
 
+
+    <!-- 添加lazy -->
+    <!-- <script>
+        let activeEffect
+        let effectStatck = []
+
+        function effect(fn, options = {
+            lazy: true //新增
+        }) {
+            const effectFn = () => {
+                cleanup(effectFn)
+                activeEffect = effectFn
+                effectStatck.push(effectFn)
+                const res = fn() //新增
+                effectStatck.pop()
+                activeEffect = effectStatck[effectStatck.length - 1]
+                return res //新增
+            }
+            effectFn.deps = []
+            effectFn.options = options
+            if (!options.lazy) { //新增
+                effectFn() //新增
+            } //新增
+            return effectFn //新增
+        }
+
+        function cleanup(effectFn) {
+            for (let i = 0; i < effectFn.deps.length; i++) {
+                let deps = effectFn.deps[i]
+                deps.delete(effectFn)
+            }
+            effectFn.deps.length = 0
+        }
+
+
+        function fn() {
+            document.body.innerText = obj.foo
+            obj.foo = obj.foo++
+        }
+
+        const data = {
+            foo: 1,
+            bar: 2
+        } // change
+
+
+        let bucket = new WeakMap()
+        const obj = new Proxy(data, {
+            get(target, key) {
+                track(target, key)
+                return target[key]
+            },
+            set(target, key, newValue) {
+                target[key] = newValue
+                trigger(target, key, newValue)
+            }
+        })
+
+        function track(target, key) {
+            if (!activeEffect) return
+            let depsMap = bucket.get(target)
+            if (!depsMap) {
+                bucket.set(target, depsMap = new Map())
+            }
+            let deps = depsMap.get(key)
+            if (!deps) {
+                depsMap.set(key, deps = new Set())
+            }
+            deps.add(activeEffect)
+            activeEffect.deps.push(deps)
+        }
+
+        function trigger(target, key, value) {
+            let depsMap = bucket.get(target)
+            if (!depsMap) return
+            let deps = depsMap.get(key)
+            const effectsToRun = new Set()
+            deps && deps.forEach(dep => {
+                if (dep !== activeEffect) {
+                    effectsToRun.add(dep)
+                }
+            })
+            effectsToRun.forEach(effect => {
+                if (effect.options.scheduler) {
+                    effect.options.scheduler(effect)
+                } else {
+                    effect()
+                }
+            })
+        }
+
+        // const effectFn = effect(() => obj.foo + obj.bar, {
+        //     lazy: true
+        // })
+
+        function computed(getter) {
+            const effectFn = effect(getter, {
+                lazy: true
+            })
+
+            const obj = {
+                get value(){
+                    return effectFn()
+                }
+            }
+
+            return obj
+        }
+
+        let sumRes = computed(() => obj.foo + obj.bar)
+
+       setTimeout(() => {
+          console.log(sumRes.value)
+          setTimeout(() => {
+            obj.foo++
+            console.log(sumRes.value)
+          }, 2000)
+       }, 2000)
+    </script> -->
+
+    <!-- 添加dirty -->
+    <!-- <script>
+        let activeEffect
+        let effectStatck = []
+
+        function effect(fn, options = {
+            lazy: true //新增
+        }) {
+            const effectFn = () => {
+                cleanup(effectFn)
+                activeEffect = effectFn
+                effectStatck.push(effectFn)
+                const res = fn() //新增
+                effectStatck.pop()
+                activeEffect = effectStatck[effectStatck.length - 1]
+                return res //新增
+            }
+            effectFn.deps = []
+            effectFn.options = options
+            if (!options.lazy) { //新增
+                effectFn() //新增
+            } //新增
+            return effectFn //新增
+        }
+
+        function cleanup(effectFn) {
+            for (let i = 0; i < effectFn.deps.length; i++) {
+                let deps = effectFn.deps[i]
+                deps.delete(effectFn)
+            }
+            effectFn.deps.length = 0
+        }
+
+
+        function fn() {
+            document.body.innerText = obj.foo
+            obj.foo = obj.foo++
+        }
+
+        const data = {
+            foo: 1,
+            bar: 2
+        } // change
+
+
+        let bucket = new WeakMap()
+        const obj = new Proxy(data, {
+            get(target, key) {
+                track(target, key)
+                return target[key]
+            },
+            set(target, key, newValue) {
+                target[key] = newValue
+                trigger(target, key, newValue)
+            }
+        })
+
+        function track(target, key) {
+            if (!activeEffect) return
+            let depsMap = bucket.get(target)
+            if (!depsMap) {
+                bucket.set(target, depsMap = new Map())
+            }
+            let deps = depsMap.get(key)
+            if (!deps) {
+                depsMap.set(key, deps = new Set())
+            }
+            deps.add(activeEffect)
+            activeEffect.deps.push(deps)
+        }
+
+        function trigger(target, key, value) {
+            let depsMap = bucket.get(target)
+            if (!depsMap) return
+            let deps = depsMap.get(key)
+            const effectsToRun = new Set()
+            deps && deps.forEach(dep => {
+                if (dep !== activeEffect) {
+                    effectsToRun.add(dep)
+                }
+            })
+            effectsToRun.forEach(effect => {
+                if (effect.options.scheduler) {
+                    effect.options.scheduler(effect)
+                } else {
+                    effect()
+                }
+            })
+        }
+
+        // const effectFn = effect(() => obj.foo + obj.bar, {
+        //     lazy: true
+        // })
+
+        function computed(getter) {
+            let value
+            let dirty = true
+
+            const effectFn = effect(getter, {
+                lazy: true,
+                scheduler(){
+                    dirty = true
+                }
+            })
+
+            const obj = {
+                get value(){
+                    if(dirty){
+                        value = effectFn()
+                        dirty = false
+                    }
+                    return value
+                }
+            }
+
+            return obj
+        }
+
+        let sumRes = computed(() => obj.foo + obj.bar)
+
+       setTimeout(() => {
+          console.log(sumRes.value)
+          setTimeout(() => {
+            obj.foo++
+            console.log(sumRes.value)
+          }, 2000)
+       }, 2000)
+    </script> -->
+
+
+    <!-- 嵌套问题 -->
+    <script>
+        let activeEffect
+        let effectStatck = []
+
+        function effect(fn, options = {
+            lazy: true //新增
+        }) {
+            const effectFn = () => {
+                cleanup(effectFn)
+                activeEffect = effectFn
+                effectStatck.push(effectFn)
+                const res = fn() //新增
+                effectStatck.pop()
+                activeEffect = effectStatck[effectStatck.length - 1]
+                return res //新增
+            }
+            effectFn.deps = []
+            effectFn.options = options
+            if (!options.lazy) { //新增
+                effectFn() //新增
+            } //新增
+            return effectFn //新增
+        }
+
+        function cleanup(effectFn) {
+            for (let i = 0; i < effectFn.deps.length; i++) {
+                let deps = effectFn.deps[i]
+                deps.delete(effectFn)
+            }
+            effectFn.deps.length = 0
+        }
+
+
+        function fn() {
+            document.body.innerText = obj.foo
+            obj.foo = obj.foo++
+        }
+
+        const data = {
+            foo: 1,
+            bar: 2
+        } // change
+
+
+        let bucket = new WeakMap()
+        const obj = new Proxy(data, {
+            get(target, key) {
+                track(target, key)
+                return target[key]
+            },
+            set(target, key, newValue) {
+                target[key] = newValue
+                trigger(target, key, newValue)
+            }
+        })
+
+        function track(target, key) {
+            if (!activeEffect) return
+            let depsMap = bucket.get(target)
+            if (!depsMap) {
+                bucket.set(target, depsMap = new Map())
+            }
+            let deps = depsMap.get(key)
+            if (!deps) {
+                depsMap.set(key, deps = new Set())
+            }
+            deps.add(activeEffect)
+            activeEffect.deps.push(deps)
+        }
+
+        function trigger(target, key, value) {
+            let depsMap = bucket.get(target)
+            if (!depsMap) return
+            let deps = depsMap.get(key)
+            const effectsToRun = new Set()
+            deps && deps.forEach(dep => {
+                if (dep !== activeEffect) {
+                    effectsToRun.add(dep)
+                }
+            })
+            effectsToRun.forEach(effect => {
+                if (effect.options.scheduler) {
+                    effect.options.scheduler(effect)
+                } else {
+                    effect()
+                }
+            })
+        }
+
+        // const effectFn = effect(() => obj.foo + obj.bar, {
+        //     lazy: true
+        // })
+
+        function computed(getter) {
+            let value
+            let dirty = true
+
+            const effectFn = effect(getter, {
+                lazy: true,
+                scheduler(){
+                    if(!dirty){
+                        dirty = true
+                        trigger(obj, 'value')
+                    }
+                }
+            })
+
+            const obj = {
+                get value(){
+                    if(dirty){
+                        value = effectFn()
+                        dirty = false
+                    }
+                    track(obj, 'value')
+                    return value
+                }
+            }
+
+            return obj
+        }
+
+        let sumRes = computed(() => obj.foo + obj.bar)
+
+        effect(() => {
+            debugger
+            document.body.innerHTML = sumRes.value
+        })
+
+       setTimeout(() => {
+        //   console.log(sumRes.value)
+          setTimeout(() => {
+            obj.foo++
+            // console.log(sumRes.value)
+          }, 2000)
+       }, 2000)
     </script>
+    
+
     <!-- 代码优化前 -->
     <!-- <script>
         let activeEffect
