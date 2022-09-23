@@ -9,7 +9,7 @@
 </head>
 
 <body>
-     <!-- <script>
+    <!-- <script>
          // 4.3 设计一个完善的响应系统
         let activeEffect
 
@@ -42,7 +42,7 @@
            obj.notExist = 'hellow gucss'
         }, 2000)
     </script> -->
-    <script>
+    <!-- <script>
         // 4.3 设计一个完善的响应系统
         let activeEffect
         function effect(fn) {
@@ -111,6 +111,80 @@
         setTimeout(() => {
             obj.other = 'hello changed'
         }, 2000)
+    </script> -->
+    
+
+    <script>
+        let activeEffect
+
+        function effect(fn) {
+            activeEffect = fn
+            fn()
+        }
+
+        
+
+        function fn1() {
+            console.log('this is fn1')
+            createDom(1)
+        }
+
+        function fn2() {
+            console.log('this is fn2')
+            createDom(2)
+        }
+
+        const data = {
+            text1: 'i am text1',
+            text2: 'i am text2',
+        }
+
+        const bucketMap = new WeakMap()
+        let obj = new Proxy(data, {
+            get(target, key) {
+                track(target, key)
+               return target[key]
+            },
+            set(target, key, newVal) {
+              target[key] = newVal
+              trigger(target,key)
+            }
+        })
+
+        function createDom(index){
+            let dom = document.createElement('div')
+            dom.innerHTML = obj[`text${index}`]
+            document.body.appendChild(dom)
+        }
+
+        function track(target, key){
+            if(!activeEffect) return
+            let bucket = bucketMap.get(target)
+            if(!bucket) {
+                bucketMap.set(target, bucket = new Map())
+            }
+            let deps = bucket.get(key)
+            if(!deps){
+                bucket.set(key, deps = new Set())
+            }
+            deps.add(activeEffect)
+        }
+
+        function trigger(target, key){
+            let bucket = bucketMap.get(target)
+            if(!bucket) return
+            let deps = bucket.get(key)
+            if(!deps) return
+            deps.forEach(fn => {
+                fn()
+            });
+        }
+
+        effect(fn1)
+        setTimeout(() => {
+            obj.text1 = 'i am text1 changed'
+        }, 4000) 
+        // effect(fn2)
     </script>
 </body>
 

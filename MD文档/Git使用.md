@@ -74,6 +74,6 @@ HEAD^ --表示上一个版本，即上一次的commit，也可以写成HEAD~
 
    git push <remote> :refs/tags/<tagname> --变体一：远程仓库中移除这个标签 例：git push origin :refs/tags/v1.4-lw
 
-   git push origin --delete <tagname> --变体二：远程仓库中移除这个标签 例：git push origin v1.4-lw
+   git push origin --delete <tagname> --变体二：远程仓库中移除这个标签 例：git push origin --delete v1.4-lw
    
 ```
