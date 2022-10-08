@@ -13,20 +13,61 @@ body{
     --version-color: #0032b4;
     --version-border-color: #0030ae;
     --table-box-shdow: 0px 0px 5px 5px rgba(0, 9, 55, 0.07);
-    min-width: 1200px;
+    min-width: 1000px;
 }
 
 #top-bar {
+    display: none;
+    padding: 12px 0;
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;    
-    height: 80px;
     background-color: white;
     z-index: 100;
-    display: none;
-    transition: all cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    box-shadow: 0px 4px 4px  rgba(0, 9, 55, 0.2);
 }  
+
+.top-bar-box{
+    width: 980px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar-title{
+    font-size: 34px;
+}
+
+.top-bar-pro{
+    display: inline-block;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 16px;
+    font-size: 40px;
+    color: var(--yelow-color);
+    border: 2px solid var(--yelow-color);
+}
+
+.top-bar-question{
+    display: inline-block;
+    font-size: 14px;
+    text-align: left;
+    background-color: var(--yelow-color);
+    padding: 2px 16px;
+}
+
+.top-bar-question-tip{
+    font-size: 14px;
+    text-align: left;
+}
+
+.top-bar-question-number{
+    font-size: 20px;
+    font-weight: 600;
+    font-style: oblique;
+}
 
 #header {
    padding-top: 10px;
@@ -254,8 +295,6 @@ body{
 }
 
 #verCompareTable th:nth-child(2) {
-    /* background-color: var(--version-color);
-    color: white; */
     position: relative;
 }
 
@@ -272,7 +311,7 @@ body{
     color: white;
     line-height: 49px;
     border: 2px solid var(--version-border-color);
-    box-shadow: var(--table-box-shdow);
+    box-shadow: 0px -2px 5px 5px rgba(0, 9, 55, 0.1);
 }
 
 .table-img{

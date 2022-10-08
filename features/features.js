@@ -242,10 +242,13 @@ function pageScrollListener() {
     const el_offsetTop = el.offsetTop
     window.onscroll = (e) => {
         const scroll_top = document.documentElement.scrollTop || document.body.scrollTop
-        if (scroll_top >= (el_height + el_offsetTop - 40)) {
+        console.log(scroll_top, el_height, el_offsetTop)
+        if (scroll_top >= (el_height + el_offsetTop - 80)) {
             top_bar.style.display = 'block'
+            top_bar.style.top = '0px'
         } else {
             top_bar.style.display = 'none'
+            // top_bar.style.top = '-38px'
         }
     }
 }
