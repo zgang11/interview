@@ -230,6 +230,24 @@ window.onload = function () {
     drawTable()
 
     addTooltips()
+
+    // 监听页面滑动
+    pageScrollListener()
+}
+
+function pageScrollListener() {
+    const top_bar = $('top-bar')
+    const el = $('header-bar')
+    const el_height = el.offsetHeight
+    const el_offsetTop = el.offsetTop
+    window.onscroll = (e) => {
+        const scroll_top = document.documentElement.scrollTop || document.body.scrollTop
+        if (scroll_top >= (el_height + el_offsetTop - 40)) {
+            top_bar.style.display = 'block'
+        } else {
+            top_bar.style.display = 'none'
+        }
+    }
 }
 
 function addTooltips() {
@@ -305,12 +323,12 @@ function drawTable() {
                 td1_dom += func.function
                 if (func.details.length) {
                     let value = JSON.stringify(func.details)
-                    td1_dom += `<span class="tooltip" data-value=${value}>` + hasDetails + '</span>'
+                    td1_dom += `<div class="tooltip" data-value=${value}>` + hasDetails + '</div>'
                 }
                 td1.innerHTML = td1_dom
                 // 设置表格第三列
                 let td2 = document.createElement('td')
-                td2.innerHTML = '<div class="ddd">' + func.hasProVer ? hasFuncImg : notHasFuncImg + '</div>'
+                td2.innerHTML = '<div>' + func.hasProVer ? hasFuncImg : notHasFuncImg + '</div>'
                 td2.className = "border-special-cls"
                 let td3 = document.createElement('td')
                 td3.innerHTML = func.hasBasicVer ? hasFuncImg : notHasFuncImg
