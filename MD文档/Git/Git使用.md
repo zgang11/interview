@@ -76,6 +76,7 @@ HEAD^ --表示上一个版本，即上一次的commit，也可以写成HEAD~
 
    git push origin --delete <tagname> --变体二：远程仓库中移除这个标签 例：git push origin --delete v1.4-lw
    
+   git branch --contains v2.9.0 --查看那个分支包含tag v2.9.0
 ```
 
 
