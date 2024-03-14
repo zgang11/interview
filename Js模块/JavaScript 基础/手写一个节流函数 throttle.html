@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手写一个节流函数 throttle</title>
+</head>
+
+<body>
+  <div style="width: 200px; height: 10000px; background-color: red;"></div>
+  <!-- <script>
+    // https://github.com/sisterAn/JavaScript-Algorithms/issues/92
+    const throttle = (fn, wait = 50) => {
+       let previos = 0
+       return function(...args) {
+         let now = +new Date()
+         if(now - previos > wait) {
+           previos = now 
+           fn.apply(this, args)
+         }
+       }
+    }
+    let betterFn = throttle(() => console.log('fn 执行了'), 10000)
+    setInterval(betterFn, 100);
+  </script> -->
+
+  <!-- <script>
+    let throttle = (func, wait) => { // func为原本事件触发后所需要执行的函数、wait为节流的周期时长
+
+      let prev = null; // 为了避免全局的命名污染，因此我们不考虑使用全局变量。但同时我们需要一个变量来存储一个新周期的起始时间，因此借助闭包缓存新周期的起始时间
+
+      return function () { // 备注："this: any" 是ts的写法，如果不传this,下方语句“context = this;”会报错，js的写法不传this也不会报错
+        let context = this; // 谁调用函数（这里的函数是节流函数return出来的函数），this就指向谁。
+        // 这步不能少，因为原本的事件函数func，我们是作为参数传递给了节流函数，事件真正执行的函数是节流函数return出来的函数。
+        // 此时func的this指向是window，如果func内部想修改this指向当前函数的调用者，就必须存储this，之后借助apply修改func的this指向。
+
+        let args = arguments; // arguments 是一个对应于传递给函数的参数的类数组对象，可以获取函数的参数（这里的函数是节流函数return出来的函数）。
+        // 这步不能少，因为某些事件函数是自带event参数的（比如click、input），而此时原本的事件函数func，我们是作为参数传递给了节流函数，事件真正执行的函数是节流函数return出来的函数，只有它才能拿到event参数。
+        // 而原本的事件函数func是拿不到event参数的，如果少了这步，不把节流函数return出来的函数的arguments对象存起来的话 func就获取不到event参数了
+
+        let now = Date.now(); // 获取当前时间
+
+        if (!prev || now - prev >= wait) { // 如果当前周期起始时间不存在（那就是第一次触发事件），或者当前周期已经结束
+          console.log('新周期开始');
+          func.apply(context, args); // 通过 apply 修改func的this指向，并让func获取真正的事件函数（即节流函数return出来的函数）的参数，之后执行func
+          prev = Date.now(); // 更新新周期的起始事件
+        }
+      }
+    }
+
+    let betterFn = throttle(() => console.log('fn 执行了'), 10000)
+    setInterval(() => {console.log('22222'); betterFn()}, 100);
+  </script> -->
+
+
+  <!-- <script>
+    // https://blog.csdn.net/Boale_H/article/details/124201596
+    let throttle = (func, wait) => { // func为原本事件触发后所需要执行的函数、wait为节流的周期时长
+
+      let timeout = null;
+
+      return function () { // 备注："this: any" 是ts的写法，如果不传this,下方语句“context = this;”会报错，js的写法不传this也不会报错
+        let context = this; // 谁调用函数（这里的函数是节流函数return出来的函数），this就指向谁。
+        // 这步不能少，因为原本的事件函数func，我们是作为参数传递给了节流函数，事件真正执行的函数是节流函数return出来的函数。
+        // 此时func的this指向是window，如果func内部想修改this指向当前函数的调用者，就必须存储this，之后借助apply修改func的this指向。
+
+        let args = arguments; // arguments 是一个对应于传递给函数的参数的类数组对象，可以获取函数的参数（这里的函数是节流函数return出来的函数）。
+        // 这步不能少，因为某些事件函数是自带event参数的（比如click、input），而此时原本的事件函数func，我们是作为参数传递给了节流函数，事件真正执行的函数是节流函数return出来的函数，只有它才能拿到event参数。
+        // 而原本的事件函数func是拿不到event参数的，如果少了这步，不把节流函数return出来的函数的arguments对象存起来的话 func就获取不到event参数了
+
+        if (!timeout) {
+          timeout = setTimeout(() => {
+            timeout = null;
+            func.apply(context, args); // 通过 apply 修改func的this指向，并让func获取真正的事件函数（即节流函数return出来的函数）的参数，之后执行func
+          }, wait)
+        }
+      }
+    }
+    let betterFn = throttle(() => console.log('fn 执行了'), 10000)
+    setInterval(() => {console.log('22222'); betterFn()}, 100);
+  </script> -->
+
+  <script>
+    const throttle = (func, wait, options) => { // func为原本事件触发后所需要执行的函数；
+      // wait为节流的周期时长；
+      // options是一个对象，如果想周期内第一次触发事件就执行func（即前缘throttling），传入{leading: false}，如果想周期内最后一次触发事件才执行func（即延迟throttling），传入{trailing: false}，两者不能共存，否则函数不能执行
+
+      let timeout = null; // 为了避免全局的命名污染，因此我们不考虑使用全局变量。但同时我们需要一个变量来存储定时器，以便判断当前是否处于定时状态（防抖状态），因此借助闭包缓存定时器实例
+      let context = null; // 为了避免全局的命名污染，因此我们不考虑使用全局变量。但原本的事件函数func，我们是作为参数传递给了防抖函数，事件真正执行的函数是防抖函数return出来的函数。
+      // 此时func的this指向是window，如果func内部想修改this指向当前函数的调用者，就必须存储this，之后借助apply修改func的this指向。因此借助闭包缓存调用者的this
+
+      let args = null; // 为了避免全局的命名污染，因此我们不考虑使用全局变量。但某些事件函数是自带event参数的（比如click、input），而此时原本的事件函数func，我们是作为参数传递给了防抖函数。
+      // 事件真正执行的函数是防抖函数return出来的函数，只有它才能拿到event参数。
+      // 而原本的事件函数func是拿不到event参数的，如果少了这步，不把防抖函数return出来的函数的arguments对象存起来的话 func就获取不到event参数了。因此借助闭包缓存事件函数参数（比如event参数）
+
+      let result = null; // 为了避免全局的命名污染，因此我们不考虑使用全局变量。但同时我们需要一个变量来存储func执行之后返回的结果，因此借助闭包缓存func执行之后返回的结果
+      let previous = 0; // 为了避免全局的命名污染，因此我们不考虑使用全局变量。但同时我们需要一个变量来存储一个新周期的起始时间，因此借助闭包缓存新周期的起始时间
+      // 如果 options 没传则设为空对象
+      if (!options) options = {};
+
+      let later = function () {
+        previous = options.leading === false ? 0 : Date.now(); // 如果是设定周期内第一次触发事件就执行func，那么就重置previous为0，否则就将previous设为当前时间
+        timeout = null; // 清空context、args闭包变量，释放内存
+        result = func.apply(context, args); // 通过 apply 修改func的this指向，并让func获取真正的事件函数（即节流函数return出来的函数）的参数，之后执行func
+        if (!timeout) context = args = null; // 清空context、args闭包变量，释放内存
+      };
+
+      return function () { // 备注："this: any" 是ts的写法，如果不传this,下方语句“context = this;”会报错，js的写法不传this也不会报错
+        let now = Date.now();
+        if (!previous && options.leading === false) previous = now; // 如果当前周期起始时间不存在（那就是第一次触发事件），或者当前周期已经结束
+        let remaining = wait - (now - previous);
+        context = this; // 谁调用函数（这里的函数是防抖函数return出来的函数），this就指向谁。
+        // 这步不能少，因为原本的事件函数func，我们是作为参数传递给了防抖函数，事件真正执行的函数是防抖函数return出来的函数。
+        // 此时func的this指向是window，如果func内部想修改this指向当前函数的调用者，就必须存储this，之后借助apply修改func的this指向。
+
+        args = arguments; // arguments 是一个对应于传递给函数的参数的类数组对象，可以获取函数的参数（这里的函数是防抖函数return出来的函数）。
+        // 这步不能少，因为某些事件函数是自带event参数的（比如click、input），而此时原本的事件函数func，我们是作为参数传递给了防抖函数，事件真正执行的函数是防抖函数return出来的函数，只有它才能拿到event参数。
+        // 而原本的事件函数func是拿不到event参数的，如果少了这步，不把防抖函数return出来的函数的arguments对象存起来的话 func就获取不到event参数了
+
+        if (remaining <= 0 || remaining > wait) {
+          if (timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+          }
+          previous = now;
+          result = func.apply(context, args);
+          if (!timeout) context = args = null;
+        } else if (!timeout && options.trailing !== false) {
+          timeout = setTimeout(later, remaining);
+        }
+        return result;
+      };
+    };
+
+    let betterFn = throttle(() => console.log('fn 执行了'), 10000, {leading: false, trailing: true})
+    window.addEventListener('scroll', betterFn)
+
+  </script>
+</body>
+
+</html>

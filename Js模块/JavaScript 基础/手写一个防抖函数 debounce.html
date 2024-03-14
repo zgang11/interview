@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>防抖</title>
+</head>
+
+<body>
+  <!-- <script>
+    // https://github.com/sisterAn/JavaScript-Algorithms/issues/95
+    function debounce(fn, wait = 50, immediate) {
+      let timer = null
+      return function (...args) {
+        let context = this
+        if (timer) clearTimeout(timer)
+
+        if(immediate && !timer) {
+          fn.apply(context, args)
+        }
+        
+        if(!immediate) {
+          
+        } else {
+         
+        }
+
+        timer = setTimeout(() => {
+          fn.apply(context, args)
+        }, wait)
+        
+      }
+    }
+
+    let betterFn = debounce(() => console.log("fn 防抖执行了"), 1000, true)
+    document.addEventListener('click', betterFn)
+  </script> -->
+
+  <script>
+      // https://blog.csdn.net/Boale_H/article/details/124201596
+      // 创建debounce防抖函数
+      const debounce = (func, wait, immediate) => { // func为原本事件触发后所需要执行的函数、wait为防抖的周期时长、immediate为是否先执行事件函数func再做防抖（true为前缘debounce，false为延迟debounce）
+        let timeout = null; // 为了避免全局的命名污染，因此我们不考虑使用全局变量。但同时我们需要一个变量来存储定时器，以便判断当前是否处于定时状态（防抖状态），因此借助闭包缓存定时器实例
+        let context = null; // 为了避免全局的命名污染，因此我们不考虑使用全局变量。但原本的事件函数func，我们是作为参数传递给了防抖函数，事件真正执行的函数是防抖函数return出来的函数。
+        // 此时func的this指向是window，如果func内部想修改this指向当前函数的调用者，就必须存储this，之后借助apply修改func的this指向。因此借助闭包缓存调用者的this
+
+        let args = null; // 为了避免全局的命名污染，因此我们不考虑使用全局变量。但某些事件函数是自带event参数的（比如click、input），而此时原本的事件函数func，我们是作为参数传递给了防抖函数。
+        // 事件真正执行的函数是防抖函数return出来的函数，只有它才能拿到event参数。
+        // 而原本的事件函数func是拿不到event参数的，如果少了这步，不把防抖函数return出来的函数的arguments对象存起来的话 func就获取不到event参数了。因此借助闭包缓存事件函数参数（比如event参数）
+
+        let timestamp = null; // 为了避免全局的命名污染，因此我们不考虑使用全局变量。但同时我们需要一个变量来记录当前最新的定时器计时时间内最后一次事件触发的时间戳，因此借助闭包缓存当前最新的定时器计时时间内最后一次事件触发的时间戳
+        let result = null; // 为了避免全局的命名污染，因此我们不考虑使用全局变量。但同时我们需要一个变量来存储func执行之后返回的结果，因此借助闭包缓存func执行之后返回的结果
+
+        let later = function () {
+          // console.log(2111);
+
+          // 获取当前时间
+          let now = (new Date()).getTime();
+          // 获取当前定时器计时时间内最后一次事件触发至定时器计时结束的时间间隔
+          let last = now - timestamp;
+
+          // 如果当前间隔时间少于设定的时间wait且大于0就重新设置定时器：
+          //（比如wait传参是3000ms，而第一次计时周期内（3000ms内）最后一次触发事件发生在了2900ms，
+          // 那么在经历完3000ms之后，执行定时器的回调函数，发现最后一次触发事件距离3000ms的计时结束的时间间隔才100ms，不足3000ms，
+          // 这时候在执行定时器的回调时，不应该立马判定当前3000ms周期内的防抖结束，因为用户是有可能会在超过3000ms周期之后，比如超过3000ms周期100ms之后，还会触发事件，
+          // 那么我们就应该继续执行防抖，阻止func的多次执行，所以需要再次启动定时器，再次启动的定时器的时间周期应该是 “wait-当前定时器计时时间内最后一次事件触发至定时器计时结束的时间间隔” ，
+          // 而不是盲目的再次以wait为周期重新创建定时器（这样可以缩短启动下次防抖的时间，以及缩短非立即执行func的开始执行时间））
+          if (last < wait && last >= 0) {
+            console.log(3221);
+
+            timeout = setTimeout(later, wait - last);
+          } else {
+            // console.log('用户停止触发事件且计时结束了');
+            // 清空timeout、context、args闭包变量，释放内存
+            timeout = context = args = null;
+            // 如果不是立即执行，则执行func
+            if (!immediate) {
+              result = func.apply(context, args);
+            }
+          }
+        };
+
+        return function () { // 备注："this: any" 是ts的写法，如果不传this,下方语句“context = this;”会报错，js的写法不传this也不会报错
+          context = this; // 谁调用函数（这里的函数是防抖函数return出来的函数），this就指向谁。
+          // 这步不能少，因为原本的事件函数func，我们是作为参数传递给了防抖函数，事件真正执行的函数是防抖函数return出来的函数。
+          // 此时func的this指向是window，如果func内部想修改this指向当前函数的调用者，就必须存储this，之后借助apply修改func的this指向。
+
+          args = arguments; // arguments 是一个对应于传递给函数的参数的类数组对象，可以获取函数的参数（这里的函数是防抖函数return出来的函数）。
+          // 这步不能少，因为某些事件函数是自带event参数的（比如click、input），而此时原本的事件函数func，我们是作为参数传递给了防抖函数，事件真正执行的函数是防抖函数return出来的函数，只有它才能拿到event参数。
+          // 而原本的事件函数func是拿不到event参数的，如果少了这步，不把防抖函数return出来的函数的arguments对象存起来的话 func就获取不到event参数了
+
+          // 获得当前事件触发的时间戳
+          let now = (new Date()).getTime()
+          // 更新当前最新的定时器计时时间内最后一次事件触发的时间戳
+          timestamp = now;
+          // 如果定时器不存在且func需要立即执行
+          if (!timeout && immediate) {
+            // 通过 apply 修改func的this指向，并让func获取真正的事件函数（即防抖函数return出来的函数）的参数，之后执行func
+            result = func.apply(context, args);
+            context = args = null;
+          }
+          // 如果定时器不存在就创建一个（这里创建的定时器只会在每次wait时间周期内的第一次事件触发时创建，因为这个是setTimeout而不是setInterval，所以当第一次触发事件创建定时器之后，timeout就会一直存在或者被其他定时器覆盖，而不会被清空）
+          if (!timeout) {
+            timeout = setTimeout(later, wait);
+          }
+          // 如果定时器存在，说明此时处于防抖状态，不需要再次创建新的定时器
+          if (timeout) {
+            // console.log('如果定时器存在，说明此时处于防抖状态，不需要再次创建新的定时器');
+          }
+          // 返回func执行之后的结果
+          return result;
+        };
+      };
+
+      let betterFn = debounce(() => console.log("fn 防抖执行了"), 1000, false)
+      document.addEventListener('click', betterFn)
+  </script>
+</body>
+
+</html>
