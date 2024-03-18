@@ -1,49 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>阿里异步串行编程题：按照以下要求，实现 createFlow 函数</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>阿里异步串行编程题：按照以下要求，实现 createFlow 函数 </title>
-</head>
+  <body>
+    <script>
+      // https://github.com/sisterAn/JavaScript-Algorithms/issues/106
+      // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-<body>
-  <script>
-    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+      // const subFlow = createFlow([() => delay(1000).then(() => console.log("c"))]);
 
-    const subFlow = createFlow([() => delay(1000).then(() => console.log("c"))]);
+      // createFlow([
+      //   () => console.log("a"),
+      //   delay(1000),
+      //   () => console.log("b"),
+      //   subFlow,
+      //   [() => delay(1000).then(() => console.log("d")), () => console.log("e")],
+      // ]).run(() => {
+      //   console.log("done");
+      // });
+      // 需要按照 a,b,延迟1秒,c,延迟1秒,d,e, done 的顺序打印
+      // 按照上面的测试用例，实现 createFlow：
+      //   flow 是指一系列 effects 组成的逻辑片段。
+      //   flow 支持嵌套。
+      //   effects 的执行只需要支持串行。
 
-    createFlow([
-      () => console.log("a"),
-      delay(1000),
-      () => console.log("b"),
-      // subFlow,
-      // [() => delay(1000).then(() => console.log("d")), () => console.log("e")],
-    ]).run(() => {
-      console.log("done");
-    });
-
-
-    function createFlow(arr) {
-      run_ = () => {
-        arr.reduce((acc, cur) => {
-          return acc.then(() => {
-            if (cur instanceof Promise) {
-
+      class Flow {
+        constructor(effects) {
+          this.queue = [...effects.flat()];
+        }
+        async run(cb) {
+          for (let task of this.queue) {
+            if (task instanceof Flow) {
+              await task.run();
+            } else {
+              await task();
             }
-            cur()
-          })
-        }, Promise.resolve())
+          }
+          if (cb) cb();
+        }
       }
-      run = async (fn) => {
 
-        await this.run_()
-        fn()
+      function createFlow(effects = []) {
+        return new Flow(effects);
       }
-      return this
-    }
-  </script>
-</body>
 
+      // 测试
+      const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      const subFlow = createFlow([
+        () => delay(1000).then(() => console.log("c")),
+      ]);
+
+      createFlow([
+        () => console.log("a"),
+        () => console.log("b"),
+        subFlow,
+        [
+          () => delay(1000).then(() => console.log("d")),
+          () => console.log("e"),
+        ],
+      ]).run(() => {
+        console.log("done");
+      });
+      // a,b,延迟1秒,c,延迟1秒,d,e, done 的顺序打印
+    </script>
+  </body>
 </html>
