@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
-    <script>
+  <body>
+    <!-- <script>
+        // https://developer.aliyun.com/article/1414481
         function bird() {
             this.eat = function () {
                 console.log('eat')
@@ -27,7 +27,245 @@
         }
 
         bird().eat().fly().c()
-    </script>
-</body>
+    </script> -->
+    <!-- <script>
+      // 对象链式调用-基础
+      /* 简单的链式调用 */
+      function Person(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+      Person.prototype = {
+        info() {
+          console.log(`我的名字是${this.name}，我今年${this.age}岁`);
+          return this;
+        },
+        start() {
+          console.log("开始起床！");
+          return this;
+        },
+        eat() {
+          console.log("开始吃饭");
+          return this;
+        },
+        work() {
+          console.log("开始工作！");
+          return this;
+        },
+        run() {
+          console.log("下班啦！下班啦！");
+          return this;
+        },
+      };
+      var person = new Person("rose", 18);
+      person.info().start().eat().work().run();
+    </script> -->
+    <!-- <script>
+      // 对象链式调用-高阶
+      //首先定义构造函数 Person
+      function Person(name) {
+        this.name = name;
+        //任务队列（使用队列的先进先出性质来模拟链式调用函数的执行顺序）
+        this.queue = [];
 
+        let fn = () => {
+          console.log("init 组要做的事情");
+          //next方法是 Person 原型上的方法，用于从任务队列中取出函数执行
+          this.next();
+        };
+
+        //函数入队
+        this.queue.push(fn);
+
+        // 一定要添加定时器、将其放入函数队列中
+        setTimeout(() => {
+          this.next();
+        }, 0);
+
+        return this;
+      }
+
+      //在Person的原型上实现eat、sleep、sleepFirst以及辅助方法next
+      Person.prototype = {
+        eat(food) {
+          let fn = () => {
+            console.log("吃" + " " + food);
+            this.next();
+          };
+          this.queue.push(fn);
+          return this;
+        },
+        sleep(time) {
+          let fn = () => {
+            setTimeout(() => {
+              console.log("碎觉" + "" + time);
+              this.next();
+            }, time * 1000);
+          };
+          this.queue.push(fn);
+          return this;
+        },
+        sleepFirst(time) {
+          let fn = () => {
+            setTimeout(() => {
+              console.log("等待" + "" + time);
+              this.next();
+            }, time * 1000);
+          };
+          //sleepFirst要优先执行,所以放到队列首部，
+          this.queue.unshift(fn);
+          return this;
+        },
+        next() {
+          //从队列首部取出一个函数
+          let fn = this.queue.shift();
+          fn && fn(); //如果fn存在就执行fn
+        },
+      };
+
+      var per = new Person("Hank");
+    </script> -->
+    <!-- <script>
+      function _add(num) {
+        this.sum = 0;
+        this.sum += num;
+        return this;
+      }
+      _add.prototype.add = function (num) {
+        this.sum += num;
+        return this;
+      };
+      function add(num) {
+        return new _add(num);
+      }
+      let res = add(1).add(2).add(3);
+      console.log(res.sum); //6
+    </script> -->
+    <!-- <script>
+      // 函数的链式调用-递归调用
+      // 模拟一系列函数
+      function fn1(ctx, next) {
+        console.log("函数fn1执行...");
+      }
+      function fn2(ctx, next) {
+        console.log("函数fn2执行...");
+      }
+      function fn3(ctx, next) {
+        console.log("函数fn3执行...");
+      }
+
+      let fns = [fn1, fn2, fn3];
+
+      // 定义一个触发函数
+      const trigger = (fns) => {
+        fns.forEach((fn) => {
+          fn();
+        });
+      };
+      // 执行触发，所有函数依次执行
+      trigger(fns); //
+    </script> -->
+    <!-- <script>
+      // 函数的链式调用-洋葱圈调用
+      // koa的链式调用的底层原理、其实是利用函数调用栈
+      // 模拟一系列函数
+      function fn1(ctx, next) {
+        console.log(ctx, "函数fn1执行..."); // 打印顺序 1
+        next();
+        console.log(ctx, "fn1 ending"); // 打印顺序 6
+      }
+      function fn2(ctx, next) {
+        console.log(ctx, "函数fn2执行..."); // 打印顺序 2
+        next();
+        console.log(ctx, "fn2 ending"); // 打印顺序 5
+      }
+      function fn3(ctx, next) {
+        console.log(ctx, "函数fn3执行..."); // 打印顺序 3
+        next();
+        console.log(ctx, "fn3 ending"); // 打印顺序 4
+      }
+
+      function wrap(fns) {
+        // 必然会返回一个函数...
+        return (ctx) => {
+          // 闭包保留fns数组的长度
+          let l = fns.length;
+          // 调用时从第一个函数开始
+          return next(0);
+
+          function next(i) {
+            // 此时已经是最后一个函数了，因为已经没有下一个函数了，因此直接返回即可
+            if (i === l) return;
+            // 拿到相应的函数
+            let fn = fns[i];
+            // 执行当下函数，将参数透传过来，每个函数的next是一个函数，因此通过bind返
+            // 回，留在每个函数内部调用，并保留参数，实现递归
+            return fn(ctx, next.bind(null, i + 1));
+          }
+        };
+      }
+
+      let arr = [fn1, fn2, fn3];
+      // 组合后的函数
+      let fn = wrap(arr);
+      // 执行 并 传入ctx
+      fn({ word: "winter is comming!" });
+    </script> -->
+
+    <script>
+      //  函数的链式调用-组合（reduce）链式调用
+      // 典型的利用闭包实现链式调用
+      // 模拟几个函数
+      function fn1(arg1) {
+        // ...对arg1的操作逻辑
+        console.log("fn1的参数：", arg1);
+        let arg = arg1 + 30;
+        return arg;
+      }
+      function fn2(arg2) {
+        // ...对arg2的操作逻辑
+        console.log("fn2的参数：", arg2);
+        let arg = arg2 + 20;
+        return arg;
+      }
+      function fn3(arg3) {
+        // ...对arg3的操作逻辑
+        console.log("fn3的参数：", arg3);
+        let arg = arg3 + 10;
+        return arg;
+      }
+      // 省略所有容错判断
+      function compose(fns) {
+        let l = fns.length;
+        if (!l) throw new Error("至少得有一个函数呀...");
+
+        // 一个，就直接返回这个函数...
+        if (l === 1) return fns[0];
+
+        // 数组迭代，返回一个函数，函数的实体为后一个函数执行的返回值作为前一个函
+        // 数的参数，然后前一个函数执行，最终返回第一个函数的返回值
+        return fns.reduce((a, b, i) => {
+          return function c(...arg) {
+            return a(b(...arg));
+          };
+        });
+      }
+
+      let fns = [fn1, fn2, fn3];
+
+      // 将函数组合，形成复杂函数
+      let fn = compose(fns);
+
+      // 执行
+      let r = fn(10);
+
+      console.log(r);
+      // 执行过程打印
+      // fn3的参数： 10
+      // fn2的参数： 20
+      // fn1的参数： 40
+      // 70
+      复制代码;
+    </script>
+  </body>
 </html>
