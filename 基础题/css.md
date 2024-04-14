@@ -10,3 +10,33 @@
 ##### 4. 了解flex布局吗
 [Flex 布局教程：语法篇](https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
 [Flex 布局教程：实例篇](https://www.ruanyifeng.com/blog/2015/07/flex-examples.html)
+
+##### 5. 伪类和伪元素的区别
+[伪类选择器](https://weread.qq.com/web/reader/7d53223071e219457d53617ka0a32dd027aa0a080f42962?)
+
+##### 6. CSS样式隔离手段
+[CSS 隔离方案](https://blog.csdn.net/qq_42943914/article/details/128955418)
+[实现 css 样式隔离的方法](https://blog.csdn.net/qq_17335549/article/details/136176209)
+
+
+##### 7. 伪类和伪元素的区别
+[伪类选择器](https://weread.qq.com/web/reader/7d53223071e219457d53617ka0a32dd027aa0a080f42962?)
+
+
+##### 8. 浏览器渲染流程
+[一文搞懂，浏览器是如何渲染页面的](https://juejin.cn/post/7250774027613519929)
+[浏览器渲染流程（精讲](https://zhuanlan.zhihu.com/p/586060532)
+
+##### 9. CSS会不会阻塞？JS呢？
+[css加载造成阻塞](https://www.jianshu.com/p/9698590ac8c1)
+[CSS 阻塞 和 js 阻](https://www.cnblogs.com/caijinghong/p/13994813.html)
+
+##### 10. script的defer和async机制？domContentload？
+[script标签的defer和async属性详解](https://blog.csdn.net/weixin_45092437/article/details/129752333)
+[DOMContentLoaded事件](https://weread.qq.com/web/reader/751326d0720befab7514782kc8f3245027cc8ffe9a588b8?)
+
+##### 11. href和url？
+[surl、src和href的区别](https://www.cnblogs.com/chri330dj/p/12401719.html)
+
+##### 12. href和url？
+[js中的类型转换机制（很详细，要收藏）](https://blog.csdn.net/weixin_69422396/article/details/135621587)
