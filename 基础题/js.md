@@ -57,4 +57,21 @@
 
 ##### 13. 懒加载实现原理？
 [懒加载实现原理](https://zhuanlan.zhihu.com/p/354172134?utm_id=0)
-[懒加载]（https://weread.qq.com/web/reader/43b32c10813ab7c1fg01909ek4e73277021a4e732ced3b55?）
+[懒加载](https://weread.qq.com/web/reader/43b32c10813ab7c1fg01909ek4e73277021a4e732ced3b55?)
+
+##### 14. 箭头函数和普通函数的区别
+[箭头函数](https://es6.ruanyifeng.com/#docs/function#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
+
+
+##### 15. 考察原型，如何查找一个对象的原型，如何查找一个函数的原型；如果一个构造函数作为对象，怎么查找这个对象的原型，（都要查找到null 尽头的那种）
+[如何获取一个对象的原型对象](https://blog.csdn.net/m0_61726249/article/details/124729851)
+
+##### 16. 数据类型有哪些，如何判断
+[数据类型](https://weread.qq.com/web/reader/751326d0720befab7514782k4e73277021a4e732ced3b55?)
+
+##### 17. let、const与栈、堆之间的关系，栈、堆哪个访问速度更快，为什么？
+[let 和 const 命令](https://es6.ruanyifeng.com/#docs/let)
+[堆数据访问快还是栈数据访问快?](https://zhuanlan.zhihu.com/p/638488266)
+
+##### 17. settimeout和settimeinterval哪个更准确，为什么？延时设为0ms会怎样？(最少4ms)？
+[settimeout和settimeinterval](https://zhuanlan.zhihu.com/p/640173156)

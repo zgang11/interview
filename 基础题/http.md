@@ -7,3 +7,16 @@
 [HTTP缓存机制详解](https://www.cnblogs.com/xiaobingch/p/17314690.html)
 [了解浏览器缓存](https://blog.csdn.net/weixin_44792849/article/details/131430282)
 [彻底理解浏览器的缓存机制](https://blog.csdn.net/x550392236/article/details/132584609)
+[缓存](https://weread.qq.com/web/reader/43b32c10813ab7c1fg01909ek44f328c023e44f683a8420b?)
+
+##### 3. 给出URL post方法的返回体，要求写一段http报文
+[缓存](https://ac.nowcoder.com/discuss/932838?type=2&order=0&page=1&source_id=discuss_tag_nctrack)
+
+##### 4. cookie
+[cookie是什么？有什么用？cookie详解，一篇文章彻底搞懂cookie ](https://news.sohu.com/a/761274235_613453)
+[Cookie 的 SameSite 属性](https://blog.csdn.net/weixin_38289101/article/details/127977426)
+
+##### 4. 什么是cdn
+[cdn](https://weread.qq.com/web/reader/43b32c10813ab7c1fg01909ek32932b102423295c76ac7d9?)
+[cdn回流](https://answer.baidu.com/answer/land?params=13g%2F91ZpxHnzrc7q1OU%2BPlmLKmvf4ddjBmd1zQwJdsHwLzlMeSGE28pUCRKW6dWmMH%2FtJSuY1f1S66g7APrEKCzoMXEplzIc%2BZgcpmzGP6xGQd5e8SpwR1vbvFgJEV0pbBELafQzpweAVvZ1oFLWCASw%2FQc%2BrzOCM6LICM51YlcJlhCx4pVv74CPxcg6zLcvbzvv1M4wE5Z5071FPpX%2FGA%3D%3D&from=dqa&lid=b09c1f4a0025912b&word=cdn%E5%9B%9E%E6%B5%81)
+
