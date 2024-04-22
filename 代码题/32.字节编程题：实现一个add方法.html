@@ -11,68 +11,41 @@
 
 <body>
   <script>
-    // function add() {
-    //   let args = [].slice.call(arguments)
-    //   let self = this
-    //   this.num = args
-
-    //   function add_() {
-    //     let args_ = [].slice.call(arguments)
-    //     self.num.push(...args_)
-    //     return add_
+    // // 不限数量参数
+    // function sum(...rest) {
+    //   // 第一次执行时，定义一个数组专门用来存储所有的参数
+    //   var _args = Array.prototype.slice.call(arguments)
+    //   // 在内部声明一个函数，利用闭包的特性保存_args并收集所有的参数值
+    //   var _adder = function () {
+    //     _args.push(...arguments)
+    //     return _adder
     //   }
-    //   add_.value = () => {
-    //       return self.num.reduce((acc, cur) => acc += cur, 0)
-    //     }
-    //   return add_
+    //   // 利用toString隐式转换的特性，当最后执行时隐式转换，并计算最终的值返回
+    //   _adder.toString = () => _args.reduce((a, b) => a + b)
+    //   return _adder
     // }
+    // console.log(sum(1, 2, 3).toString())
+    // console.log(Number(sum(1)(2)(3))) // 6
+    // console.log(Number(sum(1, 2, 3)(4))) // 10
+    // console.log(Number(sum(1)(2)(3)(4)(5))) // 15
+  </script>
 
-
-    // function add() {
-    //     const arr = [].slice.apply(arguments)
-    //     function add_(){
-    //         arr.push(...arguments)
-    //         return add_
-    //     }
-    //     add_.value = function(){
-    //       return  arr.reduce((acc, cur) => {
-    //         return acc + cur
-    //       })
-    //     }
-
-    //     return add_
-    // }
-    // function add(){
-    //   let args = [].slice(arguments)
-    //   const add_ = function(...arg){
-    //     args.push(...arg)
-    //     return add_
-    //   }
-    //   add_.value = function(){
-    //     return args.reduce((acc, cur) => acc + cur)
-    //   }
-    //   return add_
-    // }
-
-
-    // const result = add(1)(2, 3)(4).value()
-    // console.log(result)
-    function add(...outer) {
-      function innerAdd(...inner) {
-        return add(...outer, ...inner);
-      }
-
-      innerAdd.toString = function () {
-        let result = 0;
-        for (let i = 0; i < outer.length; i++) {
-          result += outer[i];
-        }
-        return result;
-      }
-      return innerAdd;
-    }
-
-    console.log(add(1)(2)(3).toString());
+  <script>
+   function add(...rest) {
+     let args = Array.prototype.slice.call(rest)
+     var add_ = (...rest) => {
+        args.push(...rest)
+        return add_
+     }
+     add_.toString = () => {
+       return args.reduce((acc, cur) => acc + cur, 0)
+     }
+     return add_
+   }
+    console.log(add(1, 2, 3).toString()) // 6
+    console.log(add(1)(2)(3).toString()) // 6
+    console.log(Number(add(1, 2, 3)(4))) // 10
+    console.log(Number(add(1)(2)(3)(4)(5))) // 15
   </script>
 </body>
 

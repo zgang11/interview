@@ -38,5 +38,16 @@
 ##### 11. href和url？
 [surl、src和href的区别](https://www.cnblogs.com/chri330dj/p/12401719.html)
 
-##### 12. href和url？
+##### 12. js中的类型转换机制?
 [js中的类型转换机制（很详细，要收藏）](https://blog.csdn.net/weixin_69422396/article/details/135621587)
+
+##### css文件放在head标签里和body的区别？
+[js中的类型转换机制（很详细，要收藏）](https://blog.csdn.net/weixin_69422396/article/details/135621587)
+
+##### ssr服务端渲染原理？
+[js中的类型转换机制（很详细，要收藏）](https://blog.csdn.net/weixin_69422396/article/details/135621587)
+
+##### 响应式设计手段
+[响应式布局的实现方式](https://blog.csdn.net/qq_38987146/article/details/117930050?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogOpenSearchComplete%7ERate-1-117930050-blog-133434186.235%5Ev43%5Epc_blog_bottom_relevance_base9&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogOpenSearchComplete%7ERate-1-117930050-blog-133434186.235%5Ev43%5Epc_blog_bottom_relevance_base9&utm_relevant_index=2)
+[响应式设计](https://weread.qq.com/web/reader/7d53223071e219457d53617k03a32a4023f03afdbd66a39?)
+
