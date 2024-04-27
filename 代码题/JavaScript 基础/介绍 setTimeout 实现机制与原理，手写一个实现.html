@@ -32,18 +32,17 @@
 
     <script>
         function setTimeout_(fn, timeout) {
-            let start = +new Date()
-            const loop = function () {
-                let timer = window.requestAnimationFrame(loop)
-                let now = +new Date()
-                if (now - start > timeout) {
-                    // start = now
-                    fn.call(this, ...arguments)
-                    window.cancelAnimationFrame(timer)
-                }
-            }
-            return   window.requestAnimationFrame(loop)
-             
+             let prev = +new Date()
+             let loop = function(...args) {
+               let timer = window.requestAnimationFrame(loop)
+               let now = +new Date()
+               if(now - prev > timeout) {
+                  fn.call(this, ...args)
+                  cancelAnimationFrame(timer)
+                  timer = null
+               }
+             }
+             return window.requestAnimationFrame(loop)
         }
         function fn() {
             console.log('111')

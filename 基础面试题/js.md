@@ -1,7 +1,7 @@
 ##### 1. 跨域
 
 [跨域资源共享](https://weread.qq.com/web/reader/751326d0720befab7514782kf7e32f002adf7e6c85508f1?)
-[js 处理的 8 种跨域方法](https://www.cnblogs.com/lcspring/p/11079754.html)
+[9种常见的前端跨域解决方案](https://blog.csdn.net/xiaolinlife/article/details/130982886)
 
 ##### 2. 能说说首屏加载优化有哪些方案么
 
@@ -38,6 +38,7 @@
 ##### 8. 你知道哪些安全问题，如何避免
 
 [跨站脚本攻击（XSS）](https://weread.qq.com/web/reader/7c4327b05cfd497c4eaa52fk8f132430178f14e45fce0f7?)
+[一文深入了解CSRF漏洞](https://zhuanlan.zhihu.com/p/627642117)
 
 ##### 9. 性能指标说一下
 
@@ -135,3 +136,13 @@
 
 #### crossorigin="anonymous"
 [script标签中的crossorigin属性详解](https://blog.csdn.net/qq_40028324/article/details/107076751)
+
+#### class+extends+super 和 寄生组合继承 有什么区别
+[Class 的继承](https://es6.ruanyifeng.com/#docs/class-extends#%E7%AE%80%E4%BB%8B)
+
+#### 函数式编程与面向对象的区别
+[函数式编程和面向对象编程的区别](https://blog.csdn.net/qq_17335549/article/details/137882778)
+
+#### 解构赋值和函数默认值一起来问（阮一峰的书有个很经典的例子）
+[变量的解构赋值](https://es6.ruanyifeng.com/#docs/destructuring)
+[函数的扩展](https://es6.ruanyifeng.com/#docs/function)

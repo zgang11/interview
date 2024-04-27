@@ -60,3 +60,15 @@ React 学习曲线相对较陡，尤其是当引入数据流管理工具时，�
 
 #### [proxy 会全部属性代理吗]
 [proxy](https://es6.ruanyifeng.com/#docs/proxy)
+
+#### [eventBus介绍,和vuex对比，优缺点]
+[Vue事件总线（EventBus）使用指南：详细解析与实战应用](https://blog.csdn.net/shanghai597/article/details/130965196)
+
+#### [【Vue】组件传值的六种方法]
+[【Vue】组件传值的六种方法](https://www.cnblogs.com/liliuyu/p/13590853.html)
+
+#### [vue的双向绑定缺点]
+[vue双向数据绑定的缺点](https://localsite.baidu.com/okam/pages/article/index?articleId=20116233&ucid=n1DvP1c3nHf&categoryLv1=%E6%95%99%E8%82%B2%E5%9F%B9%E8%AE%AD&ch=54&srcid=10004)
+
+#### [defineProperties缺点, 为什么使用proxy]
+[关于Object.defineProperty 的基础知识](https://www.cnblogs.com/zjjDaily/p/11227623.html)
