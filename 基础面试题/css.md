@@ -6,6 +6,7 @@
 
 ##### 3. 了解盒模型么
 [css盒子模型有几种？ 以及盒模型设置？](https://juejin.cn/post/7000693042269126664)
+[三种盒模型详解](https://blog.csdn.net/weixin_44368963/article/details/108317468)
 
 ##### 4. 了解flex布局吗
 [Flex 布局教程：语法篇](https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
@@ -57,3 +58,13 @@
 
 #### CSS水平垂直居中
 [水平垂直](https://weread.qq.com/web/reader/77832ba0718ff5d377894a0ka6832360236a684eceeee20?)
+
+#### 物理像素和逻辑像素的区别
+[前端的物理像素、逻辑像素、移动端1像素边框解决方案](https://blog.csdn.net/Liu_yunzhao/article/details/90515002?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-90515002-blog-115312902.235%5Ev43%5Epc_blog_bottom_relevance_base9&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-90515002-blog-115312902.235%5Ev43%5Epc_blog_bottom_relevance_base9&utm_relevant_index=2)
+
+#### rem是什么
+[相对单位](https://weread.qq.com/web/reader/7d53223071e219457d53617k6f4322302126f4922f45dec?)
+
+#### 画一条0.5px的线段应该怎么实现
+[CSS 画一条0.5px的线的方法（ 4种 ）](https://blog.csdn.net/cuclife/article/details/137509039)
+

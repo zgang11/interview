@@ -38,4 +38,8 @@
 
 #####  react事件和dom原生事件区别？react的事件机制合成事件的机制
 
-#####   react16以后fiber架构流程 
+#####  react16以后fiber架构流程 
+
+#####  react的redux的数据流
+
+#####  useState和useReducer的区别

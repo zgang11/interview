@@ -68,7 +68,10 @@
 [垃圾回收](https://weread.qq.com/web/reader/751326d0720befab7514782ke3632bd0222e369853df322?)
 
 ##### 13. 懒加载实现原理？
+[懒加载实现原理](https://zhuanlan.zhihu.com/p/354172134?utm_id=0)
+[懒加载](https://weread.qq.com/web/reader/43b32c10813ab7c1fg01909ek4e73277021a4e732ced3b55?)
 
+##### 13. 图片预加载实现原理？
 [懒加载实现原理](https://zhuanlan.zhihu.com/p/354172134?utm_id=0)
 [懒加载](https://weread.qq.com/web/reader/43b32c10813ab7c1fg01909ek4e73277021a4e732ced3b55?)
 
@@ -146,3 +149,6 @@
 #### 解构赋值和函数默认值一起来问（阮一峰的书有个很经典的例子）
 [变量的解构赋值](https://es6.ruanyifeng.com/#docs/destructuring)
 [函数的扩展](https://es6.ruanyifeng.com/#docs/function)
+
+#### 原型继承实现
+[继承](https://weread.qq.com/web/reader/eb232f50718ff5e9eb2a999k6c8328f022d6c8349cc72d5?)

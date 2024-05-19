@@ -72,3 +72,8 @@ React 学习曲线相对较陡，尤其是当引入数据流管理工具时，�
 
 #### [defineProperties缺点, 为什么使用proxy]
 [关于Object.defineProperty 的基础知识](https://www.cnblogs.com/zjjDaily/p/11227623.html)
+
+#### 30 道 Vue 面试题，超详细（自测 Vue 掌握程度）
+[30 道 Vue 面试题，超详细（自测 Vue 掌握程度）](https://zhuanlan.zhihu.com/p/644543319)
+
+![Alt text](image.png)
