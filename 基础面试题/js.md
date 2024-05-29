@@ -2,6 +2,8 @@
 
 [跨域资源共享](https://weread.qq.com/web/reader/751326d0720befab7514782kf7e32f002adf7e6c85508f1?)
 [9种常见的前端跨域解决方案](https://blog.csdn.net/xiaolinlife/article/details/130982886)
+[什么是跨域？及 7 种跨域解决方法](https://www.cnblogs.com/mochenxiya/p/16597545.html)
+[跨域](https://www.cnblogs.com/Haier123/p/15911442.html)
 
 ##### 2. 能说说首屏加载优化有哪些方案么
 
@@ -114,10 +116,6 @@
 
 #### [浏览器从输入 URL 到页面渲染加载的过程（浏览器知识体系整理）](https://blog.csdn.net/weixin_45811256/article/details/130316442)
 
-#### 跨域
-[什么是跨域？及 7 种跨域解决方法](https://www.cnblogs.com/mochenxiya/p/16597545.html)
-[跨域](https://www.cnblogs.com/Haier123/p/15911442.html)
-
 #### 创建对象的方式
 [创建对象](https://weread.qq.com/web/reader/751326d0720befab7514782k09332a2023b093f65e0888c?)
 
@@ -152,3 +150,14 @@
 
 #### 原型继承实现
 [继承](https://weread.qq.com/web/reader/eb232f50718ff5e9eb2a999k6c8328f022d6c8349cc72d5?)
+
+#### 说说commonjs和esmodule？
+[Module 的语法](https://es6.ruanyifeng.com/#docs/module)
+[Module 的加载实现](https://es6.ruanyifeng.com/#docs/module-loader)
+
+#### 时针和分针的夹角？
+[面试题：时钟角度问题，15点10时针与分针的夹角是多少度？](https://www.jianshu.com/p/e13cb50de0b7)
+
+#### sourcemap原理知道吗？
+[深入SourceMap原理](https://www.jianshu.com/p/3ca1298000c3)
+

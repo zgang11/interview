@@ -1,0 +1,1 @@
+[前端 10 问之 TypeScript (第一篇）](https://zhuanlan.zhihu.com/p/234208637)

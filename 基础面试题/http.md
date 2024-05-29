@@ -5,6 +5,10 @@
 ##### http1.1/http2 http2的多路复用是什么
 [为什么是HTTP/2而不是HTTP/1.2](https://weread.qq.com/web/reader/71f32ba071f02f3971f1284k636320102206364d3f0ffdc?)
 
+##### https详解
+[万字长文，带你彻底搞懂HTTPS（文末附实战）](https://mp.weixin.qq.com/s/HbEhD93S7y3p8amlzS2sKw)
+[20 张图带你全面了解 HTTPS 协议，再也不怕面试问到了！](https://zhuanlan.zhihu.com/p/597168426)
+
 ##### 2. 缓存
 [缓存](https://weread.qq.com/web/reader/1d9321c0718ff5e11d9afe8k9bf32f301f9bf31c7ff0a60?)
 [HTTP缓存机制详解](https://www.cnblogs.com/xiaobingch/p/17314690.html)

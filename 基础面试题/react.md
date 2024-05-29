@@ -23,6 +23,7 @@
 #####  react 框架有什么特点
 
 #####  了解过React的数据流吗？redux， redux 的底层运行机制是怎么样的? redux的state改变，而不是用新的数据，会不会发生变化
+[Redux入门教程（快速上手）](https://segmentfault.com/a/1190000011474522)
 
 #####  react18新特性
 
@@ -37,9 +38,23 @@
 #####  react组件间通信
 
 #####  react事件和dom原生事件区别？react的事件机制合成事件的机制
+[事件处理](https://weread.qq.com/web/reader/81b326407198d71881ba331k6f4322302126f4922f45dec?)
 
 #####  react16以后fiber架构流程 
 
 #####  react的redux的数据流
+[通俗易懂的redux原理](https://juejin.cn/post/6863760642092826637)
 
 #####  useState和useReducer的区别
+[useReducer 和 useState 的区别是？](https://www.nowcoder.com/discuss/513987747963531264)
+
+#####  react hooks 有哪些优缺点？
+[React hooks的优缺点详解](https://www.jb51.net/article/210661.htm#_lab2_2_0)
+
+##### redux主要解决了什么问题？它的工作原理是什么？与mobx的区别是什么？你觉得redux 和 mobx哪个更好？
+[Redux解决了什么问题？](https://blog.csdn.net/qq_36538012/article/details/134027836)
+[Redux原理分析以及使用详解（TS && JS)](https://cloud.tencent.com/developer/article/1905774)
+[Redux与MobX比较](https://weread.qq.com/web/reader/81b326407198d71881ba331kd1f32d7024fd1fe173d0651?)
+
+##### react中state有层级很深，比如a.b.c.d，如果只更新c属性有哪些办法？immutable.js实现的原理是什么？
+[3．状态的类型是普通对象（不包含字符串、数组）](https://weread.qq.com/web/reader/81b326407198d71881ba331k6ea321b021d6ea9ab1ba605?)
