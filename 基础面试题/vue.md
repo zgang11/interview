@@ -12,7 +12,10 @@
 
 ### 7. [vue 写组件的时候，怎么做渲染优化](https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&tn=baidu&wd=vue%E5%86%99%E7%BB%84%E4%BB%B6%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E6%80%8E%E4%B9%88%E5%81%9A%E6%B8%B2%E6%9F%93%E4%BC%98%E5%8C%96&oq=%25E5%2586%2599%25E7%25BB%2584%25E4%25BB%25B6%25E7%259A%2584%25E6%2597%25B6%25E5%2580%2599%252C%25E6%2580%258E%25E4%25B9%2588%25E5%2581%259A%25E6%25B8%25B2%25E6%259F%2593%25E4%25BC%2598%25E5%258C%2596&rsv_pq=e377bb1f00045885&rsv_t=ffd154hYY%2FPMeaEyBjfUKIYuA0FNUFWtvno0vh37QlucPYoG9qtwujWNyPY&rqlang=cn&rsv_dl=tb&rsv_enter=1&rsv_btype=t&inputT=540&rsv_sug3=9&rsv_sug1=7&rsv_sug7=100&rsv_sug2=0&rsv_sug4=1292)
 
-#### 2.1 [MVC 和 MVVM 的区别 ](https://www.cnblogs.com/luckest/p/16917400.html)
+####  MVVM MVC MVP
+[MVC 和 MVVM 的区别 ](https://www.cnblogs.com/luckest/p/16917400.html)
+[MVC，MVP 和 MVVM 的图示](https://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html)
+[MVC、MVP、MVVM模型](https://www.cnblogs.com/keyng/p/12920183.html)
 
 React 和 Vue 的区别如下：
 
