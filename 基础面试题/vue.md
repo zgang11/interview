@@ -59,9 +59,6 @@ React 学习曲线相对较陡，尤其是当引入数据流管理工具时，�
 
 [vue3 diff 算法优化](https://blog.csdn.net/weixin_46163658/article/details/122563297)
 
-#### [proxy 会全部属性代理吗]
-[proxy](https://es6.ruanyifeng.com/#docs/proxy)
-
 #### [eventBus介绍,和vuex对比，优缺点]
 [Vue事件总线（EventBus）使用指南：详细解析与实战应用](https://blog.csdn.net/shanghai597/article/details/130965196)
 
@@ -73,6 +70,11 @@ React 学习曲线相对较陡，尤其是当引入数据流管理工具时，�
 
 #### [defineProperties缺点, 为什么使用proxy]
 [关于Object.defineProperty 的基础知识](https://www.cnblogs.com/zjjDaily/p/11227623.html)
+[https://blog.csdn.net/qq_38290251/article/details/135280017](https://blog.csdn.net/qq_38290251/article/details/135280017)
+
+#### [proxy 会全部属性代理吗]
+[什么是proxy](https://es6.ruanyifeng.com/#docs/proxy)
+[为什么需要reflect]](https://es6.ruanyifeng.com/#docs/reflect)
 
 #### 30 道 Vue 面试题，超详细（自测 Vue 掌握程度）
 [30 道 Vue 面试题，超详细（自测 Vue 掌握程度）](https://zhuanlan.zhihu.com/p/644543319)
@@ -81,3 +83,10 @@ React 学习曲线相对较陡，尤其是当引入数据流管理工具时，�
 
 #### vue中nextTick的实现，结合浏览器事件循环机制说一下？
 [vm.$nextTick](https://weread.qq.com/web/reader/f8632810723f0231f86d9aakb6d32b90216b6d767d2f0dc?)
+[nextTick](https://ustbhuangyi.github.io/vue-analysis/v2/reactive/next-tick.html#vue-%E7%9A%84%E5%AE%9E%E7%8E%B0)
+[Vue的异步更新策略]
+[Vue.nextTick和vm.$nextTick区别](https://cn.vuejs.org/api/component-instance.html#nexttick)
+[NextTick的版本迭代变化]
+
+#### 一文彻底搞懂Vue中scoped和/deep/原理
+[一文彻底搞懂Vue中scoped和/deep/原理](https://www.jb51.net/javascript/294585dol.htm#_label1)
