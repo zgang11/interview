@@ -58,3 +58,5 @@
 
 ##### react中state有层级很深，比如a.b.c.d，如果只更新c属性有哪些办法？immutable.js实现的原理是什么？
 [3．状态的类型是普通对象（不包含字符串、数组）](https://weread.qq.com/web/reader/81b326407198d71881ba331k6ea321b021d6ea9ab1ba605?)
+
+![Alt text](image-1.png)

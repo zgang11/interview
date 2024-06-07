@@ -1,5 +1,22 @@
 ### 1. [「2022」寒冬下我的面试知识点复盘【Vue3、Vue2、Vite】篇](https://juejin.cn/post/7166446028266733581)
 
+### setup
+[setup](https://blog.csdn.net/qq_40340943/article/details/124381843)
+[12.5　setup 函数的作用与实现](https://weread.qq.com/web/reader/c5c32170813ab7177g0181aek98f3284021498f137082c2e?)
+
+### 组合式 API (Composition API) 好处？
+[组合式 API 常见问答](https://cn.vuejs.org/guide/extras/composition-api-faq.html)
+
+### 单文件组件中的组合式 API 语法糖 <script setup>
+[<script setup>](https://cn.vuejs.org/api/sfc-script-setup.html)
+
+### Teleport 组件
+[Teleport 组件](https://cn.vuejs.org/guide/built-ins/teleport.html)
+[14.2　Teleport 组件的实现原理](https://weread.qq.com/web/reader/c5c32170813ab7177g0181aekb6d32b90216b6d767d2f0dc?)
+
+### vue3生命周期
+[Vue 3 生命周期完整指南](https://segmentfault.com/a/1190000039680245)
+
 ### 2. [最全的 Vue 面试题+详解答案](https://www.cnblogs.com/wenshaochang123/p/14888494.html)
 
 ### 3. [vue 高频面试题（2023）](https://blog.csdn.net/jiang7701037/article/details/134700415)
@@ -56,7 +73,6 @@ React 学习曲线相对较陡，尤其是当引入数据流管理工具时，�
 [vue3 diff 算法优化](https://blog.51cto.com/u_10887428/5148470)
 
 #### [从:key 的角度，来看 Vue3 中 diff 算法的实现原理（多图详解）]
-
 [vue3 diff 算法优化](https://blog.csdn.net/weixin_46163658/article/details/122563297)
 
 #### [eventBus介绍,和vuex对比，优缺点]
