@@ -60,3 +60,12 @@
 [3．状态的类型是普通对象（不包含字符串、数组）](https://weread.qq.com/web/reader/81b326407198d71881ba331k6ea321b021d6ea9ab1ba605?)
 
 ![Alt text](image-1.png)
+
+#####  react为什么调用setState而不是直接改变state
+[react为什么调用setState而不是直接改变state](https://blog.csdn.net/m0_72603435/article/details/130452385)
+[为什么调用setState而不是直接改变state](https://blog.csdn.net/qq_68299987/article/details/134498311)
+[setState 函数做了哪些事情](https://bjcp.itcast.cn/news/20230508/16453389770.shtml)
+
+##### 函数组件重新渲染的时候怎么拿到useState之前的状态，而不是得到初始化的状态
+[React 如何获取上一个 State 的值？](https://blog.csdn.net/weixin_42650595/article/details/131857232)
+

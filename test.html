@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .s-c {
+      height: 200px;
+      margin: 0 200px 0 300px;
+    }
+    .s-m {
+      width: 100%;
+      height: 100%;
+      float: left;
+      background-color: rebeccapurple;
+    }
+    .s-l {
+      position: relative;
+      width: 300px;
+      height: 100%;
+      float: left;
+      background: red;
+      margin-left: -100%;
+      left: -300px;
+    }
+    .s-r {
+      position: relative;
+      width: 200px;
+      height: 100%;
+      float: left;
+      background-color: green;
+      margin-left: -200px;
+      right: -200px;
+    }
+  </style>
+  <body>
+    <div class="s-c">
+      <div class="s-m"></div>
+      <div class="s-l"></div>
+      <div class="s-r"></div>
+    </div>
+    <script>
+      // class Watcher {
+      //   constructor(vm, expOrFn, cb) {
+      //     this.vm = vm;
+      //     // 执行this.getter()，就可以读取data.a.b.c的内容
+      //     this.getter = parsePath(expOrFn);
+      //     this.cb = cb;
+      //     this.value = this.get();
+      //   }
+
+      //   get() {
+      //     window.target = this;
+      //     let value = this.getter.call(this.vm, this.vm);
+      //     window.target = undefined;
+      //     return value;
+      //   }
+
+      //   update() {
+      //     const oldValue = this.value;
+      //     this.value = this.get();
+      //     this.cb.call(this.vm, this.value, oldValue);
+      //   }
+      // }
+      // let obj = {a: {b: {c: 1}}}
+      // // let watch = new Watcher(this, )
+    </script>
+  </body>
+</html>

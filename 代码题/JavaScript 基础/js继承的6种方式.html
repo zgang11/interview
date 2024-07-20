@@ -111,23 +111,27 @@
     // 寄生：在函数内返回对象然后调用
     // 　　　　组合：1、函数的原型等于另一个实例。2、在函数中用apply或者call引入另一个构造函数，可传参　
 
-    function content(obj) {
-      function Fn() {}
-      Fn.prototype = obj
-      return new Fn()
+    function inheritPrototype(subType, superType) {
+      let prototype = object(superType.prototype);   // 创建对象
+      prototype.constructor = subType;                  // 增强对象
+      subType.prototype = prototype;                    // 赋值对象
     }
- 
-    let content1 = content(Person.prototype)
 
-    function Sub(){
-        Person.call(this)
+    function SuperType(name) {
+      this.name = name;
+      this.colors = ["red", "blue", "green"];
     }
-    Sub.prototype = content1
-    content1.constructor = Sub
-    let sub1 = new Sub()
-    console.log('--------------------ls')
-    console.log(sub1.age)
-    console.log(sub1.name)
+    SuperType.prototype.sayName = function() {
+      console.log(this.name);
+    };
+    function SubType(name, age) {
+      SuperType.call(this, name);
+      this.age = age;
+    }
+    inheritPrototype(SubType, SuperType);
+    SubType.prototype.sayAge = function() {
+      console.log(this.age);
+    };
 
   </script> -->
 

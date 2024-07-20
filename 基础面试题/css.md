@@ -67,4 +67,15 @@
 
 #### 画一条0.5px的线段应该怎么实现
 [CSS 画一条0.5px的线的方法（ 4种 ）](https://blog.csdn.net/cuclife/article/details/137509039)
+[h6种移动端 1px 解决方案(完整版)](https://blog.csdn.net/xgangzai/article/details/107118168)
+
+#### css水平垂直居中的12种方式
+[css水平垂直居中的12种方式](https://www.cnblogs.com/orangehome/p/15838498.00html#title1.1)
+
+#### css 的继承性是什么?
+[css中有哪些属性可以继承](https://www.php.cn/faq/474099.html)
+
+#### <meta> 标签里面有什么
+[什么是＜meta＞ 标签](https://blog.csdn.net/wsl3465205046/article/details/139963103)
+
 

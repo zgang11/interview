@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手写题，原本是考察我封装一个函数，每次返回下一个质数</title>
+</head>
+<body>
+  <script>
+    function nextPrime() {
+      let cur = 1
+      var isPrime = (num) => {
+        if(num === 1) return true
+        for(let i = 2; i * i <= num; i++) {
+          if(num % i === 0) return false
+        }
+        return true
+      }
+      var getPrime = () => {
+        while(true) {
+          let prime = isPrime(cur)
+          cur++
+          if(prime) return cur-1
+        }
+      }
+      return {
+        next: function() {
+           let val = getPrime()
+           return val
+        }
+      }
+    }
+    let prime = nextPrime()
+  </script>
+</body>
+</html>

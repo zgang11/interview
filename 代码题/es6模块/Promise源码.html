@@ -519,7 +519,7 @@
             this.resolve(p).then(res => {
               resolve(res)
             }, err => {
-              +(err)
+              reject(err)
             })
           }
         })
@@ -557,7 +557,7 @@
             count = 0
           for (let [i, p] of list.entries()) {
             this.resolve(p).then(res => {
-              values[count] = res
+              values[i] = res
               count++
               if (count === list.length) {
                 resove(values)

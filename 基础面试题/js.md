@@ -8,7 +8,7 @@
 ##### 2. 能说说首屏加载优化有哪些方案么
 
 [首屏加载时间优化的几种解决方案](https://www.pipipi.net/39268.html/amp)
-[https://blog.csdn.net/weixin_43304253/article/details/133674605](https://blog.csdn.net/weixin_43304253/article/details/133674605)
+[SPA(单页面应用)首屏加载速度该如何优化](https://blog.csdn.net/qq_41581588/article/details/138313344)
 
 ##### 3. 谈谈你对作用域链的理解
 
@@ -38,7 +38,7 @@
 [JavaScript 作用域详解](https://blog.csdn.net/time_____/article/details/131374713)
 
 ##### 8. 你知道哪些安全问题，如何避免
-
+[web安全之XSS攻击原理及防范](https://www.cnblogs.com/tugenhua0707/p/10909284.html#_labe0)
 [跨站脚本攻击（XSS）](https://weread.qq.com/web/reader/7c4327b05cfd497c4eaa52fk8f132430178f14e45fce0f7?)
 [一文深入了解CSRF漏洞](https://zhuanlan.zhihu.com/p/627642117)
 
@@ -47,6 +47,7 @@
 [【前端性能】前端性能指标和测量方法总结](https://blog.csdn.net/cherry__yu/article/details/136904574)
 [【前端性能指标](https://weread.qq.com/web/reader/43b32c10813ab7c1fg01909ek14b3246024514bfa6bb1534?)
 [新一代性能指标 Web Vitals](https://blog.csdn.net/lunahaijiao/article/details/119988381)
+[【前端性能】前端性能优化方法总结](https://blog.csdn.net/cherry__yu/article/details/136936817)
 
 ##### 性能优化手段都知道哪些？
 [前端性能优化](https://www.cnblogs.com/SuremoWang/p/15735993.html)
@@ -97,6 +98,7 @@
 ##### 17. settimeout 和 settimeinterval 哪个更准确，为什么？延时设为 0ms 会怎样？(最少 4ms)？
 
 [settimeout 和 settimeinterval](https://zhuanlan.zhihu.com/p/640173156)
+[js里面setInterval和setTimeout相同点和区别](https://www.cnblogs.com/mmykdbc/p/6213136.html)
 
 ##### Webpack 的 loader 和 plugins 的区别？
 
@@ -160,4 +162,24 @@
 
 #### sourcemap原理知道吗？
 [深入SourceMap原理](https://www.jianshu.com/p/3ca1298000c3)
+
+#### webpack的性能优化? webpack中怎么实现组件异步加载? 用过webpack5吗？用过vite吗？ webpack5和webpack4的区别？
+[webpack5 新特性解析](https://blog.51cto.com/kaimo313/5668690)
+[webpack的性能优化](https://webpack.wuhaolin.cn/4%E4%BC%98%E5%8C%96/)
+
+##### 写组件的时候，怎么做渲染优化，
+
+##### 你们的前端项目主要用的是ES版本是多少？说出ES7中的3个性特性并说出应用场景？说出ES8中的三个新特性并说出应用场景？
+[javascript最新技术ECMAScript之 ES6/ES7/ES8/ES9/ES10/ES11/ES12](https://zhuanlan.zhihu.com/p/474478111)
+
+##### ast语法树了解吗？
+[a【你应该了解的】抽象语法树AST](https://juejin.cn/post/6844904126099226631#heading-2)
+
+##### vue-loader
+[vue-loader](https://webpack.wuhaolin.cn/3%E5%AE%9E%E6%88%98/3-7%E4%BD%BF%E7%94%A8Vue%E6%A1%86%E6%9E%B6.html)
+
+##### grunt、gulp了解吗，他们和webpack有什么区别？之间的优势和差别是在哪？
+[常见的构建工具及对比](https://webpack.wuhaolin.cn/1%E5%85%A5%E9%97%A8/1-2%E5%B8%B8%E8%A7%81%E7%9A%84%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E5%8F%8A%E5%AF%B9%E6%AF%94.html)
+
+
 
