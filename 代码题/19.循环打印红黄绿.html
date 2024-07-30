@@ -39,8 +39,8 @@
 
         // async/awit实现
         const asyncStep = async () => {
-            await task(1000, 'red')
-            await task(3000, 'green')
+            await task(3000, 'red')
+            await task(1000, 'green')
             await task(2000, 'yellow')
             asyncStep()
         }

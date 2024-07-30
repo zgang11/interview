@@ -35,11 +35,48 @@
       right: -200px;
     }
   </style>
+  <style>
+    .shuang-container {
+      width: 100%;
+      height: 200px;
+    }
+    .shuang-main {
+      float: left;
+      width: 100%;
+      height: 100%;
+    }
+    .shuang-middle {
+      height: 100%;
+      margin: 0 200px;
+      background-color: aqua;
+    }
+    .shuang-left {
+      float: left;
+      width: 200px;
+      height: 100%;
+      background: yellow;
+      margin-left: -100%;
+    }
+    .shuang-right {
+      float: left;
+      width: 200px;
+      height: 100%;
+      background-color: purple;
+      margin-left: -200px;
+    }
+  </style>
   <body>
     <div class="s-c">
-      <div class="s-m"></div>
+      <div class="s-m">&amp; <script>alert('XSS攻击')</script></div>
       <div class="s-l"></div>
       <div class="s-r"></div>
+    </div>
+    <div class="shuang-container">
+      <div class="shuang-main">
+        <div class="shuang-middle"></div>
+      </div>
+      <div class="shuang-left"></div>
+      <div class="shuang-right"></div>
     </div>
     <script>
       // class Watcher {

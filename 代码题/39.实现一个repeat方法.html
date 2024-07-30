@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 需要实现的函数
+      // function repeat(func, times, wait) {}
+      // 使下面调用代码能正常工作
+      // const repeatFunc = repeat(console.log, 4, 3000);
+      // repeatFunc("hello world"); //会输出4次 hello world, 每次间隔3秒
+
+      function repeat(fn, count, timer) {
+        let t = null,
+          cnt = count;
+        function run(...args) {
+          if (cnt === 0) {
+            clearTimeout(t);
+            return;
+          }
+          cnt--;
+          t = setTimeout(() => {
+            fn.call(this, ...args);
+            run(...args);
+          }, timer);
+        }
+        return function (...args) {
+          run(...args);
+        };
+      }
+      const repeatFunc = repeat(console.log, 4, 3000);
+      repeatFunc("jsjs");
+    </script>
+  </body>
+</html>

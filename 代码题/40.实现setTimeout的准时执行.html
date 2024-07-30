@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // https://blog.csdn.net/csD_Dscnnnnnnn/article/details/123469977
+    let start = +new Date()
+    let count = 1
+    let timeout = 2000
+    function loop() {
+      console.log(count)
+      let now = +new Date()
+      let offset = now - (start + count * timeout)
+      let curTimeout = timeout - offset
+      count++
+      setTimeout(loop, curTimeout)
+    }
+    setTimeout(loop, timeout)
+  </script>
+</body>
+</html>

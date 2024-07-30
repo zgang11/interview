@@ -20,6 +20,7 @@
 [了解浏览器缓存](https://blog.csdn.net/weixin_44792849/article/details/131430282)
 [彻底理解浏览器的缓存机制](https://blog.csdn.net/x550392236/article/details/132584609)
 [缓存](https://weread.qq.com/web/reader/43b32c10813ab7c1fg01909ek44f328c023e44f683a8420b?)
+[浏览器的默认缓存时间是多久](https://docs.pingcode.com/ask/ask-ask/164240.html)
 
 ##### 3. 给出 URL post 方法的返回体，要求写一段 http 报文
 
@@ -49,7 +50,6 @@
 [TCP、UDP 的区别](https://www.php.cn/faq/463414.html)
 
 ##### http 如何建立连接，有哪些过程？
-
 [三次握手](https://weread.qq.com/web/reader/af532c005a007caf51371b1k4c5327a02794c56ff4ce24c?)
 
 ##### https？

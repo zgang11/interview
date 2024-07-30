@@ -89,6 +89,10 @@
 ##### 16. 数据类型有哪些，如何判断
 
 [数据类型](https://weread.qq.com/web/reader/751326d0720befab7514782k4e73277021a4e732ced3b55?)
+[JavaScript 数据类型](https://www.runoob.com/js/js-datatypes.html)
+
+##### JS类型转换机制
+[JavaScript的类型转换机制](https://download.csdn.net/blog/column/7279528/135440608)
 
 ##### 17. let、const 与栈、堆之间的关系，栈、堆哪个访问速度更快，为什么？
 
@@ -168,9 +172,11 @@
 [webpack的性能优化](https://webpack.wuhaolin.cn/4%E4%BC%98%E5%8C%96/)
 
 ##### 写组件的时候，怎么做渲染优化，
+[前端性能优化？](https://blog.csdn.net/m0_69892739/article/details/130921026)
 
 ##### 你们的前端项目主要用的是ES版本是多少？说出ES7中的3个性特性并说出应用场景？说出ES8中的三个新特性并说出应用场景？
 [javascript最新技术ECMAScript之 ES6/ES7/ES8/ES9/ES10/ES11/ES12](https://zhuanlan.zhihu.com/p/474478111)
+[ECMAScript 2017(ES8) 的新特性总结](https://zhuanlan.zhihu.com/p/427869322)
 
 ##### ast语法树了解吗？
 [a【你应该了解的】抽象语法树AST](https://juejin.cn/post/6844904126099226631#heading-2)
@@ -181,5 +187,23 @@
 ##### grunt、gulp了解吗，他们和webpack有什么区别？之间的优势和差别是在哪？
 [常见的构建工具及对比](https://webpack.wuhaolin.cn/1%E5%85%A5%E9%97%A8/1-2%E5%B8%B8%E8%A7%81%E7%9A%84%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E5%8F%8A%E5%AF%B9%E6%AF%94.html)
 
+
+#####  WebWorker有了解过吗？它有什么应用场景？刚刚的算法题可以用这个进行再次优化吗？
+[前端webWorker 的介绍以及应用](https://blog.csdn.net/qq_43940789/article/details/137675540)
+
+##### let / const / var的区别（复习变量环境 / 词法环境 / 执行上下文）
+[let / const / var的区别（复习变量环境 / 词法环境 / 执行上下文）](https://zhuanlan.zhihu.com/p/302840261)
+
+##### [10 个 JavaScript Promise 的面试题](https://mp.weixin.qq.com/s?__biz=MjM5MDA2MTI1MA==&mid=2649128740&idx=1&sn=f592dfc661989c84a1c3997ba0e4e287&chksm=be585889892fd19f4aa12a98d19a79129a5f78df9f0819fc7a95efee09d05d9df285d9c1189a&scene=27)
+[JS中setTimeout、promise、async、await的执行顺序](https://blog.csdn.net/tiven_/article/details/126135848)
+[帮你一步步看清async/await和promise的执行顺序](https://www.sohu.com/a/285466361_216476)
+[「过程详解」async await综合题](https://segmentfault.com/a/1190000043599856)
+
+
+##### 作用域
+[面试官：说说JS作用域和作用域链，我是这样回答的](https://maimai.cn/article/detail?fid=1753910911&efid=1EcPOL4mT6iZYcu46O1pww)
+
+##### undefined和null的区别
+[undefined和null的区别](https://zhuanlan.zhihu.com/p/641299367)
 
 
