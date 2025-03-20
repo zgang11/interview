@@ -39,8 +39,13 @@
 
 #####  react事件和dom原生事件区别？react的事件机制合成事件的机制
 [事件处理](https://weread.qq.com/web/reader/81b326407198d71881ba331k6f4322302126f4922f45dec?)
+[React 合成事件详解](https://juejin.cn/post/7005129812981317668)
 
 #####  react16以后fiber架构流程 
+
+
+##### context和redux的比较
+[Redux和Context对比](https://www.cnblogs.com/qiqi715/p/10588247.html)
 
 #####  react的redux的数据流
 [通俗易懂的redux原理](https://juejin.cn/post/6863760642092826637)

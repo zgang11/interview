@@ -75,6 +75,7 @@
 [懒加载](https://weread.qq.com/web/reader/43b32c10813ab7c1fg01909ek4e73277021a4e732ced3b55?)
 
 ##### 13. 图片预加载实现原理？
+[3种Javascript图片预加载的方法详解](https://www.bilibili.com/read/cv14694583/)
 [懒加载实现原理](https://zhuanlan.zhihu.com/p/354172134?utm_id=0)
 [懒加载](https://weread.qq.com/web/reader/43b32c10813ab7c1fg01909ek4e73277021a4e732ced3b55?)
 

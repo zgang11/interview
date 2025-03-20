@@ -64,6 +64,7 @@
 
 #### rem是什么
 [相对单位](https://weread.qq.com/web/reader/7d53223071e219457d53617k6f4322302126f4922f45dec?)
+[rem和em的区别你知道么？](https://blog.csdn.net/2302_76765965/article/details/132134386)
 
 #### 画一条0.5px的线段应该怎么实现
 [CSS 画一条0.5px的线的方法（ 4种 ）](https://blog.csdn.net/cuclife/article/details/137509039)
