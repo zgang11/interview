@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>请求 5s 未完成就终止</title>
+  </head>
+  <body>
+    <script>
+      function withTimeout(promise, timeout = 5000) {
+        let isTimeout = false;
+
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => {
+            isTimeout = true;
+            reject(new Error(`Promise timed out after ${timeout}ms`));
+          }, timeout);
+        });
+
+        return Promise.race([
+          promise.then((result) => {
+            if (isTimeout) {
+              console.log("Promise resolved after timeout, ignoring...");
+              return new Promise(() => {}); // 永不会 resolve
+            }
+            return result;
+          }),
+          timeoutPromise,
+        ]);
+      }
+
+      // 使用示例
+      const longTask = new Promise((resolve) => {
+        setTimeout(() => resolve("Success!"), 6000); // 6s 后完成（超时）
+      });
+
+      withTimeout(longTask, 5000)
+        .then(console.log)
+        .catch((err) => console.error("Error:", err.message)); // 5s 后超时
+    </script>
+  </body>
+</html>

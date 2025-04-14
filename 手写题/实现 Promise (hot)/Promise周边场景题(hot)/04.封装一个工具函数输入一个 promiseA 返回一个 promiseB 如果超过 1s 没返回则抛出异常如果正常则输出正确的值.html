@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    封装一个工具函数输入一个 promiseA 返回一个 promiseB 如果超过 1s
+    没返回则抛出异常如果正常则输出正确的值
+  </title>
+</head>
+
+<body>
+  <script>
+    function withTimeout(promiseA) {
+      // 创建一个在 1 秒后拒绝的 Promise
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => {
+          reject(new Error("Promise timed out after 1s"));
+        }, 1000);
+      });
+
+      // 使用 Promise.race 来决定哪个 Promise 先完成
+      return Promise.race([promiseA, timeoutPromise]);
+    }
+
+    // 使用示例
+    const promiseA = new Promise((resolve) => {
+      // 模拟一个可能很快或很慢的操作
+      setTimeout(() => resolve("Success!"), Math.random() * 2000); // 0-2秒随机
+    });
+
+    withTimeout(promiseA)
+      .then((result) => console.log("Result:", result))
+      .catch((error) => console.log("Error:", error.message));
+  </script>
+</body>
+
+</html>

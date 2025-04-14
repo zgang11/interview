@@ -17,6 +17,10 @@
         let t = null,
           cnt = count;
         function run(...args) {
+          if(cnt === count) {
+            fn.call(this, ...args);
+            cnt--;
+          }
           if (cnt === 0) {
             clearTimeout(t);
             return;

@@ -44,7 +44,7 @@
             await task(2000, 'yellow')
             asyncStep()
         }
-        asyncStep()
+        // asyncStep()
 
         // 使用promise实现
         const step = () => {
@@ -54,6 +54,28 @@
                 .then(step)
         }
         // step()
+
+        // 使用Generator实现
+
+        function* gen() {
+            yield task(3000, 'red')
+            yield task(1000, 'green')
+            yield task(2000, 'yellow')
+        }
+        
+        var iterator = gen();
+        var genStep = function(gen, iterator){
+            var s = iterator.next();
+            if (s.done) {
+                genStep(gen, gen());
+            } else {
+                s.value.then(function() {
+                    genStep(gen, iterator);
+                });
+            }
+        }
+        
+        genStep(gen, iterator);
     </script>
 </body>
 
