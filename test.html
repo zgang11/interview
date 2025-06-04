@@ -5,104 +5,157 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <style>
-    .s-c {
-      height: 200px;
-      margin: 0 200px 0 300px;
-    }
-    .s-m {
-      width: 100%;
-      height: 100%;
-      float: left;
-      background-color: rebeccapurple;
-    }
-    .s-l {
-      position: relative;
-      width: 300px;
-      height: 100%;
-      float: left;
-      background: red;
-      margin-left: -100%;
-      left: -300px;
-    }
-    .s-r {
-      position: relative;
-      width: 200px;
-      height: 100%;
-      float: left;
-      background-color: green;
-      margin-left: -200px;
-      right: -200px;
-    }
-  </style>
-  <style>
-    .shuang-container {
-      width: 100%;
-      height: 200px;
-    }
-    .shuang-main {
-      float: left;
-      width: 100%;
-      height: 100%;
-    }
-    .shuang-middle {
-      height: 100%;
-      margin: 0 200px;
-      background-color: aqua;
-    }
-    .shuang-left {
-      float: left;
-      width: 200px;
-      height: 100%;
-      background: yellow;
-      margin-left: -100%;
-    }
-    .shuang-right {
-      float: left;
-      width: 200px;
-      height: 100%;
-      background-color: purple;
-      margin-left: -200px;
-    }
-  </style>
   <body>
-    <div class="s-c">
-      <div class="s-m">&amp; <script>alert('XSS攻击')</script></div>
-      <div class="s-l"></div>
-      <div class="s-r"></div>
-    </div>
-    <div class="shuang-container">
-      <div class="shuang-main">
-        <div class="shuang-middle"></div>
-      </div>
-      <div class="shuang-left"></div>
-      <div class="shuang-right"></div>
-    </div>
-    <script>
-      // class Watcher {
-      //   constructor(vm, expOrFn, cb) {
-      //     this.vm = vm;
-      //     // 执行this.getter()，就可以读取data.a.b.c的内容
-      //     this.getter = parsePath(expOrFn);
-      //     this.cb = cb;
-      //     this.value = this.get();
-      //   }
+    <!-- <script>
+    const p1 = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(new Error('error'))
+        console.log('here')
+      }, 5000)
+      console.log('here1')
+    })
+    const p2 = new Promise((resolve, reject) => {
+      setTimeout(resolve(p1), 30000)
+    })
+    p2.then(res => console.log(res)).catch(err => console.log(err))
+  </script> -->
 
-      //   get() {
-      //     window.target = this;
-      //     let value = this.getter.call(this.vm, this.vm);
-      //     window.target = undefined;
-      //     return value;
-      //   }
+    <!-- <script>
+      const isFunction = (func) => typeof func === "function";
+      const PENDING = "PENDING",
+        FULFILLED = "FULFILLED",
+        REJECTED = "REJECTED";
+      class MyPromise {
+        value = null;
+        status = PENDING;
+        fulfilledQ = [];
+        rejectedQ = [];
 
-      //   update() {
-      //     const oldValue = this.value;
-      //     this.value = this.get();
-      //     this.cb.call(this.vm, this.value, oldValue);
-      //   }
+        constructor(handle) {
+          if (isFunction(handle)) {
+            throw new Error("not function");
+          }
+          try {
+            handle(this._resolve.bind(this), this._reject.bind(this));
+          } catch {
+            this._reject.bind(this);
+          }
+        }
+
+        _resolve(val) {
+          const run = () => {
+            if (this.status !== PENDING) return;
+            this.status = FULFILLED;
+            const runFulfilled = (value) => {
+              let cb;
+              while ((cb = this.fulfilledQ.unshift())) {
+                cb(value);
+              }
+            };
+
+            const runRejected = (value) => {
+              let cb;
+              while ((cb = this.runRejected.unshift())) {
+                cb(value);
+              }
+            };
+
+            if (val instanceof MyPromise) {
+              val
+                .then((value) => {
+                  this.value = value;
+                  runFulfilled(value);
+                })
+                .catch((err) => {
+                  this.value = err;
+                  runRejected(value);
+                });
+            } else {
+              this.value = val;
+              runFulfilled(val);
+            }
+          };
+          setTimeout(run, 0);
+        }
+        _reject(err) {
+          if (this.status !== PENDING) return;
+          const run = () => {
+            this.status = REJECTED;
+            const runRejected = (value) => {
+              let cb;
+              while ((cb = this.runRejected.unshift())) {
+                cb(value);
+              }
+            };
+            this.value = err;
+            runRejected(err);
+          };
+          setTimeout(run, 0);
+        }
+      }
+    </script> -->
+    <!-- <script>
+      let arr = [3, 6, 7, [3, 5, 6, [3, 0], [2, 3, 40]]];
+      // function flat(arr, depth = 1) {
+      //   return depth > 0
+      //     ? arr.reduce((acc, cur) => {
+      //         return Array.isArray(cur)
+      //           ? [...acc, ...flat(cur, depth - 1)]
+      //           : [...acc, cur];
+      //       }, [])
+      //     : arr;
       // }
-      // let obj = {a: {b: {c: 1}}}
-      // // let watch = new Watcher(this, )
+      const flat = (arr, depth) => {
+        let result = []
+        if(depth <= 0) return arr
+        arr.forEach(element => {
+          if(Array.isArray(element)){
+            result = result.concat(flat(element, depth - 1))
+          }else{
+            result.push(element)
+          }
+        }); 
+        return result
+      }
+      console.log(flat(arr, Infinity))
+    </script> -->
+    <!-- <script>
+      function f() {}
+      const f1 = new f()
+
+      function instanceof_(L, R) {
+        let O = R.prototype
+        L = L.__proto__
+        while(true) {
+          if(L === null) return false
+          if(L === O) return true
+          L = L.__proto__
+        }
+      }
+
+      console.log(instanceof_({}, f))
+    </script> -->
+    <!-- <script>
+      Function.prototype.bind_ = function (context, ...args) {
+        const ctx = context ? Object(context) : window
+        context.fn = this
+        return function() {
+          return that.call(context, ...args, ...arguments)
+        }
+      }
+    </script> -->
+    <script>
+      Array.prototype.map_ = function(cb, thisBinging) {
+        if(typeof cb !== 'function') {
+          throw new Error('not function')
+        }
+        let arr = [...this]
+        let res = []
+        for(let i = 0; i < arr.length; i++) {
+          res.push(cb.call(thisBinging, arr[i], i, arr))
+        }
+        return res
+      }
     </script>
   </body>
 </html>

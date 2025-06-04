@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>探讨instanceof实现原理，并用两种方法模拟实现 instanceof
+  </title>
+  <link rel="stylesheet" href="https://www.cnblogs.com/yalong/p/10534858.html">
+</head>
+
+<body>
+  <script>
+    function f() {
+
+    }
+    function fn(){}
+
+    const f1 = new f()
+    let instanceof_ = (L, R) => {
+      let O = R.prototype
+      L = L.__proto__
+      while (1) {
+        if (L === null) {
+          return false
+        }
+        if (L === O) {
+          return true
+        }
+        L = L.__proto__
+      }
+    }
+
+    console.log(instanceof_(f1, f))
+    console.log(instanceof_(f1, fn))
+  </script>
+</body>
+
+</html>
