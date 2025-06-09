@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      写一个 mySetInterVal(fn, a, b)，每次间隔 a,a+b,a+2b 的时间，然后写一个
+      myClear，停止上面的 mySetInterVal
+    </title>
+  </head>
+  <body>
+    <!-- <script>
+      function mySetInterVal(fn, a, b) {
+        const handler = {
+          stop: false,
+          timer: null,
+        };
+        const loop = (n) => {
+          if (handler.stop) {
+            return;
+          }
+          handler.timer = setTimeout(() => {
+            fn();
+            loop(n + 1);
+          }, (a + n * b) * 1000);
+        };
+        loop(0);
+        return handler;
+      }
+
+      function myClear(handler) {
+        handler.timer && clearTimeout(handler.timer);
+        handler.stop = true;
+      }
+
+      const timer = mySetInterVal(() => console.log(new Date()), 1, 2);
+
+      myClear(timer);
+    </script> -->
+
+    <script>
+      function mySetInterVal(fn, a, b) {
+        const inter = {
+          stop: false,
+          timer: null
+        }
+        function loop(n) {
+          if(inter.stop) return
+          inter.timer = setTimeout(() => {
+            fn.call(this)
+            loop(n + 1)
+
+          }, a + n * b)
+        }
+        loop(0)
+        return inter
+      }
+      function myClear(inter) {
+        clearTimeout(inter.timer)
+        inter.stop = true
+      }
+      const timer = mySetInterVal(() => console.log(new Date()), 1000, 2000);
+
+      // myClear(timer);
+    </script>
+  </body>
+</html>

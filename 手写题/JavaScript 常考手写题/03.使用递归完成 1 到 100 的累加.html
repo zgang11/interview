@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用递归完成 1 到 100 的累加</title>
+  </head>
+  <body>
+    <script>
+      function sum(num) {
+        if (num === 1) return 1;
+        return num + sum(num - 1);
+      }
+      console.log(sum(100));
+    </script>
+    <script>
+      // 尾递归优化
+      function process(cur, total = 0) {
+        return cur === 0 ? total : process(cur - 1, total + cur);
+      }
+    </script>
+  </body>
+</html>
