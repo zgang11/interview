@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>有并发限制的Promise.all(ts类型)</title>
+  </head>
+  <body>
+    <script>
+      function sleep(text, delay = 1000) {
+        return () =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              console.log(text);
+              resolve();
+            }, delay);
+          });
+      }
+
+      const tasks = [1, 2, 3, 4, 5].map((i) => {
+        return sleep(i);
+      });
+
+      // 方案一： 基于 async-pool 方案
+      // 维护两个数组：
+
+      // allTasks
+      // poolTasks
+      // 取出 tasks[i] 作为当前的任务：
+
+      // allTasks ← task[i]
+      // poolTasks ← e = task[i].then(()=>{poolTasks.splice(poolTasks.indexOf(e),1)})
+
+      // 通过 Promise.race + await 控制 poolTasks 始终在并发数范围内，最后通过 Promise.all 实现所有任务的并发。
+
+      const asyncPool = async (tasks, poolLimit) => {
+        /* 所有异步任务执行状态 */
+        const allTasks = [];
+        /* 正在执行的任务数组 */
+        const poolTasks = [];
+
+        for (let i = 0; i < tasks.length; i++) {
+          const curTask = Promise.resolve(tasks[i]());
+          allTasks.push(curTask);
+
+          /* 当 poolLimit <= tasks.length 时，实现并发控制 */
+          if (poolLimit <= tasks.length) {
+            /* 在原有异步包裹处理操作 */
+            const e = curTask.then(() => {
+              /* 成功后，从正在执行的任务数组中删除 */
+              poolTasks.splice(poolTasks.indexOf(e), 1);
+            });
+            poolTasks.push(e);
+
+            /* poolTasks 持续增加会超出限制数量 */
+            if (poolTasks.length >= poolLimit) {
+              /* 始终控制 poolTasks 的数量 */
+              await Promise.race(poolTasks);
+            }
+          }
+        }
+
+        /* 此时 allTasks 中剩余 pending < poolTasks */
+        return Promise.all(allTasks);
+      };
+
+      asyncPool(tasks, 2);
+    </script>
+  </body>
+</html>
