@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>实现管道函数</title>
+  </head>
+  <body>
+    <script>
+      const pipe = (...fns) => {
+        if (fns.length === 0) return (v) => v;
+        if (fns.some((fn) => typeof fn !== "function")) {
+          throw new TypeError("All arguments must be functions");
+        }
+
+        return (initialValue) => fns.reduce((acc, fn) => fn(acc), initialValue);
+      };
+      const add = (x) => (y) => x + y;
+      const square = (x) => x * x;
+      const half = (x) => x / 2;
+
+      const process = pipe(
+        add(5), // 输入+5
+        square, // 平方
+        half // 减半
+      );
+
+      console.log(process(3)); // 输出: 32 = (3+5)² / 2
+    </script>
+  </body>
+</html>

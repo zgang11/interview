@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>逆对象扁平</title>
+  </head>
+  <body>
+    <script>
+      function unflattenObject(data) {
+        let result = {};
+
+        for (let key in data) {
+          let keys = key.split(".");
+          keys.reduce((r, k, i, a) => {
+            return (
+              r[k] ||
+              (r[k] = isNaN(a[i + 1])
+                ? a.length - 1 === i
+                  ? data[key]
+                  : {}
+                : [])
+            );
+          }, result);
+        }
+
+        return result;
+      }
+
+      let testObj = {
+        "a.b.c": 1,
+        "d.e": [2, 3],
+      };
+
+      console.log(unflattenObject(testObj)); // 输出：{ a: { b: { c: 1 } }, d: { e: [2,3] } }
+    </script>
+  </body>
+</html>

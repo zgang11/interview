@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>输入50a6we8y20x 输出50个a，6个we，8个y，20个x</title>
+  </head>
+  <body>
+    <script>
+      function extendsString(str) {
+        let num = 0;
+        let cur = "";
+        let res = "";
+        for (let i = 0; i < str.length; i++) {
+          if (!isNaN(Number(str[i]))) {
+            if (cur) {
+              res += cur.repeat(num);
+              cur = "";
+              num = 0;
+            }
+            num = num * 10 + Number(str[i]);
+          } else {
+            cur += str[i];
+          }
+        }
+        res += cur.repeat(num);
+        return res;
+      }
+    </script>
+  </body>
+</html>

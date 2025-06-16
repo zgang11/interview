@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>对象的合并</title>
+  </head>
+  <body>
+    <script>
+      function isObject(obj) {
+        return Object.prototype.toString.call(obj) === "[object Object]";
+      }
+
+      function mergeObject(obj1, obj2) {
+        let result = { ...obj1 };
+        for (let key in obj2) {
+          if (isObject(obj2[key]) && isObject(result[key])) {
+            result[key] = mergeObject(result[key], obj2[key]);
+          } else {
+            result[key] = obj2[key];
+          }
+        }
+        return result;
+      }
+
+      var obj1 = {
+        a: 1,
+        b: { c: 2, d: 3 },
+        e: 4,
+        h: { i: 5 },
+      };
+
+      var obj2 = {
+        a: 111,
+        b: { c: 222, f: 333 },
+        g: 444,
+        h: 666,
+      };
+
+      var mergedObj = mergeObject(obj1, obj2);
+
+      // 将结果转化为JSON并输出到#app元素中
+      document.querySelector("#app").textContent = JSON.stringify(
+        mergedObj,
+        null,
+        4
+      );
+    </script>
+  </body>
+</html>

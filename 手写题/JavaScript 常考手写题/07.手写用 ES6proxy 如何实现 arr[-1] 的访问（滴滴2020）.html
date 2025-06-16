@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>手写用 ES6proxy 如何实现 arr[-1] 的访问（滴滴2020）</title>
+  </head>
+  <body>
+    <script>
+      let arr = [1, 2, 3, 4];
+      let proxy = new Proxy(arr, {
+        get(target, key) {
+          if (key < 0) {
+            return target[target.length + parseInt(key)];
+          }
+          return target[key];
+        },
+      });
+      console.log(proxy[-2]);
+      console.log(proxy[2]);
+    </script>
+  </body>
+</html>

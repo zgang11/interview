@@ -87,6 +87,10 @@
 
 [如何获取一个对象的原型对象](https://blog.csdn.net/m0_61726249/article/details/124729851)
 
+### 原型链
+[原型链](https://weread.qq.com/web/reader/751326d0720befab7514782k0723244023c072b030ba601)
+[js原型与原型链详解](https://blog.csdn.net/Yi_qian1000/article/details/135264247)
+
 ##### 16. 数据类型有哪些，如何判断
 
 [数据类型](https://weread.qq.com/web/reader/751326d0720befab7514782k4e73277021a4e732ced3b55?)

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>输出一个等腰三角形</title>
+  </head>
+  <body>
+    <script>
+      //   *
+      //  ***
+      // *****
+      function printTriangle(n) {
+        for (let i = 0; i < n; i++) {
+          let str = "";
+          // 添加左侧的空格
+          for (let j = 0; j < n - i - 1; j++) {
+            str += " ";
+          }
+          // 添加星号
+          for (let k = 0; k < 2 * i + 1; k++) {
+            str += "*";
+          }
+
+          console.log(str);
+        }
+      }
+
+      printTriangle(5);
+    </script>
+  </body>
+</html>

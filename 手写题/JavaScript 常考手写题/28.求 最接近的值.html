@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>求 最接近的值</title>
+  </head>
+  <body>
+    <script>
+      const arr = [3, 56, 56, 23, 7, 76, -2, 345, 45, 76, 3];
+      const num = 37;
+
+      function getClose(num, arr) {
+        let res = arr[0];
+        for (let i = 1; i < arr.length; i++) {
+          if (Math.abs(arr[i] - num) < Math.abs(res - num)) {
+            res = arr[i];
+          }
+        }
+        return res;
+      }
+      const res = getClose(num, arr);
+      console.log(res);
+    </script>
+  </body>
+</html>

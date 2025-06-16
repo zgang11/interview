@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      判断一个字符串是否为驼峰字符串， judge('ByteDance','BD') -> true
+      judge('Bytedance','BD') -> false
+    </title>
+  </head>
+  <body>
+    <script>
+      function judge(str, abbr) {
+        return (
+          str
+            .match(/[A-Z][a-z]*/g)
+            .map((item) => item[0])
+            .join("") === abbr
+        );
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sum(x,y)和sum(x)(y)</title>
+  </head>
+  <body>
+    <script>
+      // 答案一;
+      function sum(a, b) {
+        if (b) {
+          return a + b;
+        } else {
+          return function (c) {
+            return a + c;
+          };
+        }
+      }
+      // 答案二;
+      function sum() {
+        var arg = arguments;
+        if (arg.length == 2) {
+          return arg[0] + arg[1];
+        } else {
+          return function (c) {
+            return arg[0] + c;
+          };
+        }
+      }
+    </script>
+  </body>
+</html>

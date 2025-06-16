@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>手写实现Vue.js的数组、对象响应式监听</title>
+  </head>
+  <body>
+    <script>
+      // 手写实现Vue.js的数组、对象响应式监听
+      // 利用Object.defineProperty(obj, prop, descriptor)实现
+      // 参数列表：
+      // obj：需要定义属性的对象
+      // prop：需要定义的属性
+      // descriptor：属性的描述描述符
+      // 返回值：返回此对象
+
+      // 基本流程：遍历为数组、对象的每一个值、属性进行绑定监听函数，
+      // 为每个属性分配一个订阅者集合的管理数组dep；然后在编译的时候在该属性的数组dep中添加订阅者
+      // 当值改变的时候，就会通知更新，作为发布者发出通知
+      // 将事件发送给dev中存储的对应订阅者watcher，并调用对应的update方法更新视图
+
+      function observe(target) {
+        // 不是对象或者数组直接返回
+        if (typeof target !== "object" || target === null) return target;
+        // 如果是数组则需要更改原型
+        if (Array.isArray(target)) {
+          // 对于数组直接扩展方法对影响原型，所以需要处理
+          // 该方法创建新对象，隐式原型原型指向Array.prototype
+          let arrPrototype = Array.prototype;
+          const arrProto = Object.create(arrPrototype);
+          target.forEach((methodName) => {
+            arrProto[methodName] = function () {
+              arrPrototype[methodName].call(this, ...arguments);
+            };
+          });
+          target.__proto__ = arrProto; //如果target为数组则改变原型指向,使用重写后的方法
+        }
+        for (let key in target) {
+          // 遍历
+          defineProperty(target, key, target[key]);
+        }
+      }
+
+      function defineProperty(target, key, value) {
+        //监听函数
+        observe(value); //当value也为对象时进行递归深度监听 例如上面定义的obj.a
+
+        Object.defineProperty(target, key, {
+          get() {
+            return value;
+          },
+          set(newValue) {
+            if (newValue !== value) {
+              update(value, newValue);
+              //通知更新，作为发布者发出通知，
+              // 实际中会将事件发送给dev中存储的对应watcher，并调用对应的update方法更新视图
+              value = newValue;
+              observe(newValue); //当新值赋值为对象时, 对该对象绑定监听
+            }
+          },
+        });
+      }
+
+      function update(oldValue, newValue) {
+        //模拟更新操作
+        console.log(`oldValue: ${oldValue}, newValue: ${newValue}`);
+      }
+
+      let obj = {
+        a: {
+          b: 1,
+          c: 2,
+        },
+        d: 4,
+      };
+
+      observe(obj); //监听对象，绑定defineProperty方法
+      console.log(obj.a.b); //调用get方法
+      obj.a.b = 3; //直接修改b的值 监听成功
+      obj.a = 4; //把a赋值成基本类型 监听成功
+      obj.d = 5; //直接修改d的值 监听成功
+      obj.d = {
+        //把d修改成对象 监听成功
+        e: 8,
+      };
+
+      let arr = ["test", "try", ["deep"]];
+      observe(arr); //监听数组，绑定defineProperty方法
+      console.log(arr[0]); //调用get方法
+      arr[0] = "change"; //修改数组的第一层值
+      arr[2][0] = "66"; // 修改数组的第二层值
+      console.log(arr[2]); //验证修改成功
+    </script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      判断A、B数组的包含关系（值和数量），A属于B返回1，B属于A返回2，两者相等返回0，其他返回-1
+    </title>
+  </head>
+  <body>
+    <script>
+      function arrayToFrequencyObject(arr) {
+        return arr.reduce((obj, item) => {
+          obj[item] = (obj[item] || 0) + 1;
+          return obj;
+        }, {});
+      }
+
+      function compareArrays(A, B) {
+        const freqA = arrayToFrequencyObject(A);
+        const freqB = arrayToFrequencyObject(B);
+
+        let isASubsetOfB = true;
+        let isBSubsetOfA = true;
+
+        for (let key in freqA) {
+          if (!(key in freqB && freqA[key] <= freqB[key])) {
+            isASubsetOfB = false;
+            break;
+          }
+        }
+
+        for (let key in freqB) {
+          if (!(key in freqA && freqB[key] <= freqA[key])) {
+            isBSubsetOfA = false;
+            break;
+          }
+        }
+
+        if (isASubsetOfB && isBSubsetOfA) {
+          return 0; // A and B are equal
+        } else if (isASubsetOfB) {
+          return 1; // A is a subset of B
+        } else if (isBSubsetOfA) {
+          return 2; // B is a subset of A
+        } else {
+          return -1; // A and B are disjoint
+        }
+      }
+    </script>
+  </body>
+</html>

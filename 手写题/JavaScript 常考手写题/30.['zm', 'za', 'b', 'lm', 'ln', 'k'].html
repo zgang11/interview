@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>['zm', 'za', 'b', 'lm', 'ln', 'k']</title>
+  </head>
+  <body>
+    <script>
+      //     实现一个函数，
+      // 把一个字符串数组（[‘zm’, ‘za’, ‘b’, ‘lm’, ‘ln’, ‘k’]） 格式化成一个对象
+      // { ‘b’: [‘b’], ‘k’: [‘k’], ‘l’: [‘lm’, ‘ln’], ‘z’: [‘za’, ‘zm’] }
+
+      const arr = ["zm", "za", "b", "lm", "ln", "k"];
+
+      function parse(arr) {
+        let obj = {};
+        arr.forEach((item) => {
+          let key = item.slice(0, 1);
+          obj[key] = [];
+        });
+        for (let str of arr) {
+          for (let index in obj) {
+            if (str.slice(0, 1) == index) {
+              obj[index].push(str);
+            }
+          }
+        }
+        return obj;
+      }
+      console.log(parse(arr));
+    </script>
+  </body>
+</html>

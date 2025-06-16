@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript怎么清空数组</title>
+  </head>
+  <body>
+    <script>
+      let sheldon = ["c", "o", "o", "p", "e", "r"];
+      //methods 1
+      sheldon = [];
+
+      // methods 2
+      sheldon.length = 0;
+
+      // methods 3
+      sheldon.splice(0, sheldon.length);
+
+      // methods 4
+      while (sheldon.length > 0) sheldon.pop();
+
+      //
+    </script>
+  </body>
+</html>

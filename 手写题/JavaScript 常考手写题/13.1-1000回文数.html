@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1-1000回文数</title>
+  </head>
+  <body>
+    <script>
+      function isReverse(num) {
+        let newNum = num + "";
+        let l = 0,
+          r = newNum.length - 1;
+        while (l < r) {
+          if (newNum[l] !== newNum[r]) return false;
+          l++;
+          r--;
+        }
+        return true;
+      }
+      const res = [];
+      for (let i = 1; i <= 1000; i++) {
+        if (isReverse(i)) res.push(i);
+      }
+      console.log(res);
+    </script>
+  </body>
+</html>

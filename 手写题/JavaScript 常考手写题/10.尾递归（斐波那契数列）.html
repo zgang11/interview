@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>尾递归（斐波那契数列）</title>
+  </head>
+  <body>
+    <script>
+      function Fibonacci(n, num = 1, sum = 1) {
+        if (n <= 2) {
+          return sum;
+        }
+        return Fibonacci(n - 1, sum, num + sum);
+      }
+    </script>
+  </body>
+</html>

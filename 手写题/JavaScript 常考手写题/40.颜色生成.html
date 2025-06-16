@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>颜色生成</title>
+  </head>
+  <body>
+    <script>
+      function main() {
+        return `#${rand(250)}${rand(250)}${rand(250)}`;
+        function rand(n) {
+          return (Math.floor(Math.random() * n) + 1).toString(16);
+        }
+      }
+    </script>
+  </body>
+</html>

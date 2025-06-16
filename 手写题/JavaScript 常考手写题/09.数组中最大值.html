@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>之字形打印矩阵</title>
+  </head>
+  <body>
+    <script>
+      // 三种方法
+      let arr = [5, 2, 7, 9];
+      // let res = Math.max(...arr)
+      // let res = arr.sort()[arr.length-1]
+      let res = arr[0];
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] > res) {
+          res = arr[i];
+        }
+      }
+      console.log(res);
+    </script>
+  </body>
+</html>

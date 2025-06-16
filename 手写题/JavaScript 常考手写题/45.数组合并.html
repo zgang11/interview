@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数组合并</title>
+  </head>
+  <body>
+    <!-- <script>
+      let arr1 = [1, 2, 3];
+      let arr2 = [3, 4, 5];
+      let merged = [...new Set([...arr1, ...arr2])];
+      console.log(merged); // 输出：[1 ,2 ,3 ,4 ，5]
+    </script> -->
+    <script>
+      let arr1 = [1, 2, 3];
+      let arr2 = [3, 4, 5];
+      let merged = arr1.concat(arr2).filter((item, index, arr) => {
+        console.log(arr)
+        return arr.indexOf(item) === index;
+      });
+      console.log(merged); // 输出：[1 ,2 ,3 ,4 ，5]
+    </script>
+  </body>
+</html>

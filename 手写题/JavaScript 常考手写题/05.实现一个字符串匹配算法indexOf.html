@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>实现一个字符串匹配算法indexOf</title>
+  </head>
+  <body>
+    <script>
+      // 实现字符串匹配indexOf方法
+      // string.indexOf(searchvalue,start)
+      //        searchvalue:必需。规定需检索的字符串值。
+      //        start:可选的整数参数。规定在字符串中开始检索的位置。它的合法取值是 0 到 string Object.length - 1。
+      //              如省略该参数，则将从字符串的首字符开始检索。
+      String.prototype.indexOf = function myIndexOf(searchvalue, start = 0) {
+        console.log("myIndexOf");
+        if (typeof searchvalue !== "string")
+          throw TypeError("需检索值非字符串");
+        if (start < 0 || start > this.length)
+          throw TypeError(
+            "开始检索的位置取值不合法，合法取值是 0 到 string.length - 1"
+          );
+        for (let index = start; index < this.length; index++) {
+          if (this[index] === searchvalue[0]) {
+            let len = searchvalue.length;
+            let i = 0;
+            while (i < len && this[index + i] === searchvalue[i]) {
+              // console.log("this[index + i]", this[index + i], searchvalue[i]);
+              i++;
+            }
+            // console.log(i);
+            if (i === len) return index;
+          }
+        }
+      };
+
+      str = "test tesy";
+      console.log(str.indexOf("t"));
+    </script>
+  </body>
+</html>

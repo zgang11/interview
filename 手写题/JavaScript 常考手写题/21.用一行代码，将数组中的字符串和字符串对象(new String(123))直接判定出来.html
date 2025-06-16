@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用一行代码，将数组中的字符串和字符串对象(new String(123))直接判定出来</title>
+</head>
+<body>
+  <script>
+    let arr = ['hello', new String('123'), 123, true, {}, [], null];
+    let stringItems = arr.filter(item => typeof item === 'string' || item instanceof String);
+  </script>
+</body>
+</html>

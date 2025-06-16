@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>对象扁平化</title>
+  </head>
+  <body>
+    <script>
+      // 递归
+      function flattenObject(obj, prefix = "", res = {}) {
+        for (let key in obj) {
+          let newKey = prefix ? `${prefix}.${key}` : key;
+          if (
+            typeof obj[key] === "object" &&
+            obj[key] !== null &&
+            !(obj[key] instanceof Date)
+          ) {
+            flattenObject(obj[key], newKey, res);
+          } else {
+            res[newKey] = obj[key];
+          }
+        }
+        return res;
+      }
+      // 堆栈
+      function flattenObjectStack(obj) {
+        const stack = [[[], obj]];
+        const result = {};
+
+        while (stack.length > 0) {
+          const [keys, value] = stack.pop();
+
+          if (
+            typeof value === "object" &&
+            value !== null &&
+            !(value instanceof Date)
+          ) {
+            for (let k in value) {
+              stack.push([[...keys, k], value[k]]);
+            }
+          } else {
+            result[keys.join(".")] = value;
+          }
+        }
+
+        return result;
+      }
+    </script>
+  </body>
+</html>

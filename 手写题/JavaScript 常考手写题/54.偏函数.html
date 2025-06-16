@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>偏函数</title>
+  </head>
+  <body>
+    <script>
+      // 偏函数：先将函数的一些参数固定化，后续只需要传递剩余参数即可，减少重复传参
+
+      function partial(fn, ...args) {
+        if (typeof fn !== "function") {
+          throw new TypeError(`${typeof fn} is not a function`);
+        }
+        return function (...arr) {
+          fn.apply(fn, args.concat(arr));
+        };
+      }
+      function a(a, b, c) {
+        console.log(a, b, c);
+      }
+
+      const fn = partial(a, 1, 2);
+
+      fn(3);
+    </script>
+  </body>
+</html>

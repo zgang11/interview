@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>随机生成字符串</title>
+  </head>
+  <body>
+    <script>
+      //  随机生成字符串
+
+      function getRandomStr(len) {
+        let res = [];
+        for (let i = 0; i < len; i++) {
+          // unicode选取范围32到126
+          let temp = getRndInteger(32, 126);
+          res.push(temp);
+        }
+        return String.fromCharCode(...res);
+      }
+
+      // 以下函数返回 min（包含）～ max（包含）之间的数字：
+      function getRndInteger(min, max) {
+        // 由于random含0不含1，所以直接加一即可实现双闭合
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      console.log(getRandomStr(6));
+    </script>
+  </body>
+</html>

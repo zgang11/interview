@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>将十进制数字转为二进制数字字符串</title>
+  </head>
+  <body>
+    <script>
+      // 使用内置方法
+      let x = 10;
+      console.log(x.toString(2)); // "1010"
+      //手动实现
+       x = 10;
+      let str = "";
+      while (x) {
+        str += x & 1 ? "1" : "0";
+        x >>= 1;
+      }
+      console.log(str.split("").reverse().join("")); // "1010"
+    </script>
+  </body>
+</html>
+l
