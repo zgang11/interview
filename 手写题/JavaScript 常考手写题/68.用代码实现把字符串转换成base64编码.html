@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用代码实现把字符串转换成base64编码</title>
+</head>
+<body>
+  <script>
+    function encode(str){
+      const encodestr = encodeURI(str);
+      const base64 = btoa(encodestr);
+      return base64;
+  }
+  </script>
+</body>
+</html>

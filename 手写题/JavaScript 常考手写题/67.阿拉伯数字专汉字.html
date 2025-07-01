@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>阿拉伯数字专汉字</title>
+  </head>
+  <body>
+    <script>
+      function numToChinese(num) {
+        const digits = "零一二三四五六七八九";
+        const units = ["", "十", "百", "千"];
+        const bigUnits = ["", "万", "亿", "万亿"];
+
+        const numStr = num.toString();
+        const len = numStr.length;
+
+        let chineseNumber = "";
+        for (let unitIndex = len - 1; unitIndex >= 0; unitIndex--) {
+          const digit = numStr[len - 1 - unitIndex];
+
+          if (digit === "0") {
+            if (
+              chineseNumber[chineseNumber.length - 1] !== digits[0] &&
+              unitIndex !== 0
+            ) {
+              chineseNumber += digits[0];
+            }
+          } else {
+            chineseNumber += digits[digit] + units[unitIndex % 4];
+          }
+
+          if (unitIndex % 4 === 0 && unitIndex < 12) {
+            chineseNumber += bigUnits[Math.floor(unitIndex / 4)];
+          }
+        }
+
+        return chineseNumber;
+      }
+      console.log(numToChinese(102345060));
+    </script>
+  </body>
+</html>

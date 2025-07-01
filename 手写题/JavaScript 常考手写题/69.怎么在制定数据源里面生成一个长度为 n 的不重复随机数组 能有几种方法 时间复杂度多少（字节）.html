@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      怎么在制定数据源里面生成一个长度为 n 的不重复随机数组 能有几种方法
+      时间复杂度多少（字节）
+    </title>
+  </head>
+  <body>
+    <script>
+      // 洗牌算法
+      function fisherYates(source, n) {
+        if (n > source.length) {
+          throw new Error("需要的长度超过了数据源大小");
+        }
+
+        // 复制原数组，避免修改原数据
+        const copy = [...source];
+
+        // Fisher-Yates洗牌算法
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+
+        return copy.slice(0, n);
+      }
+
+      // 随机抽样不放回
+      function generateRandomArrayByPickAndRemove(source, n) {
+        if (n > source.length) {
+          throw new Error("需要的长度超过了数据源大小");
+        }
+
+        const result = [];
+        const usedIndices = new Set();
+
+        while (result.length < n) {
+          const randomIndex = Math.floor(Math.random() * source.length);
+          if (!usedIndices.has(randomIndex)) {
+            usedIndices.add(randomIndex);
+            result.push(source[randomIndex]);
+          }
+        }
+
+        return result;
+      }
+    </script>
+  </body>
+</html>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://github.com/sisterAn/JavaScript-Algorithms/issues/116">
 </head>
 <body>
-    <script>
+    <!-- <script>
         Object._is = (x, y) => {
             if(x === y){
                 return x !== 0 || y !== 0 || 1/x === 1/y
@@ -17,6 +17,37 @@
             }
         }
         console.log(Object._is(+0, -0))
+    </script> -->
+    <script>
+        Object._is = function(x, y) {
+            if(x === y) {
+                return x !== 0 || y !== 0 || 1/x === 1/y
+            } else {
+                return x !== x || y !== y
+            }
+        }
+        console.log(Object._is(NaN, NaN))
+        console.log(Object._is(+0, -0))
+
+
+        var spiralArray = function(array) {
+        let m = array.length, n = array[0].length, ans = []
+        let total = m * n - 1, derection = [[0, 1], [1, 0], [0, -1], [-1, 0]]
+        let vis = new Array(m).fill(0).map(() => new Array(n).fill(0)), derc = 0, i = j = 0
+        for(let i = 0; i < total; i++) {
+            ans.push(array[i][j])
+            vis[i][j] = 
+            let [i_, j_] = derection[derc]
+            let n_i = i_ + i, n_j = j_ + j
+            while(n_i < 0 || n_i >= m || n_j < 0 || n_j >= n || !vis[n_i][n_j]) {
+                derc = (derc + 1) % 4
+                let [i_, j_] = derection[derc]
+            }
+            i = n_i
+            j = n_j
+        }
+        return ans
+        };
     </script>
 </body>
 </html>

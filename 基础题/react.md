@@ -74,3 +74,8 @@
 ##### 函数组件重新渲染的时候怎么拿到useState之前的状态，而不是得到初始化的状态
 [React 如何获取上一个 State 的值？](https://blog.csdn.net/weixin_42650595/article/details/131857232)
 
+##### 函数组件重新渲染的时候怎么拿到useState之前的状态，而不是得到初始化的状态
+[React 如何获取上一个 State 的值？](https://blog.csdn.net/weixin_42650595/article/details/131857232)
+
+##### 实现简易版本的useState
+[React 如何获取上一个 State 的值？](https://blog.csdn.net/weixin_42650595/article/details/131857232)

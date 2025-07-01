@@ -6,7 +6,7 @@
   <title>Document</title>
 </head>
 <body>
-  <script>
+  <!-- <script>
     // https://blog.csdn.net/csD_Dscnnnnnnn/article/details/123469977
     let start = +new Date()
     let count = 1
@@ -20,6 +20,25 @@
       setTimeout(loop, curTimeout)
     }
     setTimeout(loop, timeout)
+  </script> -->
+
+  <script>
+    const setInterval_ = (timeout) => {
+      let start = +new Date()
+      let times = 0, timer = null
+      const loop = () => {
+        let now = +new Date()
+        let offset = now - (start + timeout * times)
+        timer = (() => {
+          console.log("times:", times)
+          times++
+          loop()
+        }, timeout - offset)
+      }
+      loop(timeout)
+      return timer
+    }
+    setInterval_(1000)
   </script>
 </body>
 </html>
