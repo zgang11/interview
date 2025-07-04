@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--
+        简要思路： 
+        1. 首先确定的是v-bind 是单向绑定，不需要对绑定的元素进行监视
+        2. v-bind 渲染的话，是对整个dom树上的有效元素中进行渲染
+        3. v-bind:src ="" 等价于 :src ="" 
+        黑名单指["head", "body", "script", "html"] 这些无效元素
+        效果步骤实现：
+        0. 通过字典来mock数据，比如 {"msg":"hello"}
+        1. 获取整个dom树中所有元素，并且筛出非黑名单里面的元素，将这些元素存入tagList
+        2. 检查每个元素的属性名 是否以 ： 开头或者 v-bind: 开头，如果是为合法bind属性
+        3. 如果合法bind属性，提取出 ：后的属性名称 或 v-bind:后的属性名称
+        4. 遍历tagList数组，通过setAttribute(attributeName, dic[attributeValue])
+        实现数据单向绑定
+
+        特例：
+        style和class属性，绑定增强
+        对于 数组和对象 也能进行绑定
+     -->
+    <img :src="img1" />
+    <img v-bind:src="img2" />
+    <div :style="sty1">11</div>
+    <p :class="list"></p>
+  </body>
+
+  <script>
+    // mock数据对应的映射关系, key-value , value可以是值，也可以是数组，也可以是对象
+    let dic = {
+      img1: "https://cdn.zutjlx.site/image/1672844542112.png",
+      img2: "https://cdn.zutjlx.site/image/202210281154371.png",
+      object1: {
+        class1: "1",
+        class2: "2",
+      },
+      list: ["title", "active"],
+      sty1: {
+        color: "red",
+        width: "800px",
+        height: "400px",
+      },
+    };
+    // console.log(typeof dic["object1"])
+    // console.log(typeof dic["img1"])
+    let tags = document.getElementsByTagName("*");
+    // 黑名单
+    let tagsDict = ["head", "body", "script", "html"];
+    // 存放有效dom元素的数组
+    let tagList = [];
+    for (let i = 0; i < tags.length; i++) {
+      const element = tags[i];
+      // 如果不在特定标签黑名单里面再添加元素
+      let flag = true;
+      for (let j = 0; j < tagsDict.length; j++) {
+        // 字符串转小写
+        if (element.tagName.toLowerCase() == tagsDict[j]) {
+          flag = false;
+          break;
+        }
+      }
+      // 如果不在黑名单里面，追加元素
+      if (flag) {
+        tagList.push(element);
+      }
+    }
+
+    // 检验属性名是否以 :开头或者以v-bind:开头
+    function check(str) {
+      if (str[0] == ":" || str.substring(0, 7) == "v-bind:") {
+        return 1;
+      }
+      return 0;
+    }
+    // 检验属性合法后 ， 提取有效属性和属性值
+    function getAttributes(str) {
+      if (check(str)) {
+        if (str[0] == ":") {
+          return str.substring(1);
+        } else {
+          return str.substring(7);
+        }
+      }
+      return "";
+    }
+    // 判断是否需要绑定加强
+    // 如果是style和class 需要绑定加强
+    function checkSpe(str) {
+      if (str == "style" || str == "class") {
+        return true;
+      }
+      return false;
+    }
+    // 遍历tagList，获取每个元素
+    for (let i = 0; i < tagList.length; i++) {
+      const element = tagList[i];
+      let attributes = element.attributes;
+      // 遍历元素的每一个属性
+      for (let j = 0; j < attributes.length; j++) {
+        let attributeName = attributes[j].name;
+        let attributeValue = attributes[j].value;
+        attributeName = getAttributes(attributeName);
+        if (
+          typeof attributeName == "undefined" ||
+          attributeName.length == 0 ||
+          attributeName == null
+        ) {
+          continue;
+        }
+        // 区分 key-value中的value是不是对象或数组
+        if (typeof dic[attributeValue] == "object") {
+          // 如果不是 数组，而是对象的形式
+          if (!Array.isArray(dic[attributeValue])) {
+            if (!checkSpe(attributeName)) {
+              element.setAttribute(attributeName, dic[attributeValue]);
+            } else {
+              // style和class绑定加强
+              let styList = [];
+              // 对象解构 一个个对key-value配对，并绑定属性和值
+              for (const key in dic[attributeValue]) {
+                if (Object.hasOwnProperty.call(dic[attributeValue], key)) {
+                  styList.push([key, dic[attributeValue][key]]);
+                }
+              }
+              styList.toString = function () {
+                return this.join(";").replaceAll(",", ":");
+              };
+              element.setAttribute(attributeName, styList.toString());
+            }
+          } else {
+            dic[attributeValue].toString = function () {
+              return this.join(" ");
+            };
+            // [1,2,3] 转成 "1,2,3"
+            element.setAttribute(attributeName, dic[attributeValue].toString());
+          }
+        }
+        // 不是对象或数组 直接绑定
+        else {
+          // 关键一步 更改属性
+          element.setAttribute(attributeName, dic[attributeValue]);
+        }
+      }
+    }
+  </script>
+</html>

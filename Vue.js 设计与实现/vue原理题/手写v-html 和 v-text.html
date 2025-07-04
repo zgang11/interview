@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root">
+      <div v-text="str" id="ss"></div>
+      <div v-html="template" id="temp"></div>
+    </div>
+  </body>
+  <script>
+    // v-html ： 获取 dom 根据innerHTML操作dom
+    // v-text ： 获取 dom 根据innerText 操作dom
+    // 慎用 v-html ， 如果使用不当，可能被用户提交的内容造成xxs 攻击
+    let dic = {
+      str: "test",
+      template: `<a style='color:red' href='https://www.baidu.com?token=xxx' onclick='alert(1)' >hhh</a>`,
+    };
+
+    let strDiv = document.getElementById("ss");
+    let tempDiv = document.getElementById("temp");
+
+    function vtext(element) {
+      let attributes = element.attributes;
+      // 遍历元素的每一个属性
+      for (let j = 0; j < attributes.length; j++) {
+        let attributeName = attributes[j].name;
+        let attributeValue = attributes[j].value;
+        if (attributeName == "v-text") element.innerText = dic[attributeValue];
+      }
+    }
+
+    function vhtml(element) {
+      let attributes = element.attributes;
+      // 遍历元素的每一个属性
+      for (let j = 0; j < attributes.length; j++) {
+        let attributeName = attributes[j].name;
+        let attributeValue = attributes[j].value;
+        if (attributeName == "v-html") element.innerHTML = dic[attributeValue];
+      }
+    }
+
+    vtext(strDiv);
+    vhtml(tempDiv);
+  </script>
+</html>

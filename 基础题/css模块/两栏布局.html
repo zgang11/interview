@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>两栏布局</title>
+</head>
+<style>
+    .box{
+        /* display: flex; */
+    }
+    .div1 {
+        width: 200px;
+        height: 300px;
+        background-color: red;
+        float: left;
+    }
+
+    .div2 {
+        height: 300px;
+        background-color: yellow;
+        overflow: hidden;
+    }
+    .div1-o {
+        width: 200px;
+        height: 300px;
+        background-color: rgba(255, 0, 0, 0.626);
+        float: left;
+    }
+
+    .div2-o {
+        height: 300px;
+        background-color: rgb(43, 151, 15);
+        margin-left: 200px;
+    }
+
+    .box-f{
+        display: flex;
+    }
+    .div1-f{
+        width: 200px;
+        height: 300px;
+        background-color: yellow;
+    }
+    .div2-f{
+        flex: 1;
+        height: 300px;
+        background: blue;
+    }
+    .div1-position{
+        width: 200px;
+        height: 300px;
+        position: absolute;
+        background-color: green;
+    }
+    .div2-position{
+        margin-left: 200px;
+        height: 300px;
+        background: cadetblue;
+    }
+</style>
+
+<body>
+    <div class="box">
+        <div class="div1">div1</div>
+        <div class="div2">div2</div>
+    </div>
+    <div class="box">
+        <div class="div1-o">div1</div>
+        <div class="div2-o">div2</div>
+    </div>
+    <div class="box-f">
+        <div class="div1-f">div1</div>
+        <div class="div2-f">div2</div>
+    </div>
+    <div class="box-position">
+          <div class="div1-position">div1</div>
+          <div class="div2-position">div2</div>
+    </div>
+</body>
+
+</html>
