@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4.6 避免无线递归循环</title>
+</head>
+
+<body>
+    <script>
+        // 4.5 嵌套的effect与effect栈
+        let activeEffect
+        let effectStatck = []
+
+        function effect(fn) {
+            const effectFn = () => {
+                cleanup(effectFn)
+                activeEffect = effectFn
+                effectStatck.push(effectFn)
+                fn()
+                effectStatck.pop()
+                activeEffect = effectStatck[effectStatck.length - 1]
+            }
+            effectFn.deps = []
+            effectFn()
+        }
+
+        function cleanup(effectFn) {
+            console.log(effectFn.deps)
+            for (let i = 0; i < effectFn.deps.length; i++) {
+                let deps = effectFn.deps[i]
+                deps.delete(effectFn)
+            }
+            effectFn.deps.length = 0
+        }
+
+        let temp1, temp2
+        function effectFn1() {
+            console.log("effectFn1执行")
+
+            effect(function effectFn2() {
+                console.log("effectFn2执行")
+                obj.bar++
+            })
+            temp1 = obj.foo
+        }
+
+        const data = { bar: 1, foo: 'foo' }
+
+        let bucket = new WeakMap()
+        const obj = new Proxy(data, {
+            get(target, key) {
+                track(target, key)
+                return target[key]
+            },
+            set(target, key, newValue) {
+                target[key] = newValue
+                trigger(target, key, newValue)
+            }
+        })
+
+        function track(target, key) {
+            if (!activeEffect) return
+            let depsMap = bucket.get(target)
+            if (!depsMap) {
+                bucket.set(target, depsMap = new Map())
+            }
+            let deps = depsMap.get(key)
+            if (!deps) {
+                depsMap.set(key, deps = new Set())
+            }
+            deps.add(activeEffect)
+            activeEffect.deps.push(deps)
+        }
+
+        function trigger(target, key, value) {
+            let depsMap = bucket.get(target)
+            if (!depsMap) return
+            let deps = depsMap.get(key)
+            let effectToRun = new Set(deps)
+            effectToRun.forEach(fn => fn())
+        }
+
+
+        effect(effectFn1)
+        setTimeout(() => {
+            obj.bar++
+        }, 2000)
+
+    </script>
+    <!-- 优化后代码 -->
+    <script>
+    //   let activeEffect
+    //   let effectStatck = []
+
+    //   function effect(fn) {
+    //     const effectFn = () => {
+    //       cleanup(effectFn)
+    //       activeEffect = effectFn
+    //       effectStatck.push(effectFn)
+    //       fn()
+    //       effectStatck.pop()
+    //       activeEffect = effectStatck[effectStatck.length - 1]
+    //     }
+    //     effectFn.deps = []
+    //     effectFn()
+    //   }
+
+    //   function cleanup(effectFn) {
+    //     console.log(effectFn.deps)
+    //     for (let i = 0; i < effectFn.deps.length; i++) {
+    //       let deps = effectFn.deps[i]
+    //       deps.delete(effectFn)
+    //     }
+    //     effectFn.deps.length = 0
+    //   }
+
+
+    //   function fn() {
+    //     document.body.innerText = obj.foo
+    //     obj.foo = obj.foo++
+    //   }
+
+    //   const data = { foo: 1 }
+
+    //   let bucket = new WeakMap()
+    //   const obj = new Proxy(data, {
+    //     get(target, key) {
+    //       track(target, key)
+    //       return target[key]
+    //     },
+    //     set(target, key, newValue) {
+    //       target[key] = newValue
+    //       trigger(target, key, newValue)
+    //     }
+    //   })
+
+    //   function track(target, key) {
+    //     if (!activeEffect) return
+    //     let depsMap = bucket.get(target)
+    //     if (!depsMap) {
+    //       bucket.set(target, depsMap = new Map())
+    //     }
+    //     let deps = depsMap.get(key)
+    //     if (!deps) {
+    //       depsMap.set(key, deps = new Set())
+    //     }
+    //     deps.add(activeEffect)
+    //     activeEffect.deps.push(deps)
+    //   }
+
+    //   function trigger(target, key, value) {
+    //     let depsMap = bucket.get(target)
+    //     if (!depsMap) return
+    //     let deps = depsMap.get(key)
+        
+    //     //////////// add ///////////
+    //     const effectsToRun = new Set()
+    //     deps && deps.forEach(dep => {
+    //       if(dep !== activeEffect){
+    //         effectsToRun.add(dep)
+    //       }
+    //     })
+    //     effectsToRun.forEach(effect => effect())
+    //   }
+
+
+    //   effect(fn)
+    //   setTimeout(() => {
+    //     obj.foo++
+    //   }, 2000)
+
+    </script>
+</body>
+
+</html>
