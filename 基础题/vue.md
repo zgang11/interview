@@ -2,6 +2,7 @@
 
 ### setup
 [setup](https://blog.csdn.net/qq_40340943/article/details/124381843)
+[Vue生命周期与setup深入详解](https://www.jb51.net/article/263754.htm)
 [12.5　setup 函数的作用与实现](https://weread.qq.com/web/reader/c5c32170813ab7177g0181aek98f3284021498f137082c2e?)
 
 ### 组合式 API (Composition API) 好处？

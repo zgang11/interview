@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>自动脱 ref</title>
+  </head>
+  <body>
+    <script>
+       function proxyRefs(target) {
+         return new Proxy(target, {
+           get(target, key, receiver) {
+             const value = Reflect.get(target, key, receiver)
+             return value.__v_isRef ? value.value : value
+           },
+           set(target, key, newValue, receiver) {
+             // 通过 target 读取真实值
+             const value = target[key]
+             // 如果值是 Ref，则设置其对应的 value 属性值
+             if (value.__v_isRef) {
+               value.value = newValue
+               return true
+             }
+             return Reflect.set(target, key, newValue, receiver)
+           }
+         })
+       }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8.11　Fragment</title>
+  </head>
+  <body>
+    <script>
+      while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+        // 增加两个判断分支，如果头尾部节点为 undefined，则说明该节点已经被处理过了，直接跳到下一个位置
+        if (!oldStartVNode) {
+          oldStartVNode = oldChildren[++oldStartIdx];
+        } else if (!oldEndVNode) {
+          oldEndVNode = newChildren[--oldEndIdx];
+        } else if (oldStartVNode.key === newStartVNode.key) {
+          // 省略部分代码
+        } else if (oldEndVNode.key === newEndVNode.key) {
+          // 省略部分代码
+        } else if (oldStartVNode.key === newEndVNode.key) {
+          // 省略部分代码
+        } else if (oldEndVNode.key === newStartVNode.key) {
+          // 省略部分代码
+        } else {
+          const idxInOld = oldChildren.findIndex(
+            (node) => node.key === newStartVNode.key
+          );
+          if (idxInOld > 0) {
+            const vnodeToMove = oldChildren[idxInOld];
+            patch(vnodeToMove, newStartVNode, container);
+            insert(vnodeToMove.el, container, oldStartVNode.el);
+            oldChildren[idxInOld] = undefined;
+          } else {
+            // 将 newStartVNode 作为新节点挂载到头部，使用当前头部节点 oldStartVNode.el 作为锚点
+            patch(null, newStartVNode, container, oldStartVNode.el);
+          }
+          newStartVNode = newChildren[++newStartIdx];
+        }
+      }
+
+      if (oldEndIdx < oldStartIdx && newStartIdx <= newEndIdx) {
+        // 添加新节点
+        // 省略部分代码
+      } else if (newEndIdx < newStartIdx && oldStartIdx <= oldEndIdx) {
+        // 移除操作
+        for (let i = oldStartIdx; i <= oldEndIdx; i++) {
+          unmount(oldChildren[i]);
+        }
+      }
+    </script>
+  </body>
+</html>

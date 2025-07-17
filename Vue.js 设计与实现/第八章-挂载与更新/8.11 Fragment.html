@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8.11　Fragment</title>
+  </head>
+  <body>
+    <script>
+      function patch(n1, n2, container) {
+        if (n1 && n1.type !== n2.type) {
+          unmount(n1);
+          n1 = null;
+        }
+
+        const { type } = n2;
+
+        if (typeof type === "string") {
+          // 省略部分代码
+        } else if (type === Text) {
+          // 省略部分代码
+        } else if (type === Fragment) {
+          // 处理 Fragment 类型的 vnode
+          if (!n1) {
+            // 如果旧 vnode 不存在，则只需要将 Fragment 的 children 逐个挂载即可
+            n2.children.forEach((c) => patch(null, c, container));
+          } else {
+            // 如果旧 vnode 存在，则只需要更新 Fragment 的 children 即可
+            patchChildren(n1, n2, container);
+          }
+        }
+      }
+
+      //  unmount 函数也需要支持 Fragment 类型的虚拟节点的卸载
+      function unmount(vnode) {
+        // 在卸载时，如果卸载的 vnode 类型为 Fragment，则需要卸载其 children
+        if (vnode.type === Fragment) {
+          vnode.children.forEach((c) => unmount(c));
+          return;
+        }
+        const parent = vnode.el.parentNode;
+        if (parent) {
+          parent.removeChild(vnode.el);
+        }
+      }
+    </script>
+  </body>
+</html>

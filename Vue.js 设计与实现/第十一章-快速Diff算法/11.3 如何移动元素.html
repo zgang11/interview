@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8.11　Fragment</title>
+  </head>
+  <body>
+    <script>
+            01 if (moved) {
+      02   const seq = lis(sources)
+      03
+      04   // s 指向最长递增子序列的最后一个元素
+      05   let s = seq.length - 1
+      06   // i 指向新的一组子节点的最后一个元素
+      07   let i = count - 1
+      08   // for 循环使得 i 递减，即按照图 11-24 中箭头的方向移动
+      09   for (i; i >= 0; i--) {
+      10     if (source[i] === -1) {
+      11       // 说明索引为 i 的节点是全新的节点，应该将其挂载
+      12       // 该节点在新 children 中的真实位置索引
+      13       const pos = i + newStart
+      14       const newVNode = newChildren[pos]
+      15       // 该节点的下一个节点的位置索引
+      16       const nextPos = pos + 1
+      17       // 锚点
+      18       const anchor = nextPos < newChildren.length
+      19         ? newChildren[nextPos].el
+      20         : null
+      21       // 挂载
+      22       patch(null, newVNode, container, anchor)
+      23     } else if (i !== seq[s]) {
+      24       // 如果节点的索引 i 不等于 seq[s] 的值，说明该节点需要移动
+      25     } else {
+      26       // 当 i === seq[s] 时，说明该位置的节点不需要移动
+      27       // 只需要让 s 指向下一个位置
+      28       s--
+      29     }
+      30   }
+      31 }
+    </script>
+    <script>
+      if (moved) {
+        const seq = lis(sources);
+
+        // s 指向最长递增子序列的最后一个元素
+        let s = seq.length - 1;
+        let i = count - 1;
+        for (i; i >= 0; i--) {
+          if (source[i] === -1) {
+            // 说明索引为 i 的节点是全新的节点，应该将其挂载
+            // 该节点在新 children 中的真实位置索引
+            const pos = i + newStart
+            const newVNode = newChildren[pos]
+            // 该节点的下一个节点的位置索引
+            const nextPos = pos + 1
+            // 锚点
+            const anchor = nextPos < newChildren.length
+              ? newChildren[nextPos].el
+              : null
+            // 挂载
+            patch(null, newVNode, container, anchor)
+          } else if (i !== seq[s]) {
+            // 说明该节点需要移动
+            // 该节点在新的一组子节点中的真实位置索引
+            const pos = i + newStart;
+            const newVNode = newChildren[pos];
+            // 该节点的下一个节点的位置索引
+            const nextPos = pos + 1;
+            // 锚点
+            const anchor =
+              nextPos < newChildren.length ? newChildren[nextPos].el : null;
+            // 移动
+            insert(newVNode.el, container, anchor);
+          } else {
+            // 当 i === seq[s] 时，说明该位置的节点不需要移动
+            // 并让 s 指向下一个位置
+            s--;
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

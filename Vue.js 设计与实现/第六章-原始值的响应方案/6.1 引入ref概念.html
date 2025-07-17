@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>引入ref概念</title>
+  </head>
+  <body>
+    <script>
+      function ref(val) {
+        const wrapper = {
+          value: val,
+        };
+        // 使用 Object.defineProperty 在 wrapper 对象上定义一个不可枚举的属性 __v_isRef，并且值为 true
+        Object.defineProperty(wrapper, "__v_isRef", {
+          value: true,
+        });
+
+        return reactive(wrapper);
+      }
+    </script>
+  </body>
+</html>
