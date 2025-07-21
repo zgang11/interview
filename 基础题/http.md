@@ -8,10 +8,11 @@
 [为什么是 HTTP/2 而不是 HTTP/1.2](https://weread.qq.com/web/reader/71f32ba071f02f3971f1284k636320102206364d3f0ffdc?)
 
 ##### https 详解
-
+[18 张图彻底弄懂 HTTPS 的原理！](https://baijiahao.baidu.com/s?id=1685474345600994715&wfr=spider&for=pc)
 [万字长文，带你彻底搞懂 HTTPS（文末附实战）](https://mp.weixin.qq.com/s/HbEhD93S7y3p8amlzS2sKw)
 [20 张图带你全面了解 HTTPS 协议，再也不怕面试问到了！](https://zhuanlan.zhihu.com/p/597168426)
 [深入浅出 HTTPS (详解版)](https://www.cnblogs.com/huansky/p/13977181.html)
+[http前端精选面试题](https://juejin.cn/post/7490770083007496207)
 
 ##### 2. 缓存
 
@@ -52,9 +53,6 @@
 ##### http 如何建立连接，有哪些过程？
 [三次握手](https://weread.qq.com/web/reader/af532c005a007caf51371b1k4c5327a02794c56ff4ce24c?)
 
-##### https？
-
-[18 张图彻底弄懂 HTTPS 的原理！](https://baijiahao.baidu.com/s?id=1685474345600994715&wfr=spider&for=pc)
 
 ##### HTTP 206 状态码
 
