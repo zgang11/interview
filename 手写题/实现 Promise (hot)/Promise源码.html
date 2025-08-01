@@ -546,11 +546,11 @@
             for (let [i, p] of list.entries()) {
               this.resolve(p)
                 .then((res) => {
-                  values[count] = res;
+                  values[i] = res;
                   count++;
                 })
                 .catch((err) => {
-                  values[count] = err;
+                  values[i] = err;
                   count++;
                 })
                 .finally(() => {
