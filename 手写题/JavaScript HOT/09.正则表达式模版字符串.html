@@ -10,19 +10,19 @@
 
 <body>
   <script>
-    const render = (template, context) => {
-      const getVal = (obj, props) => {
-        if (props.length === 0) {
-          return obj
-        }
-        return getVal(obj[props.shift()], props)
-      }
+    // const render = (template, context) => {
+    //   const getVal = (obj, props) => {
+    //     if (props.length === 0) {
+    //       return obj
+    //     }
+    //     return getVal(obj[props.shift()], props)
+    //   }
 
-      return template.replace(/\{\{\s*(\w+(\.\w+)*)\s*\}\}/g, (p1, p2, p3) => {
-        console.log(p1, p2, p3)
-        return getVal(context, p2.split('.'))
-      })
-    }
+    //   return template.replace(/\{\{\s*(\w+(\.\w+)*)\s*\}\}/g, (p1, p2, p3) => {
+    //     console.log(p1, p2, p3)
+    //     return getVal(context, p2.split('.'))
+    //   })
+    // }
 
     const template = '{{name}}很厉害，才{{age}}岁，他少年{{obj.a}}，独力支持，做了{{obj.b.c}}。'
     const context = {
@@ -36,8 +36,22 @@
       }
     }
 
-    console.log(render(template, context))
+    // console.log(render(template, context))
     // 二月很厉害，才15岁，他少年出外谋生，独力支持，做了许多大事。
+
+    function render(template, context) {
+                       /\{\{\s*(\w+(\.\w+)*)\s*\}\}/g
+      return template.replace(/\{\{\s*(\w+(\.\w+)*)\s*\}\}/g, (p1, p2, p3) => {
+        // console.log(p1, p2, p3)
+        var getVal = (obj, props) => {
+          if(props.length === 0) return obj
+          return getVal(obj[props.shift()], props)
+        }
+        return getVal(context, p2.split('.'))
+      })
+    }
+
+    console.log(render(template, context))
 
   </script>
 </body>

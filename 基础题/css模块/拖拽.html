@@ -1,0 +1,46 @@
+<div id="box" style="width: 100px; height: 100px; background: red; position: absolute;"></div>
+
+<script>
+  const box = document.getElementById('box');
+  let isDragging = false;
+  let startX, startY, initialX, initialY;
+
+  // 开始拖拽（鼠标/触摸）
+  const startDrag = (e) => {
+    isDragging = true;
+    // 获取初始位置（鼠标位置和元素位置）
+    const clientX = e.clientX || e.touches[0].clientX;
+    const clientY = e.clientY || e.touches[0].clientY;
+    startX = clientX;
+    startY = clientY;
+    initialX = box.offsetLeft;
+    initialY = box.offsetTop;
+    console.log(startX, startY, initialX, initialY)
+  };
+
+  // 拖拽中
+  const dragMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const clientX = e.clientX || e.touches[0].clientX;
+    const clientY = e.clientY || e.touches[0].clientY;
+    // 计算位移并更新元素位置
+    const dx = clientX - startX;
+    const dy = clientY - startY;
+    box.style.left = `${initialX + dx}px`;
+    box.style.top = `${initialY + dy}px`;
+  };
+
+  // 结束拖拽
+  const endDrag = () => {
+    isDragging = false;
+  };
+
+  // 绑定事件（兼容鼠标和触摸）
+  box.addEventListener('mousedown', startDrag);
+  box.addEventListener('touchstart', startDrag);
+  document.addEventListener('mousemove', dragMove);
+  document.addEventListener('touchmove', dragMove);
+  document.addEventListener('mouseup', endDrag);
+  document.addEventListener('touchend', endDrag);
+</script>

@@ -1,0 +1,26 @@
+<!-- 可拖拽元素 -->
+<div draggable="true" id="draggable">拖拽我</div>
+<!-- 目标容器 -->
+<div id="dropzone" style="width: 200px; height: 200px; border: 1px solid #000;"></div>
+
+<script>
+  const draggable = document.getElementById('draggable');
+  const dropzone = document.getElementById('dropzone');
+
+  // 开始拖拽
+  draggable.addEventListener('dragstart', (e) => {
+    e.dataTransfer.setData('text/plain', '拖拽的数据'); // 存储拖拽数据
+  });
+
+  // 允许放置（默认禁止）
+  dropzone.addEventListener('dragover', (e) => {
+    e.preventDefault(); // 必须阻止默认行为
+  });
+
+  // 完成放置
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    const data = e.dataTransfer.getData('text/plain'); // 获取拖拽数据
+    dropzone.textContent = `已接收：${data}`;
+  });
+</script>
