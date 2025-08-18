@@ -144,7 +144,7 @@
 [Set 和 Map 数据结构](https://es6.ruanyifeng.com/#docs/set-map)
 
 #### 单点登录怎么实现的?介绍一下 jwt 吧
-[Set 和 Map 数据结构](https://es6.ruanyifeng.com/#docs/set-map)
+[一文搞懂单点登录三种情况的实现方式](https://cloud.tencent.com/developer/article/1842072)
 
 #### crossorigin="anonymous"
 [script标签中的crossorigin属性详解](https://blog.csdn.net/qq_40028324/article/details/107076751)
