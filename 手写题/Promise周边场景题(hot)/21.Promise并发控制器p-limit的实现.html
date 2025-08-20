@@ -1,0 +1,100 @@
+<html>
+  <script>
+    function pLimit(concurrency) {
+      // 验证并发数量必须是正整数
+      if (!Number.isInteger(concurrency) || concurrency < 1) {
+        throw new TypeError("Expected `concurrency` to be a positive integer");
+      }
+
+      const queue = []; // 等待执行的任务队列
+      let activeCount = 0; // 当前正在执行的任务数量
+
+      // 从队列中获取下一个任务执行
+      const next = () => {
+        activeCount--;
+
+        // 如果队列中有等待的任务，就取出一个执行
+        if (queue.length > 0) {
+          queue.shift()();
+        }
+      };
+
+      // 执行任务的包装函数
+      const run = async (fn, resolve, args) => {
+        activeCount++;
+
+        try {
+          // 执行任务并获取结果
+          const result = await fn(...args);
+          resolve(result);
+        } catch (error) {
+          // 捕获任务执行过程中的错误
+          resolve(Promise.reject(error));
+        }
+
+        // 任务完成后，执行下一个任务
+        next();
+      };
+
+      // 生成器函数，用于包装用户传入的任务
+      const enqueue = (fn, args) => {
+        return new Promise((resolve) => {
+          // 将任务加入队列，等待执行
+          queue.push(() => {
+            run(fn, resolve, args);
+          });
+
+          // 如果当前活跃任务数小于并发限制，立即执行下一个任务
+          if (activeCount < concurrency && queue.length > 0) {
+            queue.shift()();
+          }
+        });
+      };
+
+      // 返回一个函数，用于包装需要限制并发的任务
+      const limit = (fn, ...args) => {
+        if (typeof fn !== "function") {
+          throw new TypeError("Expected `fn` to be a function");
+        }
+        return enqueue(fn, args);
+      };
+
+      // 提供一个方法查看当前队列中的任务数量
+      limit.pending = () => queue.length;
+
+      return limit;
+    }
+
+    // 使用示例
+    async function example() {
+      // 创建一个并发限制器，最多同时执行2个任务
+      const limit = pLimit(2);
+
+      // 模拟一个异步任务，随机延迟后完成
+      const fetchData = async (id, delay) => {
+        console.log(`开始执行任务 ${id}`);
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        console.log(`完成任务 ${id}`);
+        return { id, delay };
+      };
+
+      // 创建5个任务
+      const tasks = [
+        limit(fetchData, 1, 1000), // 任务1，延迟1000ms
+        limit(fetchData, 2, 500), // 任务2，延迟500ms
+        limit(fetchData, 3, 800), // 任务3，延迟800ms
+        limit(fetchData, 4, 1200), // 任务4，延迟1200ms
+        limit(fetchData, 5, 300), // 任务5，延迟300ms
+      ];
+
+      // 执行所有任务并等待完成
+      const results = await Promise.all(tasks);
+      console.log("所有任务完成:", results);
+    }
+
+    // 运行示例
+    example().catch((error) => {
+      console.error("执行出错:", error);
+    });
+  </script>
+</html>

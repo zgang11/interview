@@ -61,6 +61,7 @@
 [深入浅出 webpack](https://webpack.wuhaolin.cn/5%E5%8E%9F%E7%90%86/5-1%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E6%A6%82%E6%8B%AC.html#google_vignette)
 [vite 和 webpack 的区别](https://worktile.com/kb/p/53689)
 [vite](https://vitejs.cn/vite3-cn/guide/why.html)
+[Vite 的实现原理，确实很巧妙](https://juejin.cn/post/7350936959059722280)
 
 ##### 11. this 指向？
 
