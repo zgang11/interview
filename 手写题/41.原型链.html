@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>原型链</title>
+  </head>
+  <body>
+    <script>
+      // https://blog.csdn.net/Yi_qian1000/article/details/135264247
+      class A {}
+      let a = new A();
+      console.log(a.__proto__ === A.prototype);
+      console.log(a.__proto__.__proto__ === Object.prototype);
+      console.log(a.__proto__.__proto__.__proto__);
+    </script>
+
+    <script>
+      function Test() {}
+
+      Object.prototype.a = function () {
+        console.log(1);
+      };
+
+      Function.prototype.b = function () {
+        console.log(2);
+      };
+
+      var obj = new Test();
+
+      obj.a();
+      obj.b();
+      Test.a();
+      Test.b();
+    </script>
+  </body>
+</html>
