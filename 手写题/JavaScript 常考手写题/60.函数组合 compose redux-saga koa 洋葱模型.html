@@ -21,6 +21,7 @@
         return x + 4;
       }
       const a = compose(fn1, fn2, fn3, fn4);
+      console.log(a)
       console.log(a(1)); // 1+4+3+2+1=11
 
       function compose(...fn) {

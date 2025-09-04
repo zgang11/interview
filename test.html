@@ -6,8 +6,7 @@
     <title>Document</title>
   </head>
   <body>
-
-    <script>
+    <!-- <script>
       class A  {
 
       }
@@ -15,7 +14,7 @@
       console.log(a.__proto__ === A.prototype)
       console.log(a.__proto__.__proto__ === Object.prototype)
       console.log(a.__proto__.__proto__.__proto__)
-    </script>
+    </script> -->
     <!-- <script>
       (function () {
         async function async1() {
@@ -74,7 +73,7 @@
         .then(() => console.log("c"));
       // 输出结果：then b a c
     </script> -->
-    <script>
+    <!-- <script>
       async function foo() {
         await {
           then(resolve) {
@@ -90,6 +89,95 @@
         .then(() => console.log("d"))
         .then(() => console.log("e"));
       // 输出结果 then c a d b e
+    </script> -->
+    <!-- <script>
+      setTimeout(() => {
+        console.log('a')
+      }, 3000)
+      let i = 0
+      while(i < 1000000000) {
+        i++
+      }
+      setTimeout(() => {
+        console.log('b')
+      }, 3000)
+    </script> -->
+    <!-- <script>
+      function Foo() {
+        getName = function () {
+          console.log(1);
+        };
+        return this;
+      }
+      Foo.getName = function () {
+        console.log(2);
+      };
+      Foo.prototype.getName = function () {
+        console.log(3);
+      };
+      var getName = function () {
+        console.log(4);
+      };
+      function getName() {
+        console.log(5);
+      }
+
+      Foo.getName();
+      getName();
+      Foo().getName();
+      getName();
+
+
+      new Foo.getName();
+      new Foo().getName();
+      new new Foo().getName();
+    </script> -->
+    <!-- <script>
+      name = "tom";
+      const obj = {
+        name: "zc",
+        intro: () => {
+          console.log("My name is " + this.name);
+        },
+      };
+      obj.intro();
+
+
+
+      /** 
+       * AI扩展二期
+       *   1、对接dify，open AI 排期：https://yundocs.qianxin-inc.cn/weboffice/l/sbVXapSUKKQje
+       *   2、iframe方案，待定。
+       *   3、部分遗留bug修复。-- 3天
+       * 管控脱敏-后台完成，前端进行5%，是否暂停 -- 5天
+       * 管控优化
+       *   1、Tag标签统一成AI中样式; -- 1天
+       *   2、安装部署-发布管理  悬停、未发布加禁用样式；-- 3天
+       * 代码提交规范化 -- 3天
+       * 
+       * 
+       * 
+       * 
+       * 
+       * 
+       * **/
+    </script> -->
+    <script>
+      var obj = {
+        a: "obj",
+        foo: function () {
+          console.log("foo:", this.a);
+          return function () {
+            console.log("inner:", this.a);
+          };
+        },
+      };
+      var a = "window";
+      var obj2 = { a: "obj2" };
+
+      obj.foo()();
+      obj.foo.call(obj2)();
+      obj.foo().call(obj2);
     </script>
   </body>
 </html>

@@ -57,31 +57,33 @@
 
   <script>
     function reducer(state, action) {
-      if (!state) return {}
-      switch (action.type) {
+      if(!state) return {}
+      switch(action.type) {
         case 'ADD':
-          return { ...state, ...action.load }
-        case "MOVE":
-          return { ...state, ...action.load }
+          return {...state}
+          break
+        default:
+          return {...state}
       }
     }
 
     function createStore(reducer) {
       let state = {}
-      const listeners = []
-      const dispatch = function (action) {
-        console.log(reducer(store, action))
-        state = reducer(state, action)
-        listeners.forEach(cb => cb())
+      let listener = []
+      function getState() {
+        return state
       }
-      const subscribe = function (listener) {
-        listeners.push(listener)
+      function subscribe(cb) {
+        listener.push(cb)
       }
-      const getState = () => state
+      function dispatch(action) {
+        let state = reducer(state, action)
+        listener.forEach(cb => cb())
+      }
       return {
-        dispatch,
+        getState,
         subscribe,
-        getState
+        dispatch,
       }
     }
 

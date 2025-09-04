@@ -19,35 +19,16 @@
         console.log(Object._is(+0, -0))
     </script> -->
     <script>
-        Object._is = function(x, y) {
-            if(x === y) {
-                return x !== 0 || y !== 0 || 1/x === 1/y
-            } else {
-                return x !== x || y !== y
-            }
-        }
-        console.log(Object._is(NaN, NaN))
-        console.log(Object._is(+0, -0))
-
-
-        var spiralArray = function(array) {
-        let m = array.length, n = array[0].length, ans = []
-        let total = m * n - 1, derection = [[0, 1], [1, 0], [0, -1], [-1, 0]]
-        let vis = new Array(m).fill(0).map(() => new Array(n).fill(0)), derc = 0, i = j = 0
-        for(let i = 0; i < total; i++) {
-            ans.push(array[i][j])
-            vis[i][j] = 
-            let [i_, j_] = derection[derc]
-            let n_i = i_ + i, n_j = j_ + j
-            while(n_i < 0 || n_i >= m || n_j < 0 || n_j >= n || !vis[n_i][n_j]) {
-                derc = (derc + 1) % 4
-                let [i_, j_] = derection[derc]
-            }
-            i = n_i
-            j = n_j
-        }
-        return ans
-        };
+       Object._is = function(a, b) {
+         if(a === b) {
+            return a !== 0 || b !== 0 || 1/a === 1/b
+         } else {
+            return a !== a || b !== b
+         }
+       }
+       console.log(Object._is(-0, +0))
+       console.log(Object._is(NaN, NaN))
+       console.log(Object._is(8, 8))
     </script>
 </body>
 </html>
