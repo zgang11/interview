@@ -11,7 +11,7 @@
 
       // 从队列中获取下一个任务执行
       const next = () => {
-        activeCount--;
+        activeCount--; 
 
         // 如果队列中有等待的任务，就取出一个执行
         if (queue.length > 0) {

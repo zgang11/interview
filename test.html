@@ -5,6 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+  <!-- <style>
+    .half-pixel-line::before,
+    .half-pixel-line::after {
+      content: "";
+      display: block;
+      height: 1px;
+      background-color: black;
+      width: 100%; /* 或者指定宽度 */
+    }
+    .half-pixel-line::after {
+      margin-top: -0.5px; /* 调整此值使得两条线刚好重合 */
+    }
+  </style> -->
+  <!-- <style>
+    .half-pixel-line {
+      height: 1px; /* 或者你需要的长度 */
+      background-color: black; /* 或你想要的颜色 */
+      transform: scaleY(0.5); /* 对高度进行垂直方向的缩放 */
+    }
+  </style> -->
+  <style>
+    .half-pixel-line {
+  height: 1px; /* 或者你需要的高度 */
+  box-shadow: 0 0 0 0.5px black; /* 下偏移量为0，颜色为你想要的线条颜色 */
+}
+  </style>
   <body>
     <!-- <script>
       class A  {
@@ -179,5 +205,6 @@
       obj.foo.call(obj2)();
       obj.foo().call(obj2);
     </script>
+    <div class="half-pixel-line"></div>
   </body>
 </html>

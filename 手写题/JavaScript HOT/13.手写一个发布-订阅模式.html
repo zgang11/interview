@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>手写一个发布-订阅模式</title>
+    <!-- <link rel="stylesheet" href="https://github.com/sisterAn/JavaScript-Algorithms/issues/110"> -->
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>手写一个发布-订阅模式 </title>
-  <!-- <link rel="stylesheet" href="https://github.com/sisterAn/JavaScript-Algorithms/issues/110"> -->
-</head>
-
-<body>
-  <!-- <script>
+  <body>
+    <!-- <script>
     class EventEmitter {
       constructor() {
         // 初始值为空对象
@@ -91,139 +90,67 @@
     console.log(baseEvent.listeners)
 
   </script> -->
-  <!-- <script>
-    class EventHub {
-      constructor() {
-        this.event = {}
-      }
-      // 注册事件
-      on = function (listener, callback) {
-        if (!listener || !callback) return
-        if (!this.event[listener]) {
-          this.event[listener] = [callback]
-        } else {
-          this.event[listener].push(callback)
+    <script>
+      class EventHub {
+        constructor() {
+          this.event = {};
         }
-      }
-
-      // 发布时间
-      emit = function (listener, ...args) {
-        if (!listener) return
-        if (!this.event[listener]) {
-          console.log('warning: no such listener')
-          return
-        }
-        debugger
-        this.event[listener].forEach(item => item.call(this, ...args))
-      }
-
-      // 取消订阅
-      off = function (listener, callback) {
-        if (!callback) {
-          delete this.event[listener]
-          return
-        }
-        this.event[listener] = this.event[listener].filter(item => item !== callback)
-      }
-
-      // 订阅一次
-      once = function(listener, callback){
-          function one(){
-             callback.call(this, ...arguments)
-             this.off(listener)
+        // 注册事件
+        on = function (listener, callback) {
+          if (!listener || !callback) return;
+          if (!this.event[listener]) {
+            this.event[listener] = [callback];
+          } else {
+            this.event[listener].push(callback);
           }
-          this.on(listener, one)
-      }
-    }
+        };
 
-    const eventHub = new EventHub()
+        // 发布时间
+        emit = function (listener, ...args) {
+          if (!listener) return;
+          if (!this.event[listener]) {
+            console.log("warning: no such listener");
+            return;
+          }
+          this.event[listener].forEach((item) => item.call(this, ...args));
+        };
 
-    function cb(value) {
-      console.log(value)
-    }
+        // 取消订阅
+        off = function (listener, callback) {
+          if (!callback) {
+            delete this.event[listener];
+            return;
+          }
+          this.event[listener] = this.event[listener].filter(
+            (item) => item !== callback
+          );
+        };
 
-    function cb1(value) {
-      console.log(value + 'cb1')
-    }
-
-    eventHub.once('listener2', cb)
-    // eventHub.on('listener1', cb1)
-    eventHub.emit('listener2', 'listener1')
-    // eventHub.off('listener1', cb1)
-    // eventHub.emit('listener1', 'listener1')
-  </script> -->
-  <script>
-    class EventBus {
-      constructor() {
-        this.eventBus = {}
-      }
-      on = function (evnet, listener) {
-        if (!evnet) {
-          console.log('message')
-          return
-        }
-        if (!this.eventBus[evnet]) {
-          this.eventBus[evnet] = [listener]
-         
-        } else {
-          this.eventBus[evnet].push(listener)
-        }
-      }
-      emit = function (event, ...arg1) {
-        if (!event) return
-        let that = this
-        if(!this.eventBus[event]) {
-          console.log('no such')
-          return
-        }
-        this.eventBus[event].forEach(fn => {
-          fn.call(that, ...arg1)
-        })
+        // 订阅一次
+        once = function (listener, callback) {
+          function one() {
+            callback.call(this, ...arguments);
+            this.off(listener);
+          }
+          this.on(listener, one);
+        };
       }
 
+      const eventHub = new EventHub();
 
-      once = function (event, listener) {
-        function one() {
-          listener.call(this, ...arguments)
-          this.off(event)
-        }
-        this.on(event, one)
+      function cb(value) {
+        console.log(value);
       }
 
-      off = function (event, listener) {
-        if (!event) {
-          console.log('no such evnet')
-          return
-        }
-        if (!listener) {
-          delete this.eventBus[event]
-          return
-        }
-        if (listener) {
-          this.eventBus[event] = this.eventBus[event].filter(item => item !== listener)
-        }
+      function cb1(value) {
+        console.log(value + "cb1");
       }
-    }
 
-    let eventHub = new EventBus()
-
-    function cb(value) {
-      console.log(value)
-    }
-
-    function cb1(value) {
-      console.log(value + 'cb1')
-    }
-
-    eventHub.once('listener2', cb)
-    eventHub.emit('listener2', "listener2")
-    eventHub.emit('listener2', "listener2")
-    
-    // eventHub.on('listener1', cb1)
-    // eventHub.emit('listener1', "listener1")
-    // eventHub.off('listener1', cb1)
-    // eventHub.emit('listener1', 'listener1')
-  </script>
-</body>
-
+      eventHub.once("listener2", cb);
+      // eventHub.on('listener1', cb1)
+      eventHub.emit("listener2", "listener1");
+      // eventHub.off('listener1', cb1)
+      // eventHub.emit('listener1', 'listener1')
+    </script>
+  </body>
 </html>

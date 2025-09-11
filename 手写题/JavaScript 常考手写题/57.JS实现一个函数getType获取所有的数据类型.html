@@ -10,17 +10,29 @@
 
 <body>
     <script>
+        // function getType(obj) {
+        //     if (obj === null) {
+        //         return String(obj)
+        //     }
+        //     const getObjType = (obj) => {
+        //         // return Object.prototype.toString.call(obj).replace('[object ', '').replace(']', '')
+        //         return obj.constructor.name
+        //     }
+
+        //     return  typeof obj === 'object' ? getObjType(obj) : typeof obj
+        // }
+
         function getType(obj) {
-            if (obj === null) {
+            if(obj === null) {
                 return String(obj)
             }
-            const getObjType = (obj) => {
-                // return Object.prototype.toString.call(obj).replace('[object ', '').replace(']', '')
-                return obj.constructor.name
+            var getTypeOf = (obj) => {
+            //   return obj.constructor.name
+                 return Object.prototype.toString.apply(obj).replace('[object ', '').replace(']', '')
             }
-
-            return  typeof obj === 'object' ? getObjType(obj) : typeof obj
+            return typeof obj !== 'object' ? typeof obj : getTypeOf(obj)
         }
+
         function Person(){
 
         }

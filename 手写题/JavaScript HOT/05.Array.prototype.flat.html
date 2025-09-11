@@ -16,83 +16,51 @@
     //     }, []) : arr
     // }
 
+    // 递归
+    // const flat_1 = (arr, depth) => {
+    //   return depth > 0 ? arr.reduce((acc, cur) => {
+    //     return Array.isArray(cur) ? [...acc, ...flat_1(cur, depth - 1)] : [...acc, cur]
+    //   }, []) : arr
+    // }
+
+
+    // const flat_2 = (arr, depth) => {
+    //   let result = []
+    //   if(depth <= 0) return arr
+    //   arr.forEach(element => {
+    //     if(Array.isArray(element)){
+    //       result = result.concat(flat_2(element, depth - 1))
+    //     }else{
+    //       result.push(element)
+    //     }
+    //   }); 
+    //   return result
+    // }
+
     let arr = [3, 6, 7, [3, 5, 6, [3, 0],
       [2, 3, 40]
     ]]
-
-    // 递归
-    const flat_1 = (arr, depth) => {
+    const flat_ = function(arr, depth) {
       return depth > 0 ? arr.reduce((acc, cur) => {
-        return Array.isArray(cur) ? [...acc, ...flat_1(cur, depth - 1)] : [...acc, cur]
+         return Array.isArray(cur) ? [...acc, ...flat_(cur, depth - 1)] : [...acc, cur] 
       }, []) : arr
     }
 
-
-    const flat_2 = (arr, depth) => {
+    const flat_2 = function(arr, depth) {
+      if(depth === 0) return arr
       let result = []
-      if(depth <= 0) return arr
       arr.forEach(element => {
-        if(Array.isArray(element)){
+        if(Array.isArray(element)) {
           result = result.concat(flat_2(element, depth - 1))
-        }else{
+        } else {
           result.push(element)
         }
-      }); 
+      });
       return result
     }
 
-    console.log(flat_2(arr, 10))
-
-    // console.log(flat_1(arr, Infinity))
-
-
-    // 非递归
-    // const flat_2 = (arr, depth) => {
-    //   let ans = arr.slice()
-    //   while (depth > 0) {
-    //     let temp = [],
-    //       j = 1
-    //     for (let i = 0; i < ans.length; i++) {
-    //       if (Array.isArray(ans[i])) {
-    //         let item = ans[i]
-    //         temp.push(...item)
-    //       } else {
-    //         j++
-    //         temp.push(ans[i])
-    //       }
-    //     }
-
-    //     depth--
-    //     ans = temp
-
-    //   }
-    //   return ans
-    // }
-
-    // console.log(flat_2(arr, 2))
-
-
-    // const list = [1, 2, 3];
-    // const square = num => {
-    //   return new Promise((resolve, reject) => {
-    //     setTimeout(() => {
-    //       resolve(num * num);
-    //     }, 1000);
-    //   });
-    // }
-
-    // async function test() {
-    //   // list.forEach( x => {
-    //   //   const res = await square(x);
-    //   //   console.log(res);
-    //   // });
-    //   for(let i =0; i< list.length; i++){
-    //      const res = await square(list[i])
-    //      console.log(res)
-    //   }
-    // }
-    // test()
-
+    console.log(flat_(arr, 1))
+    console.log(flat_2(arr, 1))
   </script>
 </body>
 </html>

@@ -73,35 +73,59 @@
             }
         ];
 
-        // 非递归
-        function createTree(cityList) {
-            let res = []
-            for (let i = 0; i < cityList.length; i++) {
-                cityList[i].childern = cityList.filter(each => each.parentId === cityList[i].id)
-                if (cityList[i].parentId === 0) {
-                    res.push(cityList[i])
-                }
+        function createTree(list) {
+          let ans = []
+          for(let item of list) {
+            item.children = list.filter(each => each.parentId === item.id)
+            if(item.parentId === 0) {
+                ans.push(item)
             }
-            return res
+          }
+          return ans
         }
+        console.log(createTree(cityList))
+
+        function dfsCreateTree(list, pid) {
+          let arr = []
+          list.forEach(item => {
+            if(item.parentId === pid) {
+                arr.push(item)
+            }
+            item.children = dfsCreateTree(list, item.id)
+          })
+          return arr
+        }
+        console.log(createTree(cityList, 0))
+
+        // 非递归
+        // function createTree(cityList) {
+        //     let res = []
+        //     for (let i = 0; i < cityList.length; i++) {
+        //         cityList[i].childern = cityList.filter(each => each.parentId === cityList[i].id)
+        //         if (cityList[i].parentId === 0) {
+        //             res.push(cityList[i])
+        //         }
+        //     }
+        //     return res
+        // }
         // console.log(createTree(cityList))
 
         // 递归
-        function recursionGenerateTree(pid, arr) {
-            let array = []
-            arr.forEach(item => {
-                if (item.parentId === pid) {
-                    item.children = recursionGenerateTree(item.id, arr) // 接收子节点
-                    array.push(item)
-                };
-            })
-            return array // 返回查找到的节点
-        }
-        console.log(recursionGenerateTree(0, cityList))
+        // function recursionGenerateTree(pid, arr) {
+        //     let array = []
+        //     arr.forEach(item => {
+        //         if (item.parentId === pid) {
+        //             item.children = recursionGenerateTree(item.id, arr) // 接收子节点
+        //             array.push(item)
+        //         };
+        //     })
+        //     return array // 返回查找到的节点
+        // }
+        // console.log(recursionGenerateTree(0, cityList))
 
 
-        let tree = recursionGenerateTree(0, cityList)
-        console.log(tree)
+        // let tree = recursionGenerateTree(0, cityList)
+        // console.log(tree)
     </script>
 </body>
 
