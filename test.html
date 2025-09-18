@@ -25,12 +25,12 @@
       transform: scaleY(0.5); /* 对高度进行垂直方向的缩放 */
     }
   </style> -->
-  <style>
+  <!-- <style>
     .half-pixel-line {
-  height: 1px; /* 或者你需要的高度 */
-  box-shadow: 0 0 0 0.5px black; /* 下偏移量为0，颜色为你想要的线条颜色 */
-}
-  </style>
+      height: 1px; /* 或者你需要的高度 */
+      box-shadow: 0 0 0 0.5px black; /* 下偏移量为0，颜色为你想要的线条颜色 */
+    }
+  </style> -->
   <body>
     <!-- <script>
       class A  {
@@ -188,7 +188,7 @@
        * 
        * **/
     </script> -->
-    <script>
+    <!-- <script>
       var obj = {
         a: "obj",
         foo: function () {
@@ -205,6 +205,124 @@
       obj.foo.call(obj2)();
       obj.foo().call(obj2);
     </script>
-    <div class="half-pixel-line"></div>
+    <div class="half-pixel-line"></div> -->
+    <!-- <script>
+      class IncreasingCounter {
+        _count = 0;
+        constructor() {
+          this.count = 1
+        }
+        get value() {
+          console.log("Getting the current value!");
+          return this._count;
+        }
+        increment() {
+          this._count++;
+        }
+      }
+      let instance = new IncreasingCounter()
+      console.log(instance)
+    </script> -->
+    <!-- <script>
+      var a = function () {
+        this.b = 3;
+      };
+      var b = 7;
+
+      a.prototype.b = 1;
+      const c = new a();
+
+      console.log(b); 
+      console.log(c.b); 
+    </script> -->
+
+    <!-- <script>
+      var a = function () {
+        this.cc = 3;
+      };
+      var b = 7;
+
+      a.prototype.b = 1;
+      const c = new a();
+
+      console.log(b); // 
+      console.log(c.b); // 
+    </script> -->
+
+    <!-- <script>
+      var a = function () {
+        this.cc = 3;
+      };
+      var b = 7;
+
+      const c = new a();
+      a.prototype = { b: 3 };
+
+      console.log(b); //
+      console.log(c.b, c); //
+    </script> -->
+
+    <!-- <script>
+      let p = new Promise((resolve, reject) => {
+        reject('jsjsj')
+        throw new Error('jjs')
+        console.log(b)
+        setTimeout(() => {
+          // reject('err')
+          // console.log(b)
+          throw new Error('jjs')
+          console.log('你是谁')
+        }, 3000)
+      }).then(() => {
+
+      }).catch((err) => {
+        console.log(err)
+      }).finally(() => {
+        console.log('finally')
+      })
+    </script> -->
+
+    <!-- <script>
+      console.log(A);
+
+      var A = 666;
+
+      console.log(B);
+
+      function A() {}
+      var B = 566;
+
+      console.log(A);
+      console.log(B);
+    </script> -->
+
+    <!-- <script>
+      let p = new Promise((resolve, reject) => {
+        reject('kill')
+      }).then((res) => {
+        console.log(res)
+      }).catch(err => {
+        console.log(ccc)
+      }).then((res_, err_) => {
+        console.log(res_, err_)
+        console.log(j)
+      }).catch((lastErr) => {
+        console.log(lastErr)
+      })
+    </script> -->
+
+    <script>
+      const promise = new Promise(function (resolve, reject) {
+        resolve("ok");
+        throw new Error("test");
+      });
+      promise
+        .then(function (value) {
+          console.log(value);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    </script>
   </body>
 </html>

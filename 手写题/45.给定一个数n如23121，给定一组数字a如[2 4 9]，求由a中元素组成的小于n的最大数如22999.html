@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+      数组A中给定可以使用的1～9的数，返回由A数组中的元素组成的小于n的最大数。
+
+      例如：A=[1,2,4,9], x=2533, 返回2499
+      */
+
+      function getMaxFromArr(A, n) {
+        let ans = 0;
+
+        // 标准回溯的变形， 需要注意点：本题给定的数的位数和返回的位数不一定相同
+        const backTracking = (path, nums, target, sum) => {
+          if (sum >= target) return;
+
+          ans = Math.max(ans, sum);
+
+          for (let i = 0; i < nums.length; i++) {
+            path.push(nums[i]);
+            sum = sum * 10 + nums[i];
+            backTracking(path, nums, target, sum);
+            sum = Math.floor(sum / 10);
+            path.pop();
+          }
+        };
+
+        const path = [];
+        backTracking(path, A, n, 0);
+        return ans;
+      }
+
+      console.log(getMaxFromArr([1, 2, 4, 9], 2533)); // 2499
+      console.log(getMaxFromArr([1, 2, 4, 9], 1111)); // 999
+
+      // 本题可以优化的地方，在回溯时对同层元素，如果相同且已经处理过，可以跳过，加快回溯过程，感兴趣的同学可以自行实现
+    </script>
+  </body>
+</html>

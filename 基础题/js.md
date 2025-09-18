@@ -11,8 +11,9 @@
 [SPA(单页面应用)首屏加载速度该如何优化](https://blog.csdn.net/qq_41581588/article/details/138313344)
 
 ##### 3. 谈谈你对作用域链的理解
-
 [作用域](https://weread.qq.com/web/reader/8c632230715c01a18c683d8k45c322601945c48cce2e120?)
+[周大侠啊 进击的 JavaScript（三） 之 函数执行过程](https://developer.aliyun.com/article/645739)
+[深入理解JavaScript——执行上下文与调用栈](https://segmentfault.com/a/1190000042625485)
 
 ##### 4. 闭包
 
@@ -222,5 +223,10 @@
 
 ##### 拖拽相关的问题
 [拖拽相关的问题](https://blog.51cto.com/u_14555/14160846)
+
+##### Webpack构建速度优化
+[Webpack构建速度优化](https://cloud.tencent.com/developer/article/2137209)
+[如何优化 Webpack 的打包速度](https://blog.csdn.net/qq_16242613/article/details/147197302)
+
 
 

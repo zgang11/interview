@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态高度虚拟列表</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        .virtual-list-container {
+            width: 100%;
+            height: 400px;
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .virtual-list-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            /* 高度会动态计算 */
+        }
+        
+        .virtual-list-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+        
+        .list-item {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            transition: background-color 0.2s;
+        }
+        
+        .list-item:hover {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="p-8 bg-gray-50">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">动态高度虚拟列表示例</h2>
+        <p class="text-gray-600 mb-4">每个列表项高度不固定，内容长度随机</p>
+        
+        <div id="virtualList" class="virtual-list-container"></div>
+        
+        <div class="mt-6 text-sm text-gray-500">
+            <p>总数据量: <span id="totalCount">0</span></p>
+            <p>当前渲染: <span id="renderedCount">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        class DynamicVirtualList {
+            constructor(container, options) {
+                this.container = container;
+                this.data = options.data || [];
+                this.itemRenderer = options.itemRenderer;
+                
+                // 缓存项的高度信息
+                this.itemHeights = new Map(); // 存储已测量的项高度
+                this.offsets = [0]; // 存储累积高度偏移量
+                
+                // 渲染相关配置
+                this.overScan = options.overScan || 5; // 额外渲染的项数，优化滚动体验
+                
+                // 创建列表元素
+                this.createElements();
+                
+                // 绑定事件
+                this.bindEvents();
+                
+                // 初始渲染
+                this.render();
+            }
+            
+            createElements() {
+                // 创建占位容器（用于撑起滚动高度）
+                this.placeholder = document.createElement('div');
+                this.placeholder.className = 'virtual-list-placeholder';
+                
+                // 创建内容容器（用于显示可见项）
+                this.content = document.createElement('div');
+                this.content.className = 'virtual-list-content';
+                
+                // 添加到容器
+                this.container.appendChild(this.placeholder);
+                this.container.appendChild(this.content);
+            }
+            
+            bindEvents() {
+                // 监听滚动事件
+                this.container.addEventListener('scroll', () => {
+                    this.render();
+                });
+                
+                // 监听窗口大小变化
+                window.addEventListener('resize', () => {
+                    this.render();
+                });
+            }
+            
+            // 获取可见区域的起始和结束索引
+            getVisibleRange() {
+                const scrollTop = this.container.scrollTop;
+                const containerHeight = this.container.clientHeight;
+                
+                // 找到第一个完全可见的项
+                let startIndex = 0;
+                while (startIndex < this.offsets.length - 1 && 
+                       this.offsets[startIndex + 1] <= scrollTop) {
+                    startIndex++;
+                }
+                
+                // 找到最后一个完全可见的项
+                let endIndex = startIndex;
+                while (endIndex < this.offsets.length - 1 && 
+                       this.offsets[endIndex + 1] <= scrollTop + containerHeight) {
+                    endIndex++;
+                }
+                
+                // 应用过度扫描，避免滚动时白屏
+                startIndex = Math.max(0, startIndex - this.overScan);
+                endIndex = Math.min(this.data.length - 1, endIndex + this.overScan);
+                
+                return { startIndex, endIndex };
+            }
+            
+            // 更新高度缓存和偏移量
+            updateItemHeights() {
+                // 遍历当前已渲染的项，更新高度
+                Array.from(this.content.children).forEach((item, index) => {
+                    const dataIndex = parseInt(item.dataset.index);
+                    const height = item.offsetHeight;
+                    
+                    // 如果高度有变化，更新缓存
+                    if (!this.itemHeights.has(dataIndex) || this.itemHeights.get(dataIndex) !== height) {
+                        this.itemHeights.set(dataIndex, height);
+                        
+                        // 重新计算偏移量
+                        this.recalculateOffsets();
+                    }
+                });
+            }
+            
+            // 重新计算所有项的累积偏移量
+            recalculateOffsets() {
+                this.offsets = [0];
+                let cumulativeHeight = 0;
+                
+                for (let i = 0; i < this.data.length; i++) {
+                    // 使用缓存的高度，如果没有则使用一个估计值
+                    const height = this.itemHeights.get(i) || 80; // 80是默认估计高度
+                    cumulativeHeight += height;
+                    this.offsets.push(cumulativeHeight);
+                }
+                
+                // 更新占位容器高度
+                this.placeholder.style.height = `${cumulativeHeight}px`;
+            }
+            
+            // 渲染可见项
+            render() {
+                const { startIndex, endIndex } = this.getVisibleRange();
+                
+                // 清空内容容器
+                this.content.innerHTML = '';
+                
+                // 计算内容容器的偏移量
+                this.content.style.transform = `translateY(${this.offsets[startIndex]}px)`;
+                
+                // 渲染可见范围内的项
+                for (let i = startIndex; i <= endIndex; i++) {
+                    if (i >= 0 && i < this.data.length) {
+                        const item = this.itemRenderer(this.data[i], i);
+                        item.dataset.index = i; // 存储数据索引
+                        item.className = 'list-item ' + (item.className || '');
+                        this.content.appendChild(item);
+                    }
+                }
+                
+                // 更新高度缓存
+                this.updateItemHeights();
+                
+                // 更新统计信息
+                document.getElementById('renderedCount').textContent = endIndex - startIndex + 1;
+                
+                // 异步再次检查高度（确保内容已完全渲染）
+                requestAnimationFrame(() => {
+                    this.updateItemHeights();
+                });
+            }
+        }
+        
+        // 生成测试数据（内容长度随机，导致高度不确定）
+        function generateTestData(count) {
+            const data = [];
+            const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ";
+            
+            for (let i = 0; i < count; i++) {
+                // 随机生成1-5段文本，制造不同高度
+                const paragraphs = Math.floor(Math.random() * 5) + 1;
+                data.push({
+                    id: i,
+                    title: `Item ${i + 1}`,
+                    content: lorem.repeat(paragraphs)
+                });
+            }
+            
+            return data;
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('virtualList');
+            const itemCount = 1000; // 1000条数据，模拟大数据量
+            const testData = generateTestData(itemCount);
+            
+            // 更新总数据量显示
+            document.getElementById('totalCount').textContent = itemCount;
+            
+            // 创建虚拟列表
+            new DynamicVirtualList(container, {
+                data: testData,
+                overScan: 5,
+                // 列表项渲染函数
+                itemRenderer: (item, index) => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `
+                        <h3 class="font-semibold text-gray-800 mb-2">${item.title}</h3>
+                        <p class="text-gray-600 text-sm">${item.content}</p>
+                    `;
+                    return div;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -6,7 +6,7 @@
     <title>有并发限制的Promise.all(ts类型)</title>
   </head>
   <body>
-    <script>
+    <!-- <script>
       function sleep(text, delay = 1000) {
         return () =>
           new Promise((resolve) => {
@@ -65,6 +65,71 @@
       };
 
       asyncPool(tasks, 2);
+    </script> -->
+    <script>
+      /**
+       * 限制并发数量的异步任务执行器
+       * @param {Array<Function>} tasks 返回Promise的任务数组
+       * @param {number} limit 并发限制数
+       * @returns {Promise<Array>} 所有任务结果的数组
+       */
+      async function runWithConcurrency(tasks, limit = 3) {
+        // 存储所有任务的Promise
+        const results = [];
+        // 使用Set来追踪正在执行的任务
+        const executing = new Set();
+
+        for (const task of tasks) {
+          // 如果达到并发限制，等待任意一个任务完成
+          if (executing.size >= limit) {
+            await Promise.race(executing);
+          }
+
+          // 创建并执行新任务
+          const p = task()
+            .then((res) => {
+              console.log('p', p)
+              executing.delete(p); // 任务完成，从执行集合中移除
+              return res;
+            })
+            .catch((err) => {
+              executing.delete(p); // 即使失败也要移除
+              throw err;
+            });
+
+          executing.add(p); // 添加到执行集合
+          results.push(p); // 存储到结果数组
+        }
+
+        // 等待所有任务完成
+        return Promise.all(results);
+      }
+
+      // 模拟异步请求函数
+      function mockRequest(id, delay) {
+        return new Promise((resolve) => {
+          console.log(`请求 ${id} 开始`);
+          setTimeout(() => {
+            console.log(`请求 ${id} 完成`);
+            resolve(`结果 ${id}`);
+          }, delay);
+        });
+      }
+
+      // 创建10个请求任务
+      const tasks = [];
+      for (let i = 1; i <= 10; i++) {
+        tasks.push(() => mockRequest(i, Math.random() * 2000));
+      }
+
+      // 执行并发控制
+      runWithConcurrency(tasks, 3)
+        .then((results) => {
+          console.log("所有请求完成:", results);
+        })
+        .catch((err) => {
+          console.error("请求出错:", err);
+        });
     </script>
   </body>
 </html>

@@ -582,16 +582,17 @@
         }
       }
 
-      // let myPromise = new MyPromise((resolve, reject) => {
-      //   console.log('jajaj')
-      //   resolve('resolved')
-      // })
-      // myPromise.then(res => {
-      //   console.log(res)
-      // })
+      console.log(MyPromise.prototype)
+      let myPromise = new MyPromise((resolve, reject) => {
+        console.log('jajaj')
+        resolve('resolved')
+      })
+      myPromise.then(res => {
+        console.log(res)
+      })
     </script>
 
-    <script>
+    <!-- <script>
       const someAsyncThing = function () {
         return new Promise(function (resolve, reject) {
           // 下面一行会报错，因为x没有声明
@@ -608,6 +609,6 @@
       }, 2000);
       // Uncaught (in promise) ReferenceError: x is not defined
       // 123
-    </script>
+    </script> -->
   </body>
 </html>

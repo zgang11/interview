@@ -11,32 +11,61 @@
 
 <body>
   <script>
+    // class Scheduler {
+    //   constructor() {
+    //     this.list = []
+    //     this.maxCount = 2
+    //     this.tempRunIndex = 0
+    //   }
+    //   add = function (fn) {
+    //     this.list.push(fn)
+    //   }
+    //   taskStart = function () {
+    //     for (let i = 0; i < this.maxCount; i++) {
+    //       this.request()
+    //     }
+    //   }
+    //   request = function () {
+    //     if (this.list.length === 0 || this.tempRunIndex >= this.maxCount) return
+    //     this.tempRunIndex++
+    //     this.list.shift()().then(() => {
+    //       this.tempRunIndex--
+    //       this.request()
+    //     })
+    //   }
+
+    // }
+
+
+
     class Scheduler {
-      constructor() {
+      constructor(maxCount) {
         this.list = []
-        this.maxCount = 2
-        this.tempRunIndex = 0
+        this.limit = maxCount
+        this.activeCount = 0
       }
-      add = function (fn) {
+
+      add = function(fn) {
         this.list.push(fn)
       }
-      taskStart = function () {
-        for (let i = 0; i < this.maxCount; i++) {
+
+      taskStart = function() {
+        for(let i = 0; i < this.limit; i++) {
           this.request()
         }
       }
-      request = function () {
-        if (this.list.length === 0 || this.tempRunIndex >= this.maxCount) return
-        this.tempRunIndex++
+
+      request = function() {
+        if(this.list.length === 0 || this.activeCount > this.limit) return
+        this.activeCount++
         this.list.shift()().then(() => {
-          this.tempRunIndex--
+          this.activeCount--
           this.request()
         })
       }
-
     }
 
-    var scheduler = new Scheduler()
+    var scheduler = new Scheduler(2)
 
     function timeout(time) {
       return new Promise(resolve => {
