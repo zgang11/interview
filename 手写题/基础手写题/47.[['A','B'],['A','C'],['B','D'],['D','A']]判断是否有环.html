@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[['A','B'],['A','C'],['B','D'],['D','A']]</title>
+  </head>
+  <body>
+    <script>
+      let arr = [
+        ["A", "B"],
+        ["A", "C"],
+        ["B", "D"],
+        ["D", "A"],
+      ];
+      function detectCycle(edges) {
+        // 构建邻接表表示图
+        const adjacency = {};
+        for (const [start, end] of edges) {
+          if (!adjacency[start]) {
+            adjacency[start] = [];
+          }
+          adjacency[start].push(end);
+          // 确保终点也在邻接表中，即使它没有出边
+          if (!adjacency[end]) {
+            adjacency[end] = [];
+          }
+        }
+
+        console.log(adjacency)
+
+        const visited = new Set(); // 记录已经完全遍历的节点
+        const currentPath = []; // 记录当前DFS路径
+        const pathSet = new Set(); // 用于快速检查节点是否在当前路径中
+
+        function dfs(node) {
+          // 如果节点在当前路径中，说明找到环
+          if (pathSet.has(node)) {
+            // 找到环的起点并返回环路径
+            const idx = currentPath.indexOf(node);
+            return [...currentPath.slice(idx), node];
+          }
+
+          // 如果节点已经完全遍历，直接返回
+          if (visited.has(node)) {
+            return null;
+          }
+
+          // 将节点加入当前路径
+          currentPath.push(node);
+          pathSet.add(node);
+
+          // 递归访问所有邻居
+          for (const neighbor of adjacency[node]) {
+            const cycle = dfs(neighbor);
+            if (cycle) {
+              return cycle;
+            }
+          }
+
+          // 从当前路径中移除节点，标记为已完全遍历
+          currentPath.pop();
+          pathSet.delete(node);
+          visited.add(node);
+
+          return null;
+        }
+
+        // 对每个未访问的节点执行DFS
+        for (const node of Object.keys(adjacency)) {
+          if (!visited.has(node)) {
+            const cycle = dfs(node);
+            if (cycle) {
+              return { hasCycle: true, cyclePath: cycle };
+            }
+          }
+        }
+
+        // 如果没有找到环
+        return { hasCycle: false, cyclePath: null };
+      }
+      const edges = [['A','B'],['A','C'],['B','D'],['D','A']];
+      const { hasCycle, cyclePath } = detectCycle(arr);
+
+      if (hasCycle) {
+          console.log(`存在环，路径为: ${cyclePath.join(' -> ')}`);
+      } else {
+          console.log("不存在环");
+      }
+    </script>
+  </body>
+</html>

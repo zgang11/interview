@@ -38,11 +38,39 @@
 
 
 
+    // class Scheduler {
+    //   constructor(maxCount) {
+    //     this.list = []
+    //     this.limit = maxCount
+    //     this.activeCount = 0
+    //   }
+
+    //   add = function(fn) {
+    //     this.list.push(fn)
+    //   }
+
+    //   taskStart = function() {
+    //     for(let i = 0; i < this.limit; i++) {
+    //       this.request()
+    //     }
+    //   }
+
+    //   request = function() {
+    //     if(this.list.length === 0 || this.activeCount > this.limit) return
+    //     this.activeCount++
+    //     this.list.shift()().finally(() => {
+    //       this.activeCount--
+    //       this.request()
+    //     })
+    //   }
+    // }
+
+
     class Scheduler {
-      constructor(maxCount) {
+      constructor(limit) {
+        this.maxCount = limit
         this.list = []
-        this.limit = maxCount
-        this.activeCount = 0
+        this.tempRunIndex = 0
       }
 
       add = function(fn) {
@@ -50,19 +78,20 @@
       }
 
       taskStart = function() {
-        for(let i = 0; i < this.limit; i++) {
+        for(let i = 0; i < this.maxCount; i++) {
           this.request()
         }
       }
 
       request = function() {
-        if(this.list.length === 0 || this.activeCount > this.limit) return
-        this.activeCount++
-        this.list.shift()().then(() => {
-          this.activeCount--
+        if(this.list.length === 0 || this.tempRunIndex > this.maxCount) return
+        this.tempRunIndex++
+        this.list.shift()().finally(() => {
+          this.tempRunIndex--
           this.request()
         })
       }
+
     }
 
     var scheduler = new Scheduler(2)

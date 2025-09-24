@@ -1,0 +1,56 @@
+<html>
+  <!-- <script>
+    function uniqueArray(arr) {
+      return [...new Set(arr)]
+    }
+    // 示例
+    const arr = [1, 2, 2, 3, 3, 3];
+    console.log(uniqueArray(arr)); // [1, 2, 3]
+  </script> -->
+
+  <!-- <script>
+    function uniqueArray(arr) {
+      arr.filter((item, index) => {
+        return arr.indexOf(item) === index
+      })
+    }
+    // 示例
+    const arr = [1, 2, 2, 3, 3, 3];
+    console.log(uniqueArray(arr)); // [1, 2, 3]
+  </script> -->
+
+  <script>
+    function uniqueArray(arr) {
+      arr.reduce((acc, cur) => {
+        if (!acc.includes(cur)) {
+          acc.push(cur);
+        }
+        return acc;
+      }, []);
+    }
+    // 示例
+    const arr = [1, 2, 2, 3, 3, 3];
+    console.log(uniqueArray(arr)); // [1, 2, 3]
+  </script>
+
+  <script>
+    function uniqueArrayWithNaN(arr) {
+      const seen = new Set();
+      return arr.filter((item) => {
+        // 处理NaN的特殊情况
+        if (Number.isNaN(item)) {
+          if (!seen.has("NaN")) {
+            seen.add("NaN");
+            return true;
+          }
+          return false;
+        }
+        if (!seen.has(item)) {
+          seen.add(item);
+          return true;
+        }
+        return false;
+      });
+    }
+  </script>
+</html>

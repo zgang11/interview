@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js高级编程技巧之——compose函数</title>
+    <link rel="stylesheet" href="https://juejin.cn/post/6844904160765149192">
+</head>
+
+<body>
+    <script>
+        const add1 = (x) => x + 1;
+        const mul3 = (x) => x * 3;
+        const div2 = (x) => x / 2;
+        div2(mul3(add1(add1(0)))); //=>3
+
+
+        function compose(...fn){
+            return function(val){
+                if(fn.length === 0) return val
+                
+                let result = fn.reverse().reduce((acc, cur) => {
+                     return cur(acc)
+                }, val)
+                return result
+            }
+        }
+        let composeFun = compose(add1, mul3, div2)
+        console.log(composeFun(0))
+    </script>
+</body>
+
+</html>

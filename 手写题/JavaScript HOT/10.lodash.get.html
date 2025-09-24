@@ -22,19 +22,33 @@
       console.log(getKey(obj, "arr[0].demo"));
       console.log(getKey(obj, "arr[0].demo.c"));
 
-      function getKey(obj, path, defaultValue = undefined) {
-        let newPath = [];
-        if(Array.isArray(path)) {
-          newPath = path
-        } else {
-          newPath = path.replace(/\[/g, '.').replace(/\]/, '').split('.')
-        }
-        try {
-          for(let p of newPath) {
-             obj = obj[p]
-          }
-        } catch(e) {
-          return defaultValue
+      // function getKey(obj, path, defaultValue = undefined) {
+      //   let newPath = [];
+      //   if(Array.isArray(path)) {
+      //     newPath = path
+      //   } else {
+      //     newPath = path.replace(/\[/g, '.').replace(/\]/, '').split('.')
+      //   }
+      //   try {
+      //     for(let p of newPath) {
+      //        obj = obj[p]
+      //     }
+      //   } catch(e) {
+      //     return defaultValue
+      //   }
+      //   return obj
+      // }
+      
+      function getKey(obj, path, defaultValue = 'ddd') {
+        path = path.replace(/\[(\w+)\]/, ($0, $1) => {
+          console.log($0, $1)
+          return '.' + $1
+        })
+        console.log('path', path)
+        let pathArr = path.split('.')
+        for(let item of pathArr) {
+          if(obj[item] === undefined) return defaultValue
+          obj = obj[item]
         }
         return obj
       }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * 拼接 URL 与 Query 参数，返回新 URL
+       * @param {string} url - 原始 URL（可能包含 Query、末尾特殊字符或为空）
+       * @param {Object} query - 需拼接的 Query 对象（可能为空、值为 undefined/null）
+       * @returns {string} 拼接后的新 URL
+       */
+      function getNewUrl(url, query) {
+        // -------------------------- 步骤1：参数合法性校验与初始化 --------------------------
+        // 处理 URL：若为非字符串（如 null/undefined），转为空字符串
+        const rawUrl = typeof url === "string" ? url.trim() : "";
+        // 处理 Query：若为非对象（如 null/undefined/数组），转为空对象
+        const rawQuery =
+          typeof query === "object" && !Array.isArray(query) && query !== null
+            ? query
+            : {};
+
+        // -------------------------- 步骤2：处理原始 URL 的 Query 部分 --------------------------
+        // 清理 URL 末尾的 "?" 或 "&"（避免拼接后出现 "??" 或 "?&"）
+        const cleanedUrl = rawUrl.replace(/[?&]$/, "");
+        // 判断原始 URL 是否已包含 Query（存在 "?" 且非末尾）
+        const hasExistingQuery = cleanedUrl.includes("?");
+        // 确定拼接 Query 时的连接符：有原有 Query 则用 "&"，否则用 "?"
+        const connector = hasExistingQuery ? "&" : "?";
+
+        // -------------------------- 步骤3：处理 Query 对象，转为编码后的键值对 --------------------------
+        const queryPairs = [];
+        for (const [key, value] of Object.entries(rawQuery)) {
+          // 过滤无效键：键为空字符串或非字符串（如数字键会被转为字符串，无需过滤）
+          if (key.trim() === "") continue;
+          // 处理值：undefined/null 转为空字符串，其他类型转为字符串后 trim
+          const processedValue =
+            value === undefined || value === null ? "" : String(value).trim();
+          // 对键和值进行 URLEncode（解决特殊字符：如空格、&、=、中文等）
+          const encodedKey = encodeURIComponent(key);
+          const encodedValue = encodeURIComponent(processedValue);
+          // 加入键值对数组（格式：key=value）
+          queryPairs.push(`${encodedKey}=${encodedValue}`);
+        }
+
+        // -------------------------- 步骤4：拼接最终 URL --------------------------
+        // 若 Query 无有效键值对，直接返回清理后的原始 URL
+        if (queryPairs.length === 0) {
+          return cleanedUrl;
+        }
+        // 拼接 URL + 连接符 + 编码后的 Query 字符串（用 "&" 连接键值对）
+        return `${cleanedUrl}${connector}${queryPairs.join("&")}`;
+      }
+    </script>
+  </body>
+</html>

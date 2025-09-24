@@ -311,7 +311,7 @@
       })
     </script> -->
 
-    <script>
+    <!-- <script>
       const promise = new Promise(function (resolve, reject) {
         resolve("ok");
         throw new Error("test");
@@ -323,6 +323,96 @@
         .catch(function (error) {
           console.log(error);
         });
+    </script> -->
+
+    <!-- <script>
+      var name = "x";
+      var people = {
+        name: "y",
+        setName: (n) => {
+          this.name = n;
+          return () => {
+            return this.name;
+          };
+        },
+      };
+      var getName = people.setName(name);
+
+      console.log(people.name);
+      console.log(getName());
+    </script> -->
+    <!-- 
+    <script>
+      const name = "window";
+      const test = {
+        name: "bill",
+        show1: function () {
+          console.log(this.name); //bill
+        },
+        show2: () => {
+          console.log(this.name); //undefined 箭头函数没有this
+        },
+        show3: () => {
+          function inner() {
+            console.log(this.name); //undefined 1、不是闭包：因为并未返回匿名函数 2 this指向show3
+          }
+          inner();
+        },
+        show4: function () {
+          return function () {
+            // return this.name; //window 此处是闭包，this指向window
+            console.log(this.name)
+          };
+        },
+      };
+      test.show1();
+      test.show2();
+      test.show3();
+      test.show4()();
+    </script> -->
+    <!-- <script>
+      var arr = ["a", "b", "c", "d"];
+      for (let a in arr) {
+        console.log(a); // 0 1 2 3
+      }
+      for (let a of arr) {
+        console.log(a); // a b c d
+      }
+      // Iterator 的作用：供for...of消费
+      // Iterator 的遍历过程:
+      var it = makeIterator(["a", "b"]);
+      it.next(); // { value: "a", done: false }
+      it.next(); // { value: "b", done: false }
+      it.next(); // { value: undefined, done: true }
+      new Promise(() => {
+        throw new Error("throw");
+      })
+        .catch(() => {
+          console.log("catch"); //catch返回的内容会被resolve包裹成promise
+        })
+        .then(() => {
+          console.log("then");
+        });
+      // 输出：
+      // catch
+      // then
+      let n = 0;
+      // setState(n:this.n+1)
+      // setState(n:this.n+1)
+      setTimeout(() => {
+        // setState(n: this.n + 1)
+        // setState(n: this.n + 1)
+      }, 0);
+    </script> -->
+    <script>
+      function radomNum(n, m) {
+        while(true) {
+          let num = Math.floor(Math.random() * m + 1)
+          console.log(num)
+          if(num >= n && num <= m) return num
+        }
+      }
+      console.log(radomNum(4, 9))
     </script>
   </body>
 </html>

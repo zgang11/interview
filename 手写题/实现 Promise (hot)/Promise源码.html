@@ -559,37 +559,34 @@
             }
           });
         }
-
-        static all_(list) {
-          return new Promise((resove, reject) => {
-            const values = [],
-              count = 0;
-            for (let [i, p] of list.entries()) {
-              this.resolve(p).then(
-                (res) => {
-                  values[i] = res;
-                  count++;
-                  if (count === list.length) {
-                    resove(values);
-                  }
-                },
-                (err) => {
-                  reject(err);
+        static allSettled_(list) {
+          let result = []
+          let count = 0
+          return new MyPromise((resolve, reject) => {
+            for(let [i, p] of Object.entries(list)) {
+              MyPromise.resolve(p).then(value => {
+                result[i] = value
+              }, err => {
+                result[i] = err
+              }).finally(() => {
+                count++
+                if(count === list.length) {
+                  resolve(result)
                 }
-              );
+              })
             }
-          });
+          })
         }
       }
 
-      console.log(MyPromise.prototype)
+      console.log(MyPromise.prototype);
       let myPromise = new MyPromise((resolve, reject) => {
-        console.log('jajaj')
-        resolve('resolved')
-      })
-      myPromise.then(res => {
-        console.log(res)
-      })
+        console.log("jajaj");
+        resolve("resolved");
+      });
+      myPromise.then((res) => {
+        console.log(res);
+      });
     </script>
 
     <!-- <script>

@@ -30,33 +30,34 @@
     //   return typeof result === 'object' ? result : child;
     // }
 
-    const _new = function(fn, ...rest){
-        const obj = Object.create(fn.prototype)
-        const result = fn.call(obj, ...rest)
-        return typeof result === 'object' ? result : obj
-    }
-    const p1 = _new(Parent, 'www', '23');
-    console.log(p1);
-    p1.sayName();
+    // const _new = function(fn, ...rest){
+    //     const obj = Object.create(fn.prototype)
+    //     const result = fn.call(obj, ...rest)
+    //     return typeof result === 'object' ? result : obj
+    // }
+    // const p1 = _new(Parent, 'www', '23');
+    // console.log(p1);
+    // p1.sayName();
 
   </script>
+
+
   <script>
+    let new_ = function(fn, ...args) {
+      let proto = Object.create(fn.prototype)
+      let result = fn.call(proto, ...args)
+      return typeof result === 'object' ? result : proto
+    }
+
     function Parent(name, age) {
       this.name = name;
       this.age = age;
       this.sayName = function () {
         console.log(this.name);
       }
-      return '1'
     }
-
-    function _new_(fn, ...args){
-      const obj = Object.create(fn.prototype)
-      const result = fn.call(obj, ...args)
-      return  typeof result === 'object' ? result : obj
-    }
-    let res = _new_(Parent, 'zhangsan', '34')
-    console.log(res)
+    const p1 = new_(Parent, 'www', '23');
+    console.log(p1);
   </script>
 </body>
 

@@ -33,40 +33,47 @@
       body: document.body,
       others: [123, 'coding', new Date(), /abc/gim, ]
     };
+
     // const deepCopy = (obj) => {
-    //   if (typeof obj !== 'object') return obj 
-    //   let newObj = obj instanceof Array ? [] : {}
-    //   for (let key in obj) {
-    //     if (obj[key] instanceof Date) {
-    //       newObj[key] = new Date(obj[key].getTime())
-    //     } else if (obj[key] instanceof RegExp) {
-    //       newObj[key] = new RegExp(obj[key])
-    //     } else if (typeof obj[key] === 'object' && obj[key].nodeType === 1) {
-    //       let newNode = document.getElementsByTagName(obj[key].nodeName)[0]
-    //       newObj[key] = newNode.cloneNode(true)
-    //     } else {
-    //       newObj[key] = typeof obj[key] === "object" ? deepCopy(obj[key]) : obj[key]
+    //   if(typeof obj !== 'object') return obj
+    //   let newObj = Array.isArray(obj) ? [] : {}
+    //   for(let key in obj) {
+    //     if(obj.hasOwnProperty(key)) {
+    //       if(obj[key] instanceof Date) {
+    //         newObj[key] = new Date(obj[key].getTime())
+    //       } else if(obj[key] instanceof RegExp) {
+    //         newObj[key] = new RegExp(obj[key])
+    //       } else if(obj[key].nodeType === 1 && typeof obj[key] === 'object') {
+    //         let newNode = document.getElementsByTagName(obj[key].nodeName)[0]
+    //         newObj[key] = newNode.cloneNode(true)
+    //       } else {
+    //         newObj[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key]
+    //       }
     //     }
     //   }
     //   return newObj
     // }
 
-    const deepCopy = (obj) => {
+    // console.log("objA:", deepCopy(objA))
+
+
+    function deepCopy(obj) {
       if(typeof obj !== 'object') return obj
       let newObj = Array.isArray(obj) ? [] : {}
       for(let key in obj) {
         if(obj.hasOwnProperty(key)) {
-          if(obj[key] instanceof Date) {
-            newObj[key] = new Date(obj[key].getTime())
-          } else if(obj[key] instanceof RegExp) {
-            newObj[key] = new RegExp(obj[key])
-          } else if(obj[key].nodeType === 1 && typeof obj[key] === 'object') {
+          let val = obj[key]
+          if(val instanceof Date) {
+            newObj[key] = new Date(val)
+          } else if(val instanceof RegExp) {
+            newObj[key] = new RegExp(val)
+          } else if(val.nodeType === 1 && typeof val === 'object') {
             let newNode = document.getElementsByTagName(obj[key].nodeName)[0]
             newObj[key] = newNode.cloneNode(true)
           } else {
-            newObj[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key]
+            newObj[key] = typeof val === 'object' ? deepCopy(val) : val
           }
-        }
+        } 
       }
       return newObj
     }

@@ -1,42 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>函数柯里化，实现下面的代码</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>函数柯里化，实现下面的代码</title>
-</head>
+  <body>
+    <script>
+      // https://www.cnblogs.com/plBlog/p/12356042.html
+      // 实现一个add方法，使计算结果能够满足如下预期：
+      // add(1)(2)(3) = 6;
+      // add(1, 2, 3)(4) = 10;
+      // add(1)(2)(3)(4)(5) = 15;
 
-<body>
-  <script>
-    // https://www.cnblogs.com/plBlog/p/12356042.html
-    // 实现一个add方法，使计算结果能够满足如下预期：
-    // add(1)(2)(3) = 6;
-    // add(1, 2, 3)(4) = 10;
-    // add(1)(2)(3)(4)(5) = 15;
+      // function add() {
+      //   let args = Array.prototype.slice.call(arguments)
 
-    function add() {
-      let args = Array.prototype.slice.call(arguments)
+      //   function _add() {
+      //     args.push(...arguments)
+      //     return _add
+      //   }
 
-      function _add() {
-        args.push(...arguments)
-        return _add
+      //   _add.toString =  function(){
+      //       return args.reduce((acc, cur) => acc + cur)
+      //    }
+
+      //   return _add
+      // }
+
+      // console.log(add(1)(2)(3).toString()); // 6
+      // console.log(add(1, 2, 3)(4).toString()); // 10
+      // add(1)(2)(3)(4)(5); // 15
+      // add(2, 6)(1); // 9
+
+      function add(...args) {
+        let arr = [...args];
+        
+        function add_ (...args) {
+          arr.push(...args);
+          return add_
+        };
+        add_.toString = function () {
+          console.log(arr)
+          return arr.reduce((acc, cur) => acc + cur);
+        };
+        return add_
       }
-
-      _add.toString =  function(){
-          return args.reduce((acc, cur) => acc + cur)
-       }
-
-      return _add
-    }
-
-    console.log(add(1)(2)(3).toString()) // 6
-    console.log(add(1, 2, 3)(4).toString())// 10
-    add(1)(2)(3)(4)(5) // 15
-    add(2, 6)(1) // 9
-
-  </script>
-</body>
-
+      console.log(add(1)(2)(3).toString()); // 6
+      console.log(add(1, 2, 3)(4).toString()); // 10
+    </script>
+  </body>
 </html>

@@ -14,5 +14,22 @@
         return Fibonacci(n - 1, sum, num + sum);
       }
     </script>
+    <script>
+      // 带缓存
+      function fibonacci(n, map = {}) {
+        if (n == 1 || n == 2) {
+          map[n] = 1;
+          return 1;
+        }
+        if (!map[n]) {
+          map[n] = fibonacci(n - 1, map) + fibonacci(n - 2, map);
+        }
+        return map[n];
+      }
+
+      console.log(fibonacci(8, {}));
+      console.log(fibonacci(1, {}));
+      console.log(fibonacci(38, {}));
+    </script>
   </body>
 </html>

@@ -18,16 +18,26 @@
     function fn(){}
 
     const f1 = new f()
-    let instanceof_ = (L, R) => {
-      let O = R.prototype
+    // let instanceof_ = (L, R) => {
+    //   let O = R.prototype
+    //   L = L.__proto__
+    //   while (1) {
+    //     if (L === null) {
+    //       return false
+    //     }
+    //     if (L === O) {
+    //       return true
+    //     }
+    //     L = L.__proto__
+    //   }
+    // }
+
+    function instanceof_(L, R) {
+      let prototype = R.prototype
       L = L.__proto__
-      while (1) {
-        if (L === null) {
-          return false
-        }
-        if (L === O) {
-          return true
-        }
+      while(true) {
+        if(L === null) return false
+        if(L === prototype) return true
         L = L.__proto__
       }
     }

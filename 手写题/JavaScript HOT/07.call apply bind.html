@@ -7,21 +7,6 @@
   </head>
   <body>
     <script>
-      // Function.prototype.apply_ = function(context, arg){
-      //     context = !context ? window : Object(context)
-      //     context.fn = this
-
-      //     let result
-      //     if(arg){
-      //         result = context.fn(...arg)
-      //     }else {
-      //         result = context.fn()
-      //     }
-
-      //     delete context.fn
-      //     return result
-      // }
-
       Function.prototype.apply_ = function (context, args) {
         context = context ? Object(context) : window;
         context.fn = this;
