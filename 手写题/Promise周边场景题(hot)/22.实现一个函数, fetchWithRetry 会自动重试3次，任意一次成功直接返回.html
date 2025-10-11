@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      实现一个函数, fetchWithRetry 会自动重试3次，任意一次成功直接返回
+    </title>
+  </head>
+  <body>
+    <script>
+      // https://blog.csdn.net/m0_46672781/article/details/134827375
+      function fetchWithRetry(url, options, maxRetry = 3, backoffDelay = 1000) {
+        return new Promise((resolve, reject) => {
+          let retryCount = 0;
+          const makeRequest = () => {
+            fetch(url, options)
+              .then((response) => {
+                if (response.ok) {
+                  resolve(response);
+                } else {
+                  throw new Error(
+                    "Request failed with status ${response.status}"
+                  );
+                }
+              })
+              .catch((error) => {
+                retryCount++;
+                if (retryCount < maxRetry) {
+                  setTimeout(makeRequest, backoffDelay);
+                } else {
+                  reject(error);
+                }
+              });
+          };
+          makeRequest();
+        });
+      }
+    </script>
+  </body>
+</html>

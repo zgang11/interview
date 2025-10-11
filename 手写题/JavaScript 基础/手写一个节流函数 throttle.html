@@ -98,17 +98,17 @@
 
       // 2. 创建节流函数：1000ms内最多执行一次
       // 首次触发执行，最后一次触发也执行
-      const throttledScroll = throttle(handleScroll, 1000);
-
-      // 3. 绑定到滚动事件
-      window.addEventListener("scroll", throttledScroll);
+      // const throttledScroll = throttle(handleScroll, 5000);
 
       // 4. 其他配置示例
       // 只在首次触发执行，最后一次不执行
-      // const throttledScroll = throttle(handleScroll, 1000, { trailing: false });
+      // const throttledScroll = throttle(handleScroll, 5000, { trailing: false });
 
       // 只在最后一次触发执行，首次不执行
-      // const throttledScroll = throttle(handleScroll, 1000, { leading: false });
+      const throttledScroll = throttle(handleScroll, 5000, { leading: false });
+
+      // 3. 绑定到滚动事件
+      window.addEventListener("scroll", throttledScroll);
     </script>
   </body>
 </html>

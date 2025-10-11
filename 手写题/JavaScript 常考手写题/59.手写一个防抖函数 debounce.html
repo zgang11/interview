@@ -70,9 +70,9 @@
           if (trailing) {
             timer = setTimeout(() => {
               // 如果leading为false，则在定时器中执行（最后一次触发）
-              if (!leading) {
+              // if (!leading) {
                 func.apply(this, args);
-              }
+              // }
               timer = null;
             }, wait);
           }
@@ -97,7 +97,7 @@
 
       // 2. 创建防抖函数：500ms内没有新触发则执行
       // 默认：只在最后一次触发后执行
-      const debouncedInput = debounce(handleInput, 5000, { leading: false, trailing: true });
+      // const debouncedInput = debounce(handleInput, 5000, { leading: false, trailing: true });   
 
       // 3. 绑定到输入框事件
       const input = document.querySelector("input");
@@ -107,10 +107,10 @@
 
       // 4. 其他配置示例
       // 首次触发立即执行，之后的触发等待结束后执行
-      // const debouncedInput = debounce(handleInput, 500, { leading: true, trailing: true });
+      // const debouncedInput = debounce(handleInput, 5000, { leading: true, trailing: true });
 
       // 只在首次触发执行，之后的触发不执行
-      // const debouncedInput = debounce(handleInput, 500, { leading: true, trailing: false });
+      const debouncedInput = debounce(handleInput, 5000, { leading: true, trailing: false });
     </script>
   </body>
 </html>

@@ -404,7 +404,7 @@
         // setState(n: this.n + 1)
       }, 0);
     </script> -->
-    <script>
+    <!-- <script>
       function radomNum(n, m) {
         while(true) {
           let num = Math.floor(Math.random() * m + 1)
@@ -413,6 +413,87 @@
         }
       }
       console.log(radomNum(4, 9))
+    </script> -->
+    <!-- <script>
+      function layerSum(root) {
+        let ans = []
+        var dfs = (root, level) => {
+          ans[level] = ans[level] || 0
+          ans[level] += root.value
+          if(root.children) {
+            root.children.forEach(child => dfs(child, level + 1))
+          }
+        }
+        dfs(root, 0)
+        return ans
+      }
+
+      const res = layerSum({
+        value: 2,
+        children: [
+          { value: 6, children: [{ value: 1 }] },
+          { value: 3, children: [{ value: 2 }, { value: 3 }, { value: 4 }] },
+          { value: 5, children: [{ value: 7 }, { value: 8 }] },
+        ],
+      });
+
+      console.log(res);
+    </script> -->
+    <!-- <script>
+      setTimeout(function () {
+        console.log(1);
+      }, 100);
+
+      new Promise(function (resolve, reject) {
+        console.log(2);
+        // resolve();
+        reject('jsjs')
+        console.log(3);
+      }).then(function () {
+        console.log(4);
+        new Promise((resove, reject) => {
+          console.log(5);
+          setTimeout(() => {
+            console.log(6);
+          }, 100);
+        });
+      });
+      console.log(7);
+      console.log(8);
+      // 2 3 7 8 4 5 6 1
+    </script> -->
+    <!-- <script>
+      var a = 3;
+      function c() {
+        alert(a);
+      }
+      (function () {
+        var a = 4;
+        c();
+      })();
+    </script> -->
+    <script>
+      function Foo() {
+        Foo.a = function () {
+          console.log(1);
+        };
+        this.a = function () {
+          console.log(2);
+        };
+      }
+
+      Foo.prototype.a = function () {
+        console.log(3);
+      };
+
+      Foo.a = function () {
+        console.log(4);
+      };
+
+      Foo.a(); // 4
+      let obj = new Foo();
+      obj.a(); // 2
+      Foo.a(); // 1
     </script>
   </body>
 </html>
