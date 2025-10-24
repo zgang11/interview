@@ -6,7 +6,7 @@
     <title>对象扁平化</title>
   </head>
   <body>
-    <script>
+    <!-- <script>
       // 递归
       function flattenObject(obj, prefix = "", res = {}) {
         for (let key in obj) {
@@ -45,6 +45,35 @@
         }
 
         return result;
+      }
+    </script> -->
+    <script>
+      // 对象扁平化
+      const nestedObject = {
+        a: 1,
+        b: {
+          c: 2,
+          d: {
+            e: 3,
+          },
+        },
+      };
+
+      const flattened = flattenObject(nestedObject);
+      console.log(flattened);
+      function flattenObject(obj) {
+        let res = {}
+        for(let [key, val] of Object.entries(obj)) {
+          if(typeof val === 'object') {
+            let newObj = flattenObject(val)
+            for(let [k, v] of Object.entries(newObj)) {
+              res[`${key}.${k}`] = v
+            }
+          } else {
+            res[key] = val
+          }
+        }
+        return res
       }
     </script>
   </body>

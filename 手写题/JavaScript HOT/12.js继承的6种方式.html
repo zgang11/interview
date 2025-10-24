@@ -136,66 +136,8 @@
   </script> -->
 
 
-  <!-- <script>
-    function ParentType(name, age) {
-      this.name = name
-      this.age = age
-    }
-    ParentType.prototype.age = '11'
-
-    function ChildType() {
-
-    }
-    ChildType.prototype = new ParentType
-    let childt1 = new ChildType()
-    console.log(child1)
-
-
-    function ChildType() {
-      ParentType.call(this, ...args)
-    }
-
-
-    function ChildType() {
-      ParentType.call(this, ...args)
-    }
-    ChildType.prototype = new ParentType()
-
-
-
-    function content(obj) {
-      function Fn() {}
-      Fn.prototype = obj
-      return new Fn
-    }
-  </script> -->
   <script>
-    function SuperType(name) {
-      this.name = name
-      this.color = ['red', 'blue', 'green']
-    }
-    SuperType.prototype.sayName = function () {
-      console.log(this.name)
-    }
-
-    function SubType(name, age) {
-      SuperType.call(this, name)
-      this.age = age
-    }
-    inhreit(SubType, SuperType)
-    SubType.prototype.sayAge = function () {
-      console.log(this.age)
-    }
-
-
-    function inhreit(subType, supType) {
-      let prototype = Object(supType.prototype)
-      prototype.constructor = subType
-      subType.prototype = prototype
-    }
-    let sub1 = new SubType('zhanggang', 23)
-    sub1.sayAge()
-    sub1.sayName()
+    
   </script>
 </body>
 

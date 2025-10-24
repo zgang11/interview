@@ -65,33 +65,29 @@
     //   }
     // }
 
-
     class Scheduler {
-      constructor(limit) {
-        this.maxCount = limit
-        this.list = []
-        this.tempRunIndex = 0
+      list = []
+      tempRunCount = 0
+      maxCount = 0
+      constructor(maxCount) {
+        this.maxCount = maxCount
       }
-
-      add = function(fn) {
-        this.list.push(fn)
+      add(val) {
+        this.list.push(val)
       }
-
-      taskStart = function() {
+      taskStart() {
         for(let i = 0; i < this.maxCount; i++) {
           this.request()
         }
       }
-
-      request = function() {
-        if(this.list.length === 0 || this.tempRunIndex > this.maxCount) return
-        this.tempRunIndex++
-        this.list.shift()().finally(() => {
-          this.tempRunIndex--
+      request() {
+        if(this.list.length === 0 || this.tempRunCount > this.maxCount) return
+        this.tempRunCount++
+        this.list.shift()().then(() => {
+          this.tempRunCount--
           this.request()
         })
       }
-
     }
 
     var scheduler = new Scheduler(2)
@@ -105,7 +101,6 @@
     function addTask(time, order) {
       scheduler.add(() => timeout(time).then(() => console.log(order)))
     }
-
 
     addTask(10000, 1)
     addTask(20000, 2)

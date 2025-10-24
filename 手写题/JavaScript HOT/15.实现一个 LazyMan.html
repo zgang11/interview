@@ -29,49 +29,102 @@
       // Eat supper
       // 以此类推。
 
+      // class LLazyMan {
+      //   constructor(name) {
+      //     this.name = name;
+      //     this.queue = [];
+      //     this.sayName();
+      //     this.run();
+      //   }
+      //   sayName() {
+      //     this.queue.push(() => {
+      //       console.log(`Hi! This is ${this.name});
+      //     });
+      //     return this;
+      //   }
+      //   sleep(time) {
+      //     this.queue.push(() => this.timeWait(time));
+      //     return this;
+      //   }
+      //   sleepFirst(time) {
+      //     this.queue.unshift(() => this.timeWait(time));
+      //     return this;
+      //   }
+      //   timeWait(time) {
+      //     return new Promise((resolve) =>
+      //       setTimeout(() => {
+      //         console.log(`Wake up after ${time}`);
+      //         resolve();
+      //       }, time * 1000)
+      //     );
+      //   }
+      //   eat(param) {
+      //     this.queue.push(() => {
+      //       console.log(`Eat ${param}`);
+      //     });
+      //     return this;
+      //   }
+      //   run() {
+      //     setTimeout(async () => {
+      //       for (const task of this.queue) {
+      //         await task();
+      //       }
+      //     }, 0);
+      //   }
+      // }
+
       class LLazyMan {
+        list = [];
+        name = undefined;
+
         constructor(name) {
           this.name = name;
-          this.queue = [];
           this.sayName();
           this.run();
         }
+
         sayName() {
-          this.queue.push(() => {
+          this.list.push(() => {
             console.log(`Hi! This is ${this.name}`);
           });
           return this;
         }
-        sleep(time) {
-          this.queue.push(() => this.timeWait(time));
-          return this;
-        }
-        sleepFirst(time) {
-          this.queue.unshift(() => this.timeWait(time));
-          return this;
-        }
-        timeWait(time) {
-          return new Promise((resolve) =>
-            setTimeout(() => {
-              console.log(`Wake up after ${time}`);
-              resolve();
-            }, time * 1000)
-          );
-        }
-        eat(param) {
-          this.queue.push(() => {
-            console.log(`Eat ${param}`);
+
+        eat(val) {
+          this.list.push(() => {
+            console.log(`eat ${val}~`);
           });
           return this;
         }
+
+        sleepFirst(time) {
+          this.list.unshift(() => this.timeOut(time));
+          return this;
+        }
+
+        sleep(time) {
+          this.list.push(() => this.timeOut(time));
+          return this;
+        }
+
+        timeOut(time) {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              console.log("wait for " + time + " s");
+              resolve();
+            }, time * 1000);
+          });
+        }
+
         run() {
           setTimeout(async () => {
-            for (const task of this.queue) {
-              await task();
+            for (let p of this.list) {
+              await p();
             }
-          }, 0);
+          });
         }
       }
+
       const LazyMan = (name) => new LLazyMan(name);
       // LazyMan("Hank").sleepFirst(5).eat("supper");
       // LazyMan("Hank").eat("dinner").eat("supper");

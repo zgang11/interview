@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const tree = {
+        name: "root",
+        children: [
+          { name: "叶子1-1" },
+          { name: "叶子1-2" },
+          {
+            name: "叶子2-1",
+            children: [
+              {
+                name: "叶子3-1",
+                children: [
+                  {
+                    name: "叶子4-1",
+                    children: [{}],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+
+      // let maxHeight = 0
+      // function dfs(root, depth = 0) {
+      //   if(!root) return
+      //   depth += 1
+      //   maxHeight = Math.max(maxHeight, depth)
+      //   if(root.children) {
+      //     for(let child of root.children) {
+      //       dfs(child, depth)
+      //     }
+      //   }
+      // }
+      // dfs(tree)
+      // console.log(maxHeight)
+
+      function dfs(root) {
+        if(!root) return 0
+        let level = 1
+        if(root.children) {
+          for(let child of root.children) {
+            level = Math.max(level, dfs(child) + 1)
+          }
+        }
+        return level
+      }
+      console.log(dfs(tree))
+    </script>
+  </body>
+</html>

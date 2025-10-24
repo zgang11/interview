@@ -92,54 +92,46 @@
   </script> -->
     <script>
       class EventHub {
-        constructor() {
-          this.event = {};
-        }
-        // 注册事件
-        on = function (listener, callback) {
-          if (!listener || !callback) return;
-          if (!this.event[listener]) {
-            this.event[listener] = [callback];
+        map = {}
+        on(listener, fn) {
+          if(!listener || !fn) return
+          if(!this.map[listener]) {
+            this.map[listener] = [fn]
           } else {
-            this.event[listener].push(callback);
+            this.map[listener].push(fn)
           }
-        };
+        }
 
-        // 发布时间
-        emit = function (listener, ...args) {
-          if (!listener) return;
-          if (!this.event[listener]) {
-            console.log("warning: no such listener");
-            return;
+        once(listener, fn) {
+          let one = () => {
+            fn.apply(this, arguments)
+            this.off(listener, one)
           }
-          this.event[listener].forEach((item) => item.call(this, ...args));
-        };
+          this.on(listener, one)
+        }
 
-        // 取消订阅
-        off = function (listener, callback) {
-          if (!callback) {
-            delete this.event[listener];
-            return;
+        off(listener, fn) {
+          if(!listener || !fn) return
+          if(!fn) {
+            delete this.map[listener]
+          } else {
+            this.map[listener] = this.map[listener].filter(cb => cb !== fn)
           }
-          this.event[listener] = this.event[listener].filter(
-            (item) => item !== callback
-          );
-        };
+        }
 
-        // 订阅一次
-        once = function (listener, callback) {
-          function one() {
-            callback.call(this, ...arguments);
-            this.off(listener);
+        emit(...rest) {
+          for(let item of rest) {
+            this.map[item] && this.map[item].forEach(cb => {
+              cb()
+            });
           }
-          this.on(listener, one);
-        };
+        }
       }
 
       const eventHub = new EventHub();
 
       function cb(value) {
-        console.log(value);
+        console.log(value + 'cb');
       }
 
       function cb1(value) {
@@ -147,9 +139,9 @@
       }
 
       eventHub.once("listener2", cb);
-      // eventHub.on('listener1', cb1)
+      eventHub.on('listener1', cb1)
       eventHub.emit("listener2", "listener1");
-      // eventHub.off('listener1', cb1)
+      eventHub.off('listener1', cb1)
       // eventHub.emit('listener1', 'listener1')
     </script>
   </body>

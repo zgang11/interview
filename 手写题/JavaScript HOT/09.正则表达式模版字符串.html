@@ -24,6 +24,10 @@
     //   })
     // }
 
+
+
+
+
     const template = '{{name}}很厉害，才{{age}}岁，他少年{{obj.a}}，独力支持，做了{{obj.b.c}}。'
     const context = {
       name: '二月',
@@ -36,19 +40,25 @@
       }
     }
 
-    // console.log(render(template, context))
-    // 二月很厉害，才15岁，他少年出外谋生，独力支持，做了许多大事。
-
     function render(template, context) {
-                       /\{\{\s*(\w+(\.\w+)*)\s*\}\}/g
-      return template.replace(/\{\{\s*(\w+(\.\w+)*)\s*\}\}/g, (p1, p2, p3) => {
-        // console.log(p1, p2, p3)
-        var getVal = (obj, props) => {
-          if(props.length === 0) return obj
-          return getVal(obj[props.shift()], props)
-        }
-        return getVal(context, p2.split('.'))
+      return template.replace(/\{\{\s*(\w+(\.(\w+))*)\s*\}\}/g, ($1, $2, $3) => {
+        return getVal($2, context)
       })
+
+      function getVal(path, context) {
+        let pathArr = path.split('.')
+        let res = context
+        console.log(pathArr, res)
+        for(let item of pathArr) {
+          if(res[item]) {
+            res = res[item]
+          } else {
+            res = undefined
+            break
+          }
+        }
+        return res
+      }
     }
 
     console.log(render(template, context))

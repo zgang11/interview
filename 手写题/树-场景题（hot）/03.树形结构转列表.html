@@ -70,33 +70,6 @@
       }
       dfs(data, undefined)
       console.log(res)
-
-      // const result = data.reduce(function (acc, cur) {
-      //   acc.push({
-      //     id: cur.id,
-      //     name: cur.name,
-      //     parentId: cur.parentId
-      //   });
-      //   cur.children && cur.children.forEach(child => {
-      //     child.parentId = cur.id;
-      //     arguments.callee(acc, child);
-      //   })
-      //   return acc;
-      // }, []);
-
-
-
-
-      // let ans = [];
-      // var dfs = (tree, pid) => {
-      //   for (let item of tree) {
-      //     ans.push({ ...item, pid });
-      //     if (item.children) {
-      //       dfs(item.children, item.id);
-      //     }
-      //   }
-      // };
-      // dfs(data, undefined);
     </script>
   </body>
 </html>
