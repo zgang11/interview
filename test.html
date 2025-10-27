@@ -472,7 +472,7 @@
         c();
       })();
     </script> -->
-    <script>
+    <!-- <script>
       function Foo() {
         Foo.a = function () {
           console.log(1);
@@ -494,6 +494,148 @@
       let obj = new Foo();
       obj.a(); // 2
       Foo.a(); // 1
+    </script> -->
+    <!-- <script>
+      const transStr = (str) => {
+          let reg = /^\-.$/g
+      }
+
+    </script> -->
+    <!-- <script>
+      const obj = {
+        fn1: () => console.log(this),
+        fn2: function () {
+          console.log(this);
+        },
+      };
+
+      obj.fn1();
+      obj.fn2();
+
+      // const x = new obj.fn1();
+      const y = new obj.fn2();
+    </script> -->
+    <!-- <div style="width: 200px; height: 10000px; background-color: red"></div> -->
+
+    <!-- <script>
+      function throttle(fn, delay) {
+        let lastTime = 0;
+        timer = null;
+        return function (...args) {
+          let context = this;
+          let now = Date.now();
+          if (timer) {
+            clearTimeout(timer);
+            timer = null;
+          }
+          if (now - lastTime >= delay) {
+            fn.apply(context, args);
+            lastTime = now;
+          } else {
+            timer = setTimeout(() => {
+              fn.apply(context, args);
+              lastTime = Date.now();
+              timer = null;
+            }, delay - (now - lastTime));
+          }
+        };
+      }
+      // 监听滚动事件，100ms内只执行一次
+      window.addEventListener(
+        "scroll",
+        throttle(() => {
+          console.log("滚动位置：", window.scrollY);
+        }, 1000)
+      );
+    </script> -->
+    <!-- <script>
+      async function runWithConcurrency(tasks, limit) {
+        let result = [];
+        let executing = new Set();
+        for (let task of tasks) {
+          if (executing.size >= limit) {
+            await Promise.race(executing);
+          }
+          let p = task()
+            .then((res) => {
+              console.log('p', p)
+              executing.delete(p);
+              return res
+            })
+            .catch((err) => {
+              executing.delete(p);
+              throw err;
+            });
+          executing.add(p);
+          result.push(p)
+        }
+        return Promise.all(result)
+      }
+
+      // 模拟异步请求函数
+      function mockRequest(id, delay) {
+        return new Promise((resolve) => {
+          console.log(`请求 ${id} 开始`);
+          setTimeout(() => {
+            console.log(`请求 ${id} 完成`);
+            resolve(`结果 ${id}`);
+          }, delay);
+        });
+      }
+
+      // 创建10个请求任务
+      const tasks = [];
+      for (let i = 1; i <= 10; i++) {
+        tasks.push(() => mockRequest(i, Math.random() * 2000));
+      }
+
+      // 执行并发控制
+      runWithConcurrency(tasks, 3)
+        .then((results) => {
+          console.log("所有请求完成:", results);
+        })
+        .catch((err) => {
+          console.error("请求出错:", err);
+        });
+    </script> -->
+    <!-- <script>
+      let str = “ababac”
+    </script> -->
+    <!-- <script>
+      class Single {
+        constructor() {}
+        say() {}
+        getInstance() {
+          if(!Single.instance) {
+             Single.instance = new Single
+          }
+          return Single.instance
+        }
+      }
+    </script> -->
+    <script>
+      async function async1() {
+        console.log("async1 start");
+        await async2();
+        console.log("async1 end");
+      }
+      async function async2() {
+        console.log("async2");
+      }
+      console.log("script start");
+      setTimeout(function () {
+        console.log("setTimeout");
+      }, 0);
+      async1();
+      new Promise(function (resolve) {
+        console.log("promise1");
+        resolve();
+        console.log("promise2");
+      }).then(function () {
+        console.log("promise3");
+      });
+      console.log("script end");
+      //  "script start" => "async1 start" => ""async2"" => "promise1" => "promise2" => "script end" =>  "async1 end" => "promise3" => "setTimeout"
     </script>
   </body>
 </html>

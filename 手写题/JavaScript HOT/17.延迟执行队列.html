@@ -1,0 +1,109 @@
+<html>
+  <script>
+    class DelayQueue {
+      constructor() {
+        // 存储队列任务 [{ fn, delay, args }, ...]
+        this.queue = [];
+        // 标记队列是否正在执行
+        this.isRunning = false;
+      }
+
+      /**
+       * 添加任务到队列
+       * @param {Function} fn - 要执行的任务函数
+       * @param {number} delay - 延迟时间(ms)
+       * @param {...any} args - 任务函数的参数
+       */
+      add(fn, delay, ...args) {
+        // 校验参数
+        if (typeof fn !== "function") {
+          throw new Error("第一个参数必须是函数");
+        }
+        if (typeof delay !== "number" || delay < 0) {
+          throw new Error("延迟时间必须是非负数字");
+        }
+
+        // 添加任务到队列
+        this.queue.push({ fn, delay, args });
+
+        // 如果队列未执行，立即启动
+        if (!this.isRunning) {
+          this.run();
+        }
+      }
+
+      /**
+       * 执行队列任务
+       */
+      async run() {
+        this.isRunning = true;
+
+        // 循环执行队列中的任务
+        while (this.queue.length > 0) {
+          const { fn, delay, args } = this.queue.shift(); // 取出第一个任务
+
+          try {
+            // 等待延迟时间
+            await new Promise((resolve) => setTimeout(resolve, delay));
+            // 执行任务并传入参数
+            await fn(...args); // 支持异步任务
+          } catch (error) {
+            console.error("任务执行出错:", error);
+          }
+        }
+
+        // 队列清空后标记为未执行状态
+        this.isRunning = false;
+      }
+
+      /**
+       * 清空队列
+       */
+      clear() {
+        this.queue = [];
+      }
+
+      /**
+       * 获取当前队列长度
+       * @returns {number} 队列中的任务数量
+       */
+      getLength() {
+        return this.queue.length;
+      }
+    }
+
+    // 示例用法
+    const queue = new DelayQueue();
+
+    // 添加任务1：延迟1秒执行
+    queue.add(
+      (msg) => {
+        console.log("任务1执行:", msg);
+      },
+      1000,
+      "Hello"
+    );
+
+    // 添加任务2：延迟2秒执行（会在任务1完成后才开始计时）
+    queue.add(() => {
+      console.log("任务2执行");
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          console.log("任务2内部异步操作完成");
+          resolve();
+        }, 1000);
+      });
+    }, 2000);
+
+    // 添加任务3：延迟500ms执行（会在任务2完全完成后执行）
+    queue.add(() => {
+      console.log("任务3执行");
+    }, 500);
+
+    // 输出顺序：
+    // （1秒后）任务1执行: Hello
+    // （再等2秒后）任务2执行
+    // （任务2内部再等1秒）任务2内部异步操作完成
+    // （再等500ms）任务3执行
+  </script>
+</html>

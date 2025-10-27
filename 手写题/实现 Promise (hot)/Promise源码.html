@@ -530,10 +530,11 @@
           });
         }
         finally(cb) {
+          let P = this.constructor
           return this.then(
-            (value) => MyPromise.resolve(cb()).then(() => value),
+            (value) => P.resolve(cb()).then(() => value),
             (reason) =>
-              MyPromise.resolve(cb()).then(() => {
+              P.resolve(cb()).then(() => {
                 throw reason;
               })
           );
