@@ -24,7 +24,7 @@
     setInterval(betterFn, 100);
   </script> -->
 
-    <script>
+    <!-- <script>
       /**
        * 节流函数
        * @param {Function} func - 需要节流的函数
@@ -109,6 +109,44 @@
 
       // 3. 绑定到滚动事件
       window.addEventListener("scroll", throttledScroll);
+    </script> -->
+    <script>
+      // 基础节流函数：固定间隔内只执行一次
+      function throttle(fn, delay) {
+        let lastTime = 0; // 上次执行时间
+        let timer = null; // 定时器
+
+        return function (...args) {
+          const now = Date.now(); // 当前时间
+          const context = this; // 保存this指向
+
+          // 清除之前的定时器（避免重复触发）
+          if (timer) {
+            clearTimeout(timer);
+            timer = null;
+          }
+
+          // 如果距离上次执行已超过间隔时间，立即执行
+          if (now - lastTime >= delay) {
+            fn.apply(context, args);
+            lastTime = now; // 更新上次执行时间
+          } else {
+            // 否则，设置定时器在剩余时间后执行（确保最后一次会触发）
+            timer = setTimeout(() => {
+              fn.apply(context, args);
+              lastTime = Date.now(); // 更新上次执行时间
+              timer = null;
+            }, delay - (now - lastTime));
+          }
+        };
+      }
+      // 监听滚动事件，100ms内只执行一次
+      window.addEventListener(
+        "scroll",
+        throttle(() => {
+          console.log("滚动位置：", window.scrollY);
+        }, 10000)
+      );
     </script>
   </body>
 </html>
