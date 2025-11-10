@@ -35,17 +35,44 @@
       // add(1)(2)(3)(4)(5); // 15
       // add(2, 6)(1); // 9
 
-      function add(...args) {
-        let arr = [...args];
+      // function add(...args) {
+      //   let arr = [...args];
         
-        function add_ (...args) {
-          arr.push(...args);
+      //   function add_ (...args) {
+      //     arr.push(...args);
+      //     return add_
+      //   };
+      //   add_.toString = function () {
+      //     console.log(arr)
+      //     return arr.reduce((acc, cur) => acc + cur);
+      //   };
+      //   return add_
+      // }
+
+      function add(...rest) {
+        let args = [...rest]
+        function add_(...rest_) {
+          args.push(...rest_)
           return add_
-        };
-        add_.toString = function () {
-          console.log(arr)
-          return arr.reduce((acc, cur) => acc + cur);
-        };
+        }
+        add_.toString = function() {
+          console.log(args)
+          return args.reduce((acc, cur) => acc + cur)
+        }
+        return add_
+      }
+      
+      function add(...rest) {
+        let arr = [...rest]
+
+        function add_(...args) {
+          arr.push(...args)
+          return add_
+        }
+
+        add_.toString = function() {
+          return arr.reduce((acc, cur) => acc + cur)
+        }
         return add_
       }
       console.log(add(1)(2)(3).toString()); // 6

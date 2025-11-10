@@ -10,7 +10,32 @@
       // https://www.zhihu.com/tardis/bd/art/135999364?source_id=1001
 
       //     Input: 'abcdaaabbccccdddefgaaa'
-      // Output: 4
+      //     Output: 4
+
+      let input = 'abcdaaabbccccdddefgaaa'
+
+      function repeatChar(str) {
+        let arr = str.split(''), n = arr.length, ans = []
+        for(let i = 0; i < n; i++) {
+          let j = i + 1
+          while(j < n && arr[j] === arr[i]) {
+            j++
+          }
+          
+          if(j - i >= 2) {
+            console.log(i, j)
+            ans.push(str.slice(i, j))
+          }
+          i = j - 1
+        }
+        return ans
+      }
+
+      // function repeatChar(str) {
+      //   return str.match(/(.)\1+/g)
+      // }
+
+      console.log(repeatChar(input))
 
       // 1. 输出叠词的数量
       // 2. 输出去重叠词的数量

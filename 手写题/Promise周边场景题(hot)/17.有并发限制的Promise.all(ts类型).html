@@ -88,7 +88,6 @@
           // 创建并执行新任务
           const p = task()
             .then((res) => {
-              console.log('p', p)
               executing.delete(p); // 任务完成，从执行集合中移除
               return res;
             })
@@ -104,6 +103,29 @@
         // 等待所有任务完成
         return Promise.all(results);
       }
+
+      // async function runWithConcurrency(tasks, limit = 3) {
+      //   let result = [], executing = new Set()
+
+      //   for(let task of tasks) {
+      //     if(executing.size > limit) {
+      //      await Promise.race(executing)
+      //     }
+
+      //     let p = task().then((res) => {
+      //       executing.delete(p)
+      //       return res
+      //     }).catch(err => {
+      //       executing.delete(p)
+      //       return err
+      //     })
+      //     result.push(p)
+      //     executing.add(p)
+      //   }
+
+
+      //   return Promise.all(result)
+      // }
 
       // 模拟异步请求函数
       function mockRequest(id, delay) {

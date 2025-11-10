@@ -140,12 +140,38 @@
           }
         };
       }
+      
+      function throttle(fn, delay) {
+        let lastTime = 0
+        let timer = null
+
+        return function(...args) {
+          if(timer) {
+            clearTimeout(timer)
+            timer = null
+          }
+
+          let now = new Date().getTime()
+          if(now - lastTime > delay) {
+            fn.apply(this, args)
+            timer = null
+            lastTime = now
+          } else {
+            timer = setTimeout(() => {
+              fn.apply(this, args)
+              timer = null
+              lastTime = now
+            }, delay - (now - lastTime))
+          }
+        }
+      }
+
       // 监听滚动事件，100ms内只执行一次
       window.addEventListener(
         "scroll",
         throttle(() => {
           console.log("滚动位置：", window.scrollY);
-        }, 10000)
+        }, 3000)
       );
     </script>
   </body>

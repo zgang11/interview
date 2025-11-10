@@ -613,7 +613,7 @@
         }
       }
     </script> -->
-    <script>
+    <!-- <script>
       async function async1() {
         console.log("async1 start");
         await async2();
@@ -636,6 +636,10 @@
       });
       console.log("script end");
       //  "script start" => "async1 start" => ""async2"" => "promise1" => "promise2" => "script end" =>  "async1 end" => "promise3" => "setTimeout"
+    </script> -->
+    <script>
+      let str = 'get-element-by-id'
+      console.log(str.replace(/\-(\w)/g, ($1, $2) => $2.toLocaleUpperCase()))
     </script>
   </body>
 </html>

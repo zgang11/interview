@@ -36,6 +36,29 @@
           makeRequest();
         });
       }
+      function fetchWithRetry(url, options, maxRetry, backoffDelay) {
+        return new Promise((resolve, reject) => {
+          let retryCount = 0
+          function fetchData() {
+             fetch(url, options).then((res) => {
+               if(res.ok) {
+                 resolve(res)
+               } else {
+                throw Error()
+               }
+             }).catch((err) => {
+               
+               if(retryCount < maxRetry) {
+                retryCount++
+                setTimeout(fetchData, backoffDelay)
+               } else {
+                 reject(err)
+               }
+             })
+          }
+          fetchData()
+        })
+      }
     </script>
   </body>
 </html>

@@ -28,6 +28,7 @@
 
         timer = setTimeout(() => {
           fn.apply(context, args)
+          timer = null
         }, wait)
         
       }

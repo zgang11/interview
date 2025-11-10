@@ -84,18 +84,29 @@
         // console.log(createTree(cityList))
 
 
-        function dfsCreateTree(list, pid) {
+        // function dfsCreateTree(list, pid) {
+        //   let ans = []
+        //   list.forEach(element => {
+        //     if(element.parentId === pid) {
+        //         ans.push(element)
+        //         element.children = dfsCreateTree(list, element.id)
+        //     }
+        //   });
+        //   return ans
+        // }
+        // console.log(dfsCreateTree(cityList, 0))
+
+        function dfsListToTree(list, pid) {
           let ans = []
-          list.forEach(element => {
-            if(element.parentId === pid) {
-                ans.push(element)
-                element.children = dfsCreateTree(list, element.id)
+          for(let item of list) {
+            if(item.parentId === pid) {
+                ans.push(item)
+                item.children = dfsListToTree(list, item.id)
             }
-          });
+          }
           return ans
         }
-        console.log(dfsCreateTree(cityList, 0))
-
+        console.log(dfsListToTree(cityList, 0))
     </script>
 </body>
 
