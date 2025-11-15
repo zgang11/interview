@@ -140,32 +140,30 @@
           }
         };
       }
-      
       function throttle(fn, delay) {
-        let lastTime = 0
-        let timer = null
+        let prev = +new Date(), context = this
+        timer = null
 
-        return function(...args) {
+        
+        return function(...rest) {
+          let now = +new Date()
           if(timer) {
             clearTimeout(timer)
             timer = null
           }
-
-          let now = new Date().getTime()
-          if(now - lastTime > delay) {
-            fn.apply(this, args)
-            timer = null
-            lastTime = now
+          // console.log('ssss',now, prev,  now - prev)
+          if(now - prev > delay) {
+            fn.call(context, ...rest)
+            prev = now
           } else {
             timer = setTimeout(() => {
-              fn.apply(this, args)
-              timer = null
-              lastTime = now
-            }, delay - (now - lastTime))
+               fn.call(context, ...rest)
+               prev = now
+               timer = null
+            }, delay - (now - prev))
           }
         }
       }
-
       // 监听滚动事件，100ms内只执行一次
       window.addEventListener(
         "scroll",

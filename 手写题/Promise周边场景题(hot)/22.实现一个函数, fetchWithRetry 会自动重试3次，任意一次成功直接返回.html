@@ -36,25 +36,24 @@
           makeRequest();
         });
       }
-      function fetchWithRetry(url, options, maxRetry, backoffDelay) {
+      function fetchWithRetry(url, options, maxRetry = 3, backoffDelay = 1000) {
         return new Promise((resolve, reject) => {
           let retryCount = 0
-          function fetchData() {
-             fetch(url, options).then((res) => {
-               if(res.ok) {
-                 resolve(res)
-               } else {
-                throw Error()
-               }
-             }).catch((err) => {
-               
-               if(retryCount < maxRetry) {
-                retryCount++
+          async function fetchData() {
+            fetch(url, options).then(res => {
+              if(res.ok) {
+                resolve(res)
+              } else {
+                throw Error('获取失败')
+              }
+            }).catch(err => {
+              retryCount++
+              if(retryCount < maxRetry) {
                 setTimeout(fetchData, backoffDelay)
-               } else {
-                 reject(err)
-               }
-             })
+              } else {
+                reject(err)
+              }
+            })
           }
           fetchData()
         })

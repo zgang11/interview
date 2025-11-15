@@ -95,6 +95,14 @@
         };
       };
 
+      Function.prototype.bind_ = function(context, ...args) {
+        context = context ? Object(context) : window
+        let that = this
+        return function() {
+          return that.call(context, ...args, ...arguments)
+        }
+      }
+      
       let value = 2;
       let foo = {
         value: 1,

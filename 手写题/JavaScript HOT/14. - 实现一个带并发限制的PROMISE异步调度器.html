@@ -65,27 +65,57 @@
     //   }
     // }
 
+    // class Scheduler {
+    //   list = []
+    //   tempRunCount = 0
+    //   maxCount = 0
+    //   constructor(maxCount) {
+    //     this.maxCount = maxCount
+    //   }
+    //   add(val) {
+    //     this.list.push(val)
+    //   }
+    //   taskStart() {
+    //     for(let i = 0; i < this.maxCount; i++) {
+    //       this.request()
+    //     }
+    //   }
+    //   request() {
+    //     if(this.list.length === 0 || this.tempRunCount > this.maxCount) return
+    //     this.tempRunCount++
+    //     this.list.shift()().then(() => {
+    //       this.tempRunCount--
+    //       this.request()
+    //     })
+    //   }
+    // }
+
     class Scheduler {
-      list = []
-      tempRunCount = 0
       maxCount = 0
-      constructor(maxCount) {
-        this.maxCount = maxCount
+      tempRunCount = 0
+      list = []
+
+      constructor(limit) {
+        this.maxCount = limit
       }
-      add(val) {
-        this.list.push(val)
+
+      add = function(fn) {
+        this.list.push(fn)
       }
-      taskStart() {
+
+      taskStart = function() {
         for(let i = 0; i < this.maxCount; i++) {
           this.request()
         }
       }
-      request() {
+
+      request = function() {
         if(this.list.length === 0 || this.tempRunCount > this.maxCount) return
+        // console.log(this.tempRunCount)
         this.tempRunCount++
         this.list.shift()().then(() => {
-          this.tempRunCount--
-          this.request()
+           this.tempRunCount--
+           this.request()
         })
       }
     }

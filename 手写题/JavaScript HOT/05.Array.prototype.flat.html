@@ -7,6 +7,7 @@
 </head>
 <body>
   <script>
+    // https://article.juejin.cn/post/7553833187396796457
     // const flat_1 = (arr, depth) => {
     //     return depth > 0 ? arr.reduce((acc, cur) => {
     //        if(Array.isArray(cur)){
@@ -37,30 +38,31 @@
     //   return result
     // }
 
-    let arr = [3, 6, 7, [3, 5, 6, [3, 0],
-      [2, 3, 40]
-    ]]
-    const flat_ = function(arr, depth) {
+    let arr = [3, 6, 7, [3, 5, 6, [3, 0],[2, 3, 40]]]
+
+    var flat_ = function(arr, depth) {
       return depth > 0 ? arr.reduce((acc, cur) => {
-         return Array.isArray(cur) ? [...acc, ...flat_(cur, depth - 1)] : [...acc, cur] 
+        return Array.isArray(cur) ? [...acc, ...flat_(cur, depth - 1)] : [...acc, cur]
       }, []) : arr
     }
 
-    const flat_2 = function(arr, depth) {
-      if(depth === 0) return arr
-      let result = []
-      arr.forEach(element => {
-        if(Array.isArray(element)) {
-          result = result.concat(flat_2(element, depth - 1))
+    // 非递归
+    function flat_2(arr) {
+      let stk = [...arr], ans = []
+      while(stk.length) {
+        let top = stk.pop()
+        if(Array.isArray(top)) {
+          stk.push(...top)
         } else {
-          result.push(element)
+          ans.push(top)
         }
-      });
-      return result
+      }
+      return ans
     }
 
-    console.log(flat_(arr, 1))
-    console.log(flat_2(arr, 1))
+
+    console.log(flat_(arr, 2))
+    console.log(flat_2(arr))
   </script>
 </body>
 </html>

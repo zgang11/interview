@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let ip = "10.0.3.193"
+    function ipToInt(ip) {
+      let ipList = ip.split('.')
+      let seg0 = parseInt(ipList[0]) << 24
+      let seg1 = parseInt(ipList[1]) << 16
+      let seg2 = parseInt(ipList[2]) << 8
+      let seg3 = parseInt(ipList[3]) << 0
+      return seg0 | seg1 | seg2 | seg3
+    }
+    console.log(ipToInt(ip))
+
+
+    let num = 167773121
+    function intToIp(num) {
+      let ans = []
+      ans.unshift(String(num & 255))
+      ans.unshift(String(num >> 8 & 255))
+      ans.unshift(String(num >> 16 & 255))
+      ans.unshift(String(num >> 24 & 255))
+      return ans.join('.')
+    }
+    console.log(intToIp(num))
+  </script>
+</body>
+</html>
