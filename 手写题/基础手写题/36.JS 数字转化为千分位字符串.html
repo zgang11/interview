@@ -70,9 +70,13 @@
     <script>
       const format = (num) => {
         let str = String(num)
-        let [int, fraction] = str.split('.')
-        let reg = /(\d{1,3})(?=(\d{3})+$)/g
-        return int.replaceAll(reg, '$1,') + '.' + fraction
+        let [first, second] = str.split('.')
+        // let reg = /\d{1,3}(?=(\d{3})+$)/g
+           let reg = /\d{1,3}(?=(\d{3})+$)/g     
+        first = first.replace(reg, ($1, $2, $3) => {
+          return $1 + ','
+        })
+        return first + '.' + second
       }
       console.log(format(12343243256.32332))
     </script>

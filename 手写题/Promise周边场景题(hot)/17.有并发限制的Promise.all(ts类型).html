@@ -104,28 +104,25 @@
         return Promise.all(results);
       }
 
-      // async function runWithConcurrency(tasks, limit = 3) {
-      //   let result = [], executing = new Set()
+      async function  runWithConcurrency(tasks, limit = 3) {
+        let result = [], executing = new Set()
+        for(let task of tasks) {
+          if(executing.size > limit) {
+            await Promise.race(executing)
+          }
+          let p = task().then(res => {
+             executing.delete(p)
+             return res
+          }, err => {
+            executing.delete(p)
+            return err
+          })
+          result.push(p)
+          executing.add(p)
+        }
+        return Promise.all(result)
+      }
 
-      //   for(let task of tasks) {
-      //     if(executing.size > limit) {
-      //      await Promise.race(executing)
-      //     }
-
-      //     let p = task().then((res) => {
-      //       executing.delete(p)
-      //       return res
-      //     }).catch(err => {
-      //       executing.delete(p)
-      //       return err
-      //     })
-      //     result.push(p)
-      //     executing.add(p)
-      //   }
-
-
-      //   return Promise.all(result)
-      // }
 
       // 模拟异步请求函数
       function mockRequest(id, delay) {

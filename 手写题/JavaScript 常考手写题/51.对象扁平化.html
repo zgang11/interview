@@ -62,18 +62,18 @@
       const flattened = flattenObject(nestedObject);
       console.log(flattened);
       function flattenObject(obj) {
-        let res = {}
-        for(let [key, val] of Object.entries(obj)) {
-          if(typeof val === 'object') {
-            let newObj = flattenObject(val)
-            for(let [k, v] of Object.entries(newObj)) {
-              res[`${key}.${k}`] = v
+         let res = {}
+         for(let [k, v] of Object.entries(obj)) {
+            if(typeof v === 'object') {
+              let newObj = flattenObject(v)
+              for(let [k_, v_] of Object.entries(newObj)) {
+                res[k + '.' + k_] = v_
+              }
+            } else {
+              res[k] = v
             }
-          } else {
-            res[key] = val
-          }
-        }
-        return res
+         }
+         return res
       }
     </script>
   </body>

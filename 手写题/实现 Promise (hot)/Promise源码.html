@@ -513,6 +513,23 @@
             }
           });
         }
+        // static all_(list) {
+        //   return new MyPromise((resolve, reject) => {
+        //     let result = []
+        //     let count = 0
+        //     for(let i = 0; i < list.length; i++) {
+        //       this.resolve(list[i]).then((res) => {
+        //         result[i] = res
+        //         count++
+        //         if(count === list.length) {
+        //           resolve(result)
+        //         }
+        //       }, (err) => {
+        //           reject(err)
+        //       })
+        //     }
+        //   })
+        // }
         // 添加静态race方法
         static race(list) {
           return new MyPromise((resolve, reject) => {
@@ -530,7 +547,7 @@
           });
         }
         finally(cb) {
-          let P = this.constructor
+          let P = this.constructor;
           return this.then(
             (value) => P.resolve(cb()).then(() => value),
             (reason) =>
@@ -539,6 +556,13 @@
               })
           );
         }
+        // finally(cb) {
+        //   let P = this.constructor;
+        //   return this.then(
+        //     (res) => P.resolve(cb()).then(() => res),
+        //     (err) => P.resolve(cb()).then(() => {throw err})
+        //   );
+        // }
         // 实现allSettled
         static allSettled(list) {
           return new Promise((resolve, reject) => {
@@ -561,22 +585,27 @@
           });
         }
         static allSettled_(list) {
-          let result = []
-          let count = 0
+          let result = [];
+          let count = 0;
           return new MyPromise((resolve, reject) => {
-            for(let [i, p] of Object.entries(list)) {
-              MyPromise.resolve(p).then(value => {
-                result[i] = value
-              }, err => {
-                result[i] = err
-              }).finally(() => {
-                count++
-                if(count === list.length) {
-                  resolve(result)
-                }
-              })
+            for (let [i, p] of Object.entries(list)) {
+              MyPromise.resolve(p)
+                .then(
+                  (value) => {
+                    result[i] = value;
+                  },
+                  (err) => {
+                    result[i] = err;
+                  }
+                )
+                .finally(() => {
+                  count++;
+                  if (count === list.length) {
+                    resolve(result);
+                  }
+                });
             }
-          })
+          });
         }
       }
 

@@ -24,6 +24,8 @@
 [js 运行机制](https://www.cnblogs.com/zha-hdlxdl/p/17831036.html)
 [事件循环机制(event loop)](https://blog.csdn.net/qq_63534905/article/details/127789918)
 [JS 事件循环机制](https://www.pipipi.net/42156.html/amp)
+[代码输出题：异步&事件循环](https://blog.csdn.net/2301_79896470/article/details/148289182)
+[一篇文章搞定 JS 事件循环](https://juejin.cn/post/7125824572800106503)
 
 ##### 6. 了解 Event Loop 么
 
@@ -213,10 +215,6 @@
 ##### undefined和null的区别
 [undefined和null的区别](https://zhuanlan.zhihu.com/p/641299367)
 
-
-##### 事件循环
-[代码输出题：异步&事件循环](https://blog.csdn.net/2301_79896470/article/details/148289182)
-[一篇文章搞定 JS 事件循环](https://juejin.cn/post/7125824572800106503)
 
 ##### 前端需要掌握的设计模式
 [设计模式](https://juejin.cn/column/7195725894869254202)

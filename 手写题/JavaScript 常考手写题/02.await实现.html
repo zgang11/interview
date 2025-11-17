@@ -136,8 +136,33 @@
 
     }
 
+    function asyncToGen(testG) {
+      return function(...args) {
+          let gen = testG.call(this, ...args)
+          return new Promise((resolve, reject) => {
+              function next(...rest) {
+                let res
+                try {
+                  res = gen.next(...rest)
+                } catch(err) {
+                  reject(err)
+                }
+                let { value, done } = res
+                if(done) {
+                  return resolve(value)
+                }
+                return Promise.resolve(value).then(res => {
+                    next(res)
+                }).catch(err => {
+                    next(err)
+                })
+              }
+              next()
+          })
+      }
+    }
     const getData1 = () => new Promise(resolve => setTimeout(() => resolve('data1'), 1000));
-    const getData2 = () => new Promise(resolve => setTimeout(() => resolve('data2'), 1000));
+    const getData2 = () => new Promise(resolve => setTimeout(() => resolve('data2'), 3000));
 
     function* testG() {
       const data1 = yield getData1()

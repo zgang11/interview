@@ -637,9 +637,108 @@
       console.log("script end");
       //  "script start" => "async1 start" => ""async2"" => "promise1" => "promise2" => "script end" =>  "async1 end" => "promise3" => "setTimeout"
     </script> -->
-    <script>
+    <!-- <script>
       let str = 'get-element-by-id'
       console.log(str.replace(/\-(\w)/g, ($1, $2) => $2.toLocaleUpperCase()))
+    </script> -->
+    <!-- <script>
+      const obj = {
+        fn1: () => console.log(this),
+        fn2: function () {
+          console.log(this);
+        },
+      };
+
+      // obj.fn1();
+      // obj.fn2();
+
+      // const x = new obj.fn1();
+      const y = new obj.fn2();
+    </script> -->
+    <!-- <script>
+      setTimeout(function () {
+        new Promise(function (resolve, reject) {
+          console.log("异步宏任务promise");
+          resolve();
+        }).then(function () {
+          console.log("异步微任务then");
+        });
+        console.log("异步宏任务");
+      }, 0);
+      new Promise(function (resolve, reject) {
+        console.log("同步宏任务promise"); 
+        resolve();
+      }).then(function () {
+        console.log("同步微任务then");
+      });
+      console.log("同步宏任务");
+
+      // 同步宏任务promise
+      // 同步宏任务
+      // 同步微任务then
+      // 异步宏任务promise
+      // 异步宏任务
+      // 异步微任务then
+    </script> -->
+    <!-- <script>
+      setTimeout(() => {
+        console.log("异步1任务time1");
+        new Promise(function (resolve, reject) {
+          console.log("异步1宏任务promise");
+          setTimeout(() => {
+            console.log("异步1任务time2");
+          }, 0);
+          resolve();
+        }).then(function () {
+          console.log("异步1微任务then");
+        });
+      }, 0);
+      console.log("主线程宏任务");
+      setTimeout(() => {
+        console.log("异步2任务time2");
+      }, 0);
+      new Promise(function (resolve, reject) {
+        console.log("宏任务promise");
+        // reject();
+        resolve();
+      })
+        .then(function () {
+          console.log("微任务then");
+        })
+        .catch(function () {
+          console.log("微任务catch");
+        });
+      
+      // 主线程宏任务
+      // 宏任务promise
+      // 微任务then
+      // 异步1任务time1
+      // 异步1宏任务promise
+      // 异步1微任务then
+      // 异步2任务time2
+      // 异步1任务time2
+    </script> -->
+    <!-- <script>
+      const promise = new Promise((resolve, reject) => {
+        console.log(1);
+        console.log(2);
+      });
+      promise.then(() => {
+        console.log(3);
+      });
+      console.log(4);
+    </script> -->
+    <script>
+      const promise1 = new Promise((resolve, reject) => {
+        
+        console.log("promise1");
+        resolve("resolve1");
+      });
+      const promise2 = promise1.then((res) => {
+        console.log(res);
+      });
+      console.log("1", promise1);
+      console.log("2", promise2);
     </script>
   </body>
 </html>

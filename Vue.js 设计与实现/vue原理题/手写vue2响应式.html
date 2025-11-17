@@ -7,44 +7,29 @@
   </head>
   <body>
     <script>
-      let data = {
-        name: "hdf",
-        age: 19,
-        friend: {
-          name: "zwl",
-        },
-      };
+      function defineReactive(obj, key, val) {
+        // 递归处理子对象
+        observe(val);
 
-      //变成响应式数据
-      observer(data);
-
-      function observer(target) {
-        if (!target || typeof target !== "object") {
-          return target;
-        }
-
-        for (let key in target) {
-          defineReactive(target, key, target[key]);
-        }
+        Object.defineProperty(obj, key, {
+          get() {
+            // 依赖收集：将当前副作用函数（如渲染函数）加入依赖队列
+            Dep.target && dep.addSub(Dep.target);
+            return val;
+          },
+          set(newVal) {
+            if (newVal === val) return;
+            val = newVal;
+            // 触发更新：通知所有依赖的副作用函数重新执行
+            dep.notify();
+          },
+        });
       }
 
-      function defineReactive(target, key, value) {
-        //深度观察
-        observer(value);
-
-        Object.defineProperty(target, key),
-          {
-            get() {
-              return value;
-            },
-            set(newValue) {
-              observer(newValue);
-              if (newValue !== value) {
-                value = newValue;
-                console.log("更新视图");
-              }
-            },
-          };
+      // 对 data 进行响应式处理
+      function observe(obj) {
+        if (typeof obj !== "object" || obj === null) return;
+        new Observer(obj);
       }
     </script>
   </body>

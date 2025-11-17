@@ -77,7 +77,7 @@
         listener.push(cb)
       }
       function dispatch(action) {
-        let state = reducer(state, action)
+        state = reducer(state, action)
         listener.forEach(cb => cb())
       }
       return {
